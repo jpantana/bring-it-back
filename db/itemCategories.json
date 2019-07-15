@@ -1,0 +1,53 @@
+{
+  "category1": {
+    "name": "Musical Instruments"
+  },
+  "category2": {
+    "name": "Electronics"
+  },
+  "category3": {
+    "name": "Audio Equipment"
+  },
+  "category4": {
+    "name": "Cameras/Video Equipment"
+  },
+  "category5": {
+    "name": "Computers"
+  },
+  "category6": {
+    "name": "Vehicles & Trailers"
+  },
+  "category7": {
+    "name": "Tools (Auto)"
+  },
+  "category8": {
+    "name": "Tools (Lawn)"
+  },
+  "category9": {
+    "name": "Tools (Industrial)"
+  },
+  "category10": {
+    "name": "Tools (Commercial)"
+  },
+  "category11": {
+    "name": "Tools (Construction)"
+  },
+  "category12": {
+    "name": "Tools (Farm)"
+  },
+  "category13": {
+    "name": "Kitchen"
+  },
+  "category14": {
+    "name": "Household"
+  },
+  "category15": {
+    "name": "Athletic Equipment"
+  },
+  "category16": {
+    "name": "Beauty"
+  },
+  "category17": {
+    "name": "Aviation"
+  }
+}
