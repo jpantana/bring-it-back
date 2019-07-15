@@ -1,0 +1,16 @@
+{
+  "itemRented1": {
+    "userId": "23456",
+    "itemId": "item2",
+    "hoursRented": 5,
+    "daysRented": 0,
+    "overDue": false
+  },
+  "itemRented2": {
+    "userId": "23456",
+    "itemId": "item3",
+    "hoursRented": 3,
+    "daysRented": 0,
+    "overDue": false
+  }  
+}

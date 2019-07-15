@@ -1,0 +1,38 @@
+{
+  "item1": {
+    "name": "Gibson Country Gentlemen",
+    "imageUrl": "./imgs/chet.jpeg",
+    "description": "Gibson Chet Atkins Country Gentlemen `92",
+    "priceperhour": 20,
+    "priceperday": 100,
+    "isAvailable": true,
+    "category": "Instruments",
+    "condition": "relic",
+    "categoryId": "category1",
+    "ownerId": "owner2"
+  },
+  "item2": {
+    "name": "Stratocaster",
+    "imageUrl": "./imgs/strat.jpeg",
+    "description": "Parts-caster with vintage hand-wound Klein pickups",
+    "priceperhour": "15",
+    "priceperday": "85",
+    "isAvailable": true,
+    "category": "Instruments",
+    "condition": "rellic",
+    "categoryId": "category2",
+    "ownerId": "owner2"
+  },
+  "item3": {
+    "name": "Ryobi Weed Eater",
+    "imageUrl": "https://i5.walmartimages.com/asr/bc8d0533-b816-4421-a91e-9a69a483085b_1.055f38c53dc3d775ef21e472c0812078.jpeg?odnWidth=undefined&odnHeight=undefined&odnBg=ffffff",
+    "description": "Ryobi Extend-It RY40022 40V Li-Ion Cordless String Trimmer - Tool Only",
+    "priceperhour": "8",
+    "priceperday": "30",
+    "isAvailable": true,
+    "category": "Tool (Lawn)",
+    "condition": "good",
+    "categoryId": "category3",
+    "ownerId": "owner1"
+  }  
+}
