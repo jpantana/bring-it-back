@@ -78,7 +78,7 @@ class App extends React.Component {
                   <PublicRoute path="/auth" component={Auth} authed={authed} />
                   <PrivateRoute path="/signup" component={SignUp} authed={authed} />
                   <PrivateRoute path="/home" className="container" component={Home} authed={authed} />
-                  <PrivateRoute path="/mystuff" className="container" component={MyStuff} authed={authed} />
+                  <PrivateRoute path="/mystuff/:id" className="container" component={MyStuff} authed={authed} />
                   <Redirect from="*" to="/auth" />
                 </Switch>
               </div>
