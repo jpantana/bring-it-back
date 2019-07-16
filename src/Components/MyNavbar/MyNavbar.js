@@ -16,7 +16,7 @@ import {
 import usersData from '../../helpers/data/usersData';
 // STYLES
 import './MyNavbar.scss';
-// IMGs
+// SVGs
 import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 
 class MyNavbar extends React.Component {

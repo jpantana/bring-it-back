@@ -1,10 +1,13 @@
 import React from 'react';
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
+import PropTypes from 'prop-types';
 // JSs
+import SingleItem from '../SingleItem/SingleItem';
 import itemsData from '../../helpers/data/itemsData';
+import Items from '../Items/Items';
 // STYLES
 import './MyStuff.scss';
+// // PROPS
+import itemShape from '../../helpers/propz/itemShape';
 
 // const defaultState = [{
 //   name: '',
@@ -20,14 +23,28 @@ import './MyStuff.scss';
 // }];
 
 class MyStuff extends React.Component {
+  static propTypes = {
+    items: PropTypes.arrayOf(itemShape.itemShape),
+  }
+
   state = {
     items: [],
+    isClicked: false,
+    singleItem: {},
   }
+
+  seeSingleItem = (item) => {
+    this.setState({ isClicked: true, singleItem: item }); // change to FALSE
+    console.error(item, 'item in mystuff');
+  };
+
+  unseeSingleItem = () => {
+    this.setState({ isClicked: false });
+  };
 
   getUserItems = (uid) => {
     itemsData.getItems(uid)
       .then((items) => {
-        console.error(items, 'resp');
         this.setState({ items });
       })
       .catch(err => console.error('no items to display', err));
@@ -39,19 +56,29 @@ class MyStuff extends React.Component {
   }
 
   render() {
-    const { items } = this.state;
+    const { items, isClicked, singleItem } = this.state;
     const makeItemCards = items.map(item => (
-      <div className="card">
-        <img className="card-img-top" src={item.imageUrl} alt={(`Item belonging to ${item.name}`)} />
-        <div className="card-body">
-          <h5 className="card-title">{item.name}</h5>
-          <p className="card-text">{item.description}</p>
-        </div>
+      <div>
+        <Items
+          key={item.id}
+          item={ item }
+          seeSingleItem={this.seeSingleItem}
+        />
       </div>
     ));
     return (
-      <div>
-        { makeItemCards }
+      <div className="MyStuff">
+        <div className="col col-4">
+          { makeItemCards }
+        </div>
+        <div className="col col-6">
+          { (isClicked === true ? <SingleItem
+            key={singleItem.id}
+            singleItem={singleItem}
+            isClicked={isClicked}
+            unseeSingleItem={this.unseeSingleItem}
+          /> : '') }
+        </div>
       </div>
     );
   }
