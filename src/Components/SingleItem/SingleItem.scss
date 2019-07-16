@@ -3,3 +3,19 @@
 .SingleItem {
   display: block;
 }
+
+.fullCard {
+  margin: 10px;
+  border-radius: 10px;
+  font-family: $font1;
+  color: $fontColor1;
+  box-shadow: 2px 2px 5px $shadow;
+  &:hover {
+    transform: scale(1.1);
+    transition: .4s;
+  }
+}
+
+.itemImg {
+  // transform: scale(.5) !important;
+}
