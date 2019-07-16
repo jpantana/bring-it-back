@@ -2,6 +2,7 @@
   "user1": {
     "firstname": "Josh",
     "lastname": "Pantana",
+    "username": "username1",
     "street": "515 Old Towne Drive",
     "city": "Brentwood",
     "state": "Tennessee",
@@ -11,6 +12,7 @@
   "user2": {
     "firstname": "Stephanie",
     "lastname": "Pantana",
+    "username": "username2",
     "street": "515 Old Towne Drive",
     "city": "Brentwood",
     "state": "Tennessee",
