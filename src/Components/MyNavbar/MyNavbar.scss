@@ -1,3 +1,44 @@
+@import '../../styles/variables';
+
 .MyNavbar {
-  display: block;
+  display: flex;
+  flex-flow: row wrap;
+  // justify-content: flex-start;
+}
+
+.upperNav {
+  display: flex;
+  justify-content: space-between; 
+  width: 100%;
+  height: auto;
+  background-color: $upperNav;
+}
+
+.userDisplayDiv {
+  display: flex;
+  flex-flow: row nowrap !important;
+}
+
+.userName {
+  color: $fontColor1;
+  font-family: $font1;
+  margin: auto;
+  margin-right: 10px;
+}
+
+.userIcon {
+  margin: 5px;
+}
+
+.navBarBrand {
+  color: $fontColor1;
+  font-family: $font1;
+  font-weight: 700;
+  margin-left: 25px;
+  text-transform: uppercase;
+}
+
+.navBar {
+  width: 100%;
+  background-color: $lowerNav;
 }

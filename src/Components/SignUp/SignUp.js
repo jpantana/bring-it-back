@@ -18,7 +18,7 @@ const defaultState = {
   city: '',
   state: '',
   zipcode: '',
-  // username: '',
+  username: '',
 };
 
 class SignUp extends React.Component {
@@ -44,7 +44,7 @@ class SignUp extends React.Component {
 
   zipcodeChange = e => this.addNewUserForm('zipcode', e);
 
-  // usernameChange = e => this.addNewUserForm('username', e);
+  usernameChange = e => this.addNewUserForm('username', e);
 
   formSubmit = (e) => {
     e.preventDefault();

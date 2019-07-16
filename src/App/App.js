@@ -47,12 +47,13 @@ const PrivateRoute = ({
 class App extends React.Component {
   state = {
     authed: false,
+    useruid: '',
   }
 
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ authed: true });
+        this.setState({ authed: true, useruid: user.uid });
       } else {
         this.setState({ authed: false });
       }
@@ -64,13 +65,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed } = this.state;
+    const { authed, useruid } = this.state;
 
     return (
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar authed={authed} />
+            <MyNavbar authed={authed} useruid={useruid} />
             <div className="container">
               <div className="row">
                 <Switch>
