@@ -16,7 +16,7 @@ import {
 import usersData from '../../helpers/data/usersData';
 // STYLES
 import './MyNavbar.scss';
-// IMGs
+// SVGs
 import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 
 class MyNavbar extends React.Component {
@@ -58,7 +58,7 @@ class MyNavbar extends React.Component {
             <NavLink className="navLink hvr-shadow hvr-underline-reveal" tag={RRNavLink} to="/home">Home</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal" tag={RRNavLink} to="/stuff">My Stuff</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal" tag={RRNavLink} to={(`/mystuff/${this.props.useruid}`)}>My Stuff</NavLink>
           </NavItem>
           <NavItem>
             <NavLink className="navLink hvr-shadow  hvr-underline-reveal" onClick={this.logMeOut} href="https://github.com/reactstrap/reactstrap">Logout</NavLink>
