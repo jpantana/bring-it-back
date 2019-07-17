@@ -16,7 +16,7 @@ import addIcon from '../../SVGs/iconmonstr-plus-circle-thin.svg';
 
 const defaultItemState = {
   name: '',
-  category: '',
+  category: 'Category',
   condition: '',
   categoryId: '',
   ownerId: '',
@@ -40,6 +40,7 @@ class MyStuff extends React.Component {
     isOpen: false,
     userid: '',
     categories: [],
+    categoryId: [],
   }
 
   // callback function from Item that allows you to see a single item (sibling component to Item)
@@ -61,10 +62,13 @@ class MyStuff extends React.Component {
   };
 
   addNewItemForm = (name, e) => {
-    console.error(e, 'addNewItemForm');
     const tempItem = { ...this.state.newItem };
     tempItem[name] = e.target.value;
     this.setState({ newItem: tempItem });
+  };
+
+  categoryIdStateChg = (e) => {
+    this.setState({ categoryId: e.target.id });
   };
 
   showCategories = () => {
@@ -75,6 +79,7 @@ class MyStuff extends React.Component {
       .catch(err => console.error('no categories to speak of', err));
   };
 
+  // callback function. opens and closes and clears modal
   addNewItem = (e) => {
     e.preventDefault();
     this.setState({ isOpen: !this.state.isOpen, newItem: defaultItemState });
@@ -109,6 +114,8 @@ class MyStuff extends React.Component {
                     getUserItems={this.getUserItems}
                     showCategories={this.showCategories}
                     categories={this.state.categories}
+                    categoryIdStateChg={this.categoryIdStateChg}
+                    categoryId={this.state.categoryId}
                   />}
                 </Modal>
         <div className="col col-4 m-2">

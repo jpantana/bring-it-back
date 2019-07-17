@@ -27,6 +27,8 @@ class AddNewItems extends React.Component {
     addNewItemForm: PropTypes.func.isRequired,
     categories: categoriesShape.categoriesShape,
     showCategories: PropTypes.func.isRequired,
+    categoryIdStateChg: PropTypes.func.isRequired,
+    categoryId: PropTypes.string.isRequired,
   }
 
   toggle = this.toggle.bind(this);
@@ -43,11 +45,12 @@ class AddNewItems extends React.Component {
 
   postNewItem = (e) => {
     e.preventDefault();
-    const { getUserItems, addNewItem } = this.props;
+    const { getUserItems, addNewItem, categoryId } = this.props;
     const saveNewItem = { ...this.props.newItem };
     saveNewItem.ownerId = firebase.auth().currentUser.uid;
+    saveNewItem.categoryId = categoryId;
     itemsData.addNewItem(saveNewItem)
-      .then((resp) => {
+      .then(() => {
         addNewItem(e);
         getUserItems(this.props.userid);
       }).catch(err => console.error('item was not added', err));
@@ -55,11 +58,7 @@ class AddNewItems extends React.Component {
 
   nameAdd = e => this.props.addNewItemForm('name', e);
 
-  // categoryAdd = e => this.props.addNewItemForm('category', e);
-
-  conditionAdd = e => this.props.addNewItemForm('condtion', e);
-
-  // categoryIdAdd = e => this.props.addNewItemForm('categoryId', e);
+  conditionAdd = e => this.props.addNewItemForm('condition', e);
 
   ownerIdAdd = e => this.props.addNewItemForm('ownerId', e);
 
@@ -75,8 +74,8 @@ class AddNewItems extends React.Component {
 
   addCategory = (e) => {
     e.preventDefault();
-    this.props.addNewItemForm('category', e.target.name);
-    this.props.addNewItemForm('categoryId', e.target.id);
+    this.props.addNewItemForm('category', e);
+    this.props.categoryIdStateChg(e);
   };
 
   render() {
@@ -85,7 +84,7 @@ class AddNewItems extends React.Component {
     const catLoop = categories.map(category => (
       <DropdownItem
         id={category.id}
-        name={category.name}
+        value={category.name}
         onClick={this.addCategory}>
         {category.name}
       </DropdownItem>
@@ -113,7 +112,10 @@ class AddNewItems extends React.Component {
                   <DropdownToggle
                     caret
                     onClick={this.props.showCategories}
-                    defaultValue={newItem.category}>Category</DropdownToggle >
+                    defaultValue={newItem.category}
+                  >
+                    {newItem.category}
+                  </DropdownToggle >
                   <DropdownMenu>
                     { catLoop }
                   </DropdownMenu>
@@ -177,6 +179,7 @@ class AddNewItems extends React.Component {
                 />
               </div>
               <button type="submit" className="btn btn-primary" onClick={this.postNewItem}>Add It</button>
+              <button type="submit" className="btn btn-danger" onClick={this.props.addNewItem}>Cancel</button>
             </form>
           </ModalBody>
         </div>
