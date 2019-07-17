@@ -20,4 +20,6 @@ const getItems = uid => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-export default { getItems };
+const addNewItem = item => axios.post(`${baseUrl}/items.json`, item);
+
+export default { getItems, addNewItem };

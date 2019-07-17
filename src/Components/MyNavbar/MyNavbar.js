@@ -47,7 +47,6 @@ class MyNavbar extends React.Component {
     firebase.auth().signOut();
   };
 
-
   render() {
     const { authed } = this.props;
     const buildNavbar = () => {

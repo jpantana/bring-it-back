@@ -1,10 +1,10 @@
 {
   "item1": {
     "name": "Gibson Country Gentlemen",
-    "imageUrl": "./imgs/chet.jpeg",
+    "imageUrl": "https://raw.githubusercontent.com/jpantana/bring-it-back/master/imgs/chet.jpeg",
     "description": "Gibson Chet Atkins Country Gentlemen `92",
-    "priceperhour": 20,
-    "priceperday": 100,
+    "priceperhour": "20",
+    "priceperday": "100",
     "isAvailable": true,
     "category": "Instruments",
     "condition": "relic",
@@ -13,7 +13,7 @@
   },
   "item2": {
     "name": "Stratocaster",
-    "imageUrl": "./imgs/strat.jpeg",
+    "imageUrl": "https://raw.githubusercontent.com/jpantana/bring-it-back/master/imgs/strat.jpeg",
     "description": "Parts-caster with vintage hand-wound Klein pickups",
     "priceperhour": "15",
     "priceperday": "85",
