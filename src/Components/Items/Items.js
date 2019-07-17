@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // JSs
-import itemsData from '../../helpers/data/itemsData';
 // PROPS
 import itemShape from '../../helpers/propz/itemShape';
 // SVGs
@@ -16,16 +15,8 @@ class Items extends React.Component {
     item: itemShape.itemShape,
     seeSingleItem: PropTypes.func.isRequired,
     getUserItems: PropTypes.func.isRequired,
-    userid: PropTypes.string.isRequired,
+    deleteItemEvent: PropTypes.func.isRequired,
   }
-
-  deleteItemEvent = (e) => {
-    e.preventDefault();
-    itemsData.deleteItem(this.props.item.id)
-      .then(() => {
-        this.props.getUserItems(this.props.userid);
-      }).catch(err => console.error('item not deleted', err));
-  };
 
   singleItem = (e) => {
     e.preventDefault();
@@ -43,7 +34,7 @@ class Items extends React.Component {
         <div className="allCardIcons">
           <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
           <span className="editDeleteSpan">
-            <img onClick={this.deleteItemEvent} src={deleteIcon} alt="delete icon"/>
+            <img onClick={this.props.deleteItemEvent} src={deleteIcon} id={item.id} alt="delete icon"/>
             <img src={editIcon} alt="edit icon"/>
           </span>
         </div>

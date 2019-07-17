@@ -43,6 +43,7 @@ class MyStuff extends React.Component {
     categoryId: [],
   }
 
+  // CRUD ON ITEMS DATA
   // callback function from Item that allows you to see a single item (sibling component to Item)
   seeSingleItem = (item) => {
     this.setState({ isClicked: true, singleItem: item }); // change to FALSE
@@ -67,6 +68,13 @@ class MyStuff extends React.Component {
     this.setState({ newItem: tempItem });
   };
 
+  // callback function. opens and closes and clears modal
+  addNewItem = (e) => {
+    e.preventDefault();
+    this.setState({ isOpen: !this.state.isOpen, newItem: defaultItemState });
+  };
+
+  // CATEGORIES DATA SET
   categoryIdStateChg = (e) => {
     this.setState({ categoryId: e.target.id });
   };
@@ -79,10 +87,12 @@ class MyStuff extends React.Component {
       .catch(err => console.error('no categories to speak of', err));
   };
 
-  // callback function. opens and closes and clears modal
-  addNewItem = (e) => {
+  deleteItemEvent = (e) => {
     e.preventDefault();
-    this.setState({ isOpen: !this.state.isOpen, newItem: defaultItemState });
+    itemsData.deleteItem(e.target.id)
+      .then(() => {
+        this.getUserItems(this.state.userid);
+      }).catch(err => console.error('item not deleted', err));
   };
 
   componentDidMount() {
@@ -100,7 +110,7 @@ class MyStuff extends React.Component {
           item={ item }
           seeSingleItem={this.seeSingleItem}
           getUserItems={this.getUserItems}
-          userid={this.state.userid}
+          deleteItemEvent={this.deleteItemEvent}
         />
       </div>
     ));
@@ -132,6 +142,7 @@ class MyStuff extends React.Component {
             singleItem={singleItem}
             isClicked={isClicked}
             unseeSingleItem={this.unseeSingleItem}
+            deleteItemEvent={this.deleteItemEvent}
           /> : '') }
         </div>
       </div>
