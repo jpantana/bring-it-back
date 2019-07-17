@@ -74,6 +74,12 @@ class MyStuff extends React.Component {
     this.setState({ isOpen: !this.state.isOpen, newItem: defaultItemState });
   };
 
+  editItemEvent = (e) => {
+    e.preventDefault();
+    console.error('e in mystuff', e.target.id);
+    // use a .split to remove edit. form id that is passed.
+  };
+
   // CATEGORIES DATA SET
   categoryIdStateChg = (e) => {
     this.setState({ categoryId: e.target.id });
@@ -111,6 +117,7 @@ class MyStuff extends React.Component {
           seeSingleItem={this.seeSingleItem}
           getUserItems={this.getUserItems}
           deleteItemEvent={this.deleteItemEvent}
+          editItemEvent={this.editItemEvent}
         />
       </div>
     ));
@@ -143,6 +150,7 @@ class MyStuff extends React.Component {
             isClicked={isClicked}
             unseeSingleItem={this.unseeSingleItem}
             deleteItemEvent={this.deleteItemEvent}
+            editItemEvent={this.editItemEvent}
           /> : '') }
         </div>
       </div>

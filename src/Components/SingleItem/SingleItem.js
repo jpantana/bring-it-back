@@ -13,6 +13,7 @@ class SingleItem extends React.Component {
     isClicked: PropTypes.bool.isRequired,
     unseeSingleItem: PropTypes.func.isRequired,
     deleteItemEvent: PropTypes.func.isRequired,
+    editItemEvent: PropTypes.func.isRequired,
   }
 
   singleItemHide = (e) => {
@@ -30,7 +31,7 @@ class SingleItem extends React.Component {
 
   render() {
     // IDEAS: carousel of imgs; calculator for price booking; messaging users
-    const { singleItem } = this.props;
+    const { singleItem, editItemEvent } = this.props;
     return (
       <div>
         <div className="card fullCard" onClick={this.singleItemHide}>
@@ -46,8 +47,8 @@ class SingleItem extends React.Component {
       <div className="allCardIcons">
         <span>{singleItem.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
         <span className="editDeleteSpan">
-          <img onClick={this.deleteEvent} src={deleteIcon} id={singleItem.id}alt="delete icon"/>
-          <img src={editIcon} alt="edit icon"/>
+          <img onClick={this.deleteEvent} src={deleteIcon} id={singleItem.id} alt="delete icon"/>
+          <img onClick={editItemEvent} src={editIcon} id={`edit.${singleItem.id}`} alt="edit icon"/>
         </span>
       </div>
     </div>
