@@ -48,7 +48,7 @@ class SingleItem extends React.Component {
         <span>{singleItem.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
         <span className="editDeleteSpan">
           <img onClick={this.deleteEvent} src={deleteIcon} id={singleItem.id} alt="delete icon"/>
-          <img onClick={editItemEvent} src={editIcon} id={`edit.${singleItem.id}`} alt="edit icon"/>
+          <img onClick={editItemEvent} src={editIcon} id={`${singleItem.id}.edit`} alt="edit icon"/>
         </span>
       </div>
     </div>

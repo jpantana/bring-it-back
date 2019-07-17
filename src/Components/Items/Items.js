@@ -36,7 +36,7 @@ class Items extends React.Component {
           <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
           <span className="editDeleteSpan">
             <img onClick={deleteItemEvent} src={deleteIcon} id={item.id} alt="delete icon"/>
-            <img onClick={editItemEvent} src={editIcon} id={`edit.${item.id}`} alt="edit icon"/>
+            <img onClick={editItemEvent} src={editIcon} id={`${item.id}.edit`} alt="edit icon"/>
           </span>
         </div>
       </div>
