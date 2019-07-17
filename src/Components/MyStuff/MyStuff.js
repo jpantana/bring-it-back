@@ -13,18 +13,18 @@ import itemShape from '../../helpers/propz/itemShape';
 // SVGs
 import addIcon from '../../SVGs/iconmonstr-plus-circle-thin.svg';
 
-// const defaultState = [{
-//   name: '',
-//   imageUrl: '',
-//   description: '',
-//   priceperhour: 0,
-//   priceperday: 0,
-//   isAvailable: true,
-//   category: '',
-//   condition: '',
-//   categoryId: '',
-//   ownerId: '',
-// }];
+const defaultItemState = {
+  name: '',
+  category: '',
+  condition: '',
+  categoryId: '',
+  ownerId: '',
+  description: '',
+  imageUrl: '',
+  isAvailable: true,
+  priceperday: '',
+  priceperhour: '',
+};
 
 class MyStuff extends React.Component {
   static propTypes = {
@@ -34,14 +34,15 @@ class MyStuff extends React.Component {
   state = {
     items: [],
     isClicked: false,
-    singleItem: {},
+    singleItem: defaultItemState,
+    newItem: defaultItemState,
     isOpen: false,
+    userid: '',
   }
 
   // callback function from Item that allows you to see a single item (sibling component to Item)
   seeSingleItem = (item) => {
     this.setState({ isClicked: true, singleItem: item }); // change to FALSE
-    console.error(item, 'item in mystuff');
   };
 
   // callback function that allows you to click single item card to hide it
@@ -57,18 +58,20 @@ class MyStuff extends React.Component {
       .catch(err => console.error('no items to display', err));
   };
 
+  addNewItemForm = (name, e) => {
+    const tempItem = { ...this.state.newItem };
+    tempItem[name] = e.target.value;
+    this.setState({ newItem: tempItem });
+  };
+
   addNewItem = (e) => {
-    this.setState({ isOpen: !this.state.isOpen });
     e.preventDefault();
-    // const something = this.state for new obj to pass
-    itemsData.addNewItem()
-      .then((resp) => {
-        console.error(resp);
-      }).catch(err => console.error('item was not added', err));
+    this.setState({ isOpen: !this.state.isOpen, newItem: defaultItemState });
   };
 
   componentDidMount() {
     const uid = this.props.match.params.id;
+    this.setState({ userid: uid });
     this.getUserItems(uid); // only shows your user's items
   }
 
@@ -87,7 +90,12 @@ class MyStuff extends React.Component {
       <div className="MyStuff">
                 <Modal isOpen={this.state.isOpen} >
                   {<AddNewItems
+                    addNewItemForm={this.addNewItemForm}
+                    newItem={this.state.newItem}
+                    defaultItemState = {this.defaultItemState}
                     addNewItem={this.addNewItem}
+                    userid={this.state.userid}
+                    getUserItems={this.getUserItems}
                   />}
                 </Modal>
         <div className="col col-4 m-2">

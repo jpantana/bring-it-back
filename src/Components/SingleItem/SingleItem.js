@@ -29,8 +29,8 @@ class SingleItem extends React.Component {
           <h5 className="card-title">{singleItem.name}</h5>
           <p className="card-text">{singleItem.description}</p>
           <p className="card-text">{singleItem.condition}</p>
-          <p className="card-text">Per Day: ${singleItem.priceperhour}.00</p>
-          <p className="card-text">Per Day: ${singleItem.priceperday}.00</p>
+          <p className="card-text">Per Day: ${singleItem.priceperhour * 1}.00</p>
+          <p className="card-text">Per Day: ${singleItem.priceperday * 1}.00</p>
           <span>{singleItem.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
         </div>
       </div>
