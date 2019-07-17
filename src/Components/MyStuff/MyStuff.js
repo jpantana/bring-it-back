@@ -6,6 +6,7 @@ import SingleItem from '../SingleItem/SingleItem';
 import itemsData from '../../helpers/data/itemsData';
 import Items from '../Items/Items';
 import AddNewItems from '../AddNewItems/AddNewItems';
+import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 // STYLES
 import './MyStuff.scss';
 // PROPS
@@ -38,6 +39,7 @@ class MyStuff extends React.Component {
     newItem: defaultItemState,
     isOpen: false,
     userid: '',
+    categories: [],
   }
 
   // callback function from Item that allows you to see a single item (sibling component to Item)
@@ -59,9 +61,18 @@ class MyStuff extends React.Component {
   };
 
   addNewItemForm = (name, e) => {
+    console.error(e, 'addNewItemForm');
     const tempItem = { ...this.state.newItem };
     tempItem[name] = e.target.value;
     this.setState({ newItem: tempItem });
+  };
+
+  showCategories = () => {
+    itemCategoriesData.getCategories()
+      .then((resp) => {
+        this.setState({ categories: resp });
+      })
+      .catch(err => console.error('no categories to speak of', err));
   };
 
   addNewItem = (e) => {
@@ -96,6 +107,8 @@ class MyStuff extends React.Component {
                     addNewItem={this.addNewItem}
                     userid={this.state.userid}
                     getUserItems={this.getUserItems}
+                    showCategories={this.showCategories}
+                    categories={this.state.categories}
                   />}
                 </Modal>
         <div className="col col-4 m-2">

@@ -2,6 +2,10 @@ import React from 'react';
 import {
   ModalHeader,
   ModalBody,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
@@ -9,24 +13,11 @@ import 'firebase/auth';
 // JSs
 import itemsData from '../../helpers/data/itemsData';
 // PROPs
-
+import itemShape from '../../helpers/propz/itemShape';
+import categoriesShape from '../../helpers/propz/categoriesShape';
 // STYLES
 import './AddNewItems.scss';
-import itemShape from '../../helpers/propz/itemShape';
 
-// STILL NEED TO USE CATEGORY ID
-// const defaultState = {
-//   name: '',
-//   category: '',
-//   condition: '',
-//   categoryId: '',
-//   ownerId: '',
-//   description: '',
-//   imageUrl: '',
-//   isAvailable: true,
-//   priceperday: 0,
-//   priceperhour: 0,
-// };
 class AddNewItems extends React.Component {
   static propTypes = {
     addNewItem: PropTypes.func.isRequired,
@@ -34,11 +25,21 @@ class AddNewItems extends React.Component {
     userid: PropTypes.string.isRequired,
     newItem: itemShape.itemShape,
     addNewItemForm: PropTypes.func.isRequired,
+    categories: categoriesShape.categoriesShape,
+    showCategories: PropTypes.func.isRequired,
   }
 
-  // state = {
-  //   newItem: defaultState,
-  // }
+  toggle = this.toggle.bind(this);
+
+  state = {
+    dropdownOpen: false,
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen,
+    }));
+  }
 
   postNewItem = (e) => {
     e.preventDefault();
@@ -47,7 +48,6 @@ class AddNewItems extends React.Component {
     saveNewItem.ownerId = firebase.auth().currentUser.uid;
     itemsData.addNewItem(saveNewItem)
       .then((resp) => {
-        // this.props.history.push(`/mystuff/${this.props.userid}`);
         addNewItem(e);
         getUserItems(this.props.userid);
       }).catch(err => console.error('item was not added', err));
@@ -55,11 +55,11 @@ class AddNewItems extends React.Component {
 
   nameAdd = e => this.props.addNewItemForm('name', e);
 
-  categoryAdd = e => this.props.addNewItemForm('category', e);
+  // categoryAdd = e => this.props.addNewItemForm('category', e);
 
   conditionAdd = e => this.props.addNewItemForm('condtion', e);
 
-  categoryIdAdd = e => this.props.addNewItemForm('categoryId', e);
+  // categoryIdAdd = e => this.props.addNewItemForm('categoryId', e);
 
   ownerIdAdd = e => this.props.addNewItemForm('ownerId', e);
 
@@ -73,12 +73,27 @@ class AddNewItems extends React.Component {
 
   priceperhourAdd = e => this.props.addNewItemForm('priceperhour', e);
 
+  addCategory = (e) => {
+    e.preventDefault();
+    this.props.addNewItemForm('category', e.target.name);
+    this.props.addNewItemForm('categoryId', e.target.id);
+  };
+
   render() {
     const { newItem } = this.props;
+    const { categories } = this.props;
+    const catLoop = categories.map(category => (
+      <DropdownItem
+        id={category.id}
+        name={category.name}
+        onClick={this.addCategory}>
+        {category.name}
+      </DropdownItem>
+    ));
 
     return (
         <div>
-          <ModalHeader>Create Your Account!</ModalHeader>
+          <ModalHeader>Add A Rental!</ModalHeader>
           <ModalBody>
             <form>
               <div className="form-group">
@@ -94,15 +109,15 @@ class AddNewItems extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="lastName">Category</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="lastName"
-                  placeholder="Category"
-                  defaultValue={newItem.category}
-                  onChange={this.categoryAdd}
-                />
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                  <DropdownToggle
+                    caret
+                    onClick={this.props.showCategories}
+                    defaultValue={newItem.category}>Category</DropdownToggle >
+                  <DropdownMenu>
+                    { catLoop }
+                  </DropdownMenu>
+                </Dropdown>
               </div>
               <div className="form-group">
                 <label htmlFor="lastName">A Brief Description</label>
