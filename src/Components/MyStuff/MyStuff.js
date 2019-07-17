@@ -99,6 +99,8 @@ class MyStuff extends React.Component {
           key={item.id}
           item={ item }
           seeSingleItem={this.seeSingleItem}
+          getUserItems={this.getUserItems}
+          userid={this.state.userid}
         />
       </div>
     ));
