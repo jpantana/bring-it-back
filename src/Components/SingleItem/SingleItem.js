@@ -4,17 +4,27 @@ import PropTypes from 'prop-types';
 import itemShape from '../../helpers/propz/itemShape';
 // SVGs
 import checkIcon from '../../SVGs/iconmonstr-check-mark-6.svg';
+import deleteIcon from '../../SVGs/iconmonstr-x-mark-4.svg';
+import editIcon from '../../SVGs/iconmonstr-edit-10.svg';
 
 class SingleItem extends React.Component {
   static propTypes = {
     singleItem: itemShape.itemShape,
     isClicked: PropTypes.bool.isRequired,
     unseeSingleItem: PropTypes.func.isRequired,
+    deleteItemEvent: PropTypes.func.isRequired,
   }
 
   singleItemHide = (e) => {
     e.preventDefault();
     const { unseeSingleItem } = this.props;
+    unseeSingleItem();
+  };
+
+  deleteEvent = (e) => {
+    e.preventDefault();
+    const { unseeSingleItem, deleteItemEvent } = this.props;
+    deleteItemEvent(e);
     unseeSingleItem();
   };
 
@@ -31,10 +41,16 @@ class SingleItem extends React.Component {
           <p className="card-text">{singleItem.condition}</p>
           <p className="card-text">Per Day: ${singleItem.priceperhour}.00</p>
           <p className="card-text">Per Day: ${singleItem.priceperday}.00</p>
-          <span>{singleItem.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
         </div>
       </div>
+      <div className="allCardIcons">
+        <span>{singleItem.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
+        <span className="editDeleteSpan">
+          <img onClick={this.deleteEvent} src={deleteIcon} id={singleItem.id}alt="delete icon"/>
+          <img src={editIcon} alt="edit icon"/>
+        </span>
       </div>
+    </div>
     );
   }
 }
