@@ -76,13 +76,17 @@ class App extends React.Component {
   };
 
   render() {
-    const { authed, useruid, username } = this.state;
+    const {
+      authed,
+      useruid,
+      username,
+    } = this.state;
 
     return (
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar authed={authed} useruid={useruid} username={username}/>
+            <MyNavbar authed={authed} useruid={useruid} username={username} />
             <div className="container">
               <div className="row">
                 <Switch>

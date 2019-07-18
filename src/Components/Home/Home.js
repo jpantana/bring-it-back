@@ -10,6 +10,7 @@ class Home extends React.Component {
   componentDidMount() {
     const { uid } = firebase.auth().currentUser;
     this.getUser(uid);
+    console.error(this.props.username, 'username home');
   }
 
   getUser = (uid) => {
