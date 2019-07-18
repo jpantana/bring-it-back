@@ -26,6 +26,15 @@ class SignUp extends React.Component {
     newItem: defaultState,
   }
 
+  deleteUser = (e) => {
+    e.preventDefault();
+    firebase.auth().currentUser.delete()
+      .then((() => {
+        this.props.history.push('/auth');
+        // this.props.history.goBack();
+      })).catch(err => console.error('user not deleted', err));
+  };
+
   addNewUserForm = (name, e) => {
     const tempItem = { ...this.state.newItem };
     tempItem[name] = e.target.value;
@@ -145,6 +154,7 @@ class SignUp extends React.Component {
                 />
               </div>
               <button type="submit" className="btn btn-primary" onClick={this.formSubmit}>Submit</button>
+              <button type="submit" className="btn btn-primary" onClick={this.deleteUser}>Cancel</button>
             </form>
           </ModalBody>
         </Modal>

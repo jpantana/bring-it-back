@@ -79,8 +79,7 @@ class AddNewItems extends React.Component {
   };
 
   render() {
-    const { newItem } = this.props;
-    const { categories } = this.props;
+    const { newItem, categories } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
         id={category.id}
@@ -96,11 +95,11 @@ class AddNewItems extends React.Component {
           <ModalBody>
             <form>
               <div className="form-group">
-                <label htmlFor="firstName">Item Name</label>
+                <label htmlFor="itemName">Item Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="firstName"
+                  id="itemName"
                   aria-describedby="firstname"
                   placeholder="Item Name"
                   defaultValue={newItem.name}
@@ -122,22 +121,22 @@ class AddNewItems extends React.Component {
                 </Dropdown>
               </div>
               <div className="form-group">
-                <label htmlFor="lastName">A Brief Description</label>
+                <label htmlFor="itemDescription">A Brief Description</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="userName"
+                  id="itemDescription"
                   placeholder="This thing is the greatest..."
                   defaultValue={newItem.description}
                   onChange={this.descriptionAdd}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="streetAddress">Condition</label>
+                <label htmlFor="itemCondition">Condition</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="streetAdd
+                  id="itemCondition
                   ess" aria-describedby="streetAddress"
                   placeholder="Good, Bad,Fair, etc."
                   defaultValue={newItem.condition}
@@ -145,11 +144,11 @@ class AddNewItems extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="city">Paste An Image Url</label>
+                <label htmlFor="itemImage">Paste An Image Url</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="city
+                  id="itemImage
                   ess" aria-describedby="streetAddress"
                   placeholder="img link"
                   defaultValue={newItem.imageUrl}
@@ -157,22 +156,22 @@ class AddNewItems extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="state">Price Per Hour</label>
+                <label htmlFor="itemPriceperhour">Price Per Hour</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="state"
+                  id="itemPriceperhour"
                   placeholder="$"
                   defaultValue={newItem.priceperhour}
                   onChange={this.priceperhourAdd}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="zipCode">Price Per Day</label>
+                <label htmlFor="itemPriceperday">Price Per Day</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="zipCode"
+                  id="itemPriceperday"
                   placeholder="$"
                   defaultValue={newItem.priceperday}
                   onChange={this.priceperdayAdd}

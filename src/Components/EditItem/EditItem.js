@@ -31,12 +31,25 @@ class EditItem extends React.Component {
     showCategories: PropTypes.func.isRequired,
     editItemForm: PropTypes.func.isRequired,
     addNewItemForm: PropTypes.func.isRequired,
+    closeEditModal: PropTypes.func.isRequired,
   }
 
   toggle = this.toggle.bind(this);
 
   state = {
     dropdownOpen: false,
+    editedItem: {
+      name: this.props.editItem.name,
+      category: this.props.editItem.category,
+      condition: this.props.editItem.condition,
+      categoryId: this.props.editItem.categoryId,
+      ownerId: this.props.editItem.ownerId,
+      description: this.props.editItem.description,
+      imageUrl: this.props.editItem.imageUrl,
+      isAvailable: this.props.editItem.isAvailable,
+      priceperday: this.props.editItem.priceperday,
+      priceperhour: this.props.editItem.priceperhour,
+    },
   }
 
   toggle() {
@@ -49,17 +62,18 @@ class EditItem extends React.Component {
     e.preventDefault();
     const {
       getUserItems,
-      addNewItem,
+      closeEditModal,
       categoryId,
+      userid,
       id,
     } = this.props;
     const editThisItem = { ...this.props.editItem };
     editThisItem.ownerId = firebase.auth().currentUser.uid;
     editThisItem.categoryId = categoryId;
-    itemsData.editItem(id, editThisItem)
+    itemsData.editItem(editThisItem, id[0])
       .then(() => {
-        addNewItem(e);
-        getUserItems(this.props.userid);
+        closeEditModal(e);
+        getUserItems(userid);
       }).catch(err => console.error('item was not added', err));
   };
 
@@ -86,8 +100,7 @@ class EditItem extends React.Component {
   };
 
   render() {
-    const { editItem } = this.props;
-    const { categories } = this.props;
+    const { editItem, categories, closeEditModal } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
         id={category.id}
@@ -99,15 +112,15 @@ class EditItem extends React.Component {
 
     return (
         <div>
-          <ModalHeader>Add A Rental!</ModalHeader>
+          <ModalHeader>Edit A Rental!</ModalHeader>
           <ModalBody>
             <form>
               <div className="form-group">
-                <label htmlFor="firstName">Item Name</label>
+                <label htmlFor="edit.itemName">Item Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="firstName"
+                  id="edit.itemName"
                   aria-describedby="firstname"
                   placeholder="Item Name"
                   defaultValue={editItem.name}
@@ -129,22 +142,22 @@ class EditItem extends React.Component {
                 </Dropdown>
               </div>
               <div className="form-group">
-                <label htmlFor="lastName">A Brief Description</label>
+                <label htmlFor="edit.itemDescription">A Brief Description</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="userName"
+                  id="edit.itemDescription"
                   placeholder="This thing is the greatest..."
                   defaultValue={editItem.description}
                   onChange={this.descriptionAdd}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="streetAddress">Condition</label>
+                <label htmlFor="edit.condition">Condition</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="streetAdd
+                  id="edit.condition
                   ess" aria-describedby="streetAddress"
                   placeholder="Good, Bad,Fair, etc."
                   defaultValue={editItem.condition}
@@ -152,41 +165,41 @@ class EditItem extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="city">Paste An Image Url</label>
+                <label htmlFor="edit.image">Paste An Image Url</label>
                 <input
                   type="text"
                   className="form-control"
                   id="city
-                  ess" aria-describedby="streetAddress"
+                  ess" aria-describedby="edit.image"
                   placeholder="img link"
                   defaultValue={editItem.imageUrl}
                   onChange={this.imageUrlAdd}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="state">Price Per Hour</label>
+                <label htmlFor="edit.priceperhour">Price Per Hour</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="state"
+                  id="edit.priceperhour"
                   placeholder="$"
                   defaultValue={editItem.priceperhour}
                   onChange={this.priceperhourAdd}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="zipCode">Price Per Day</label>
+                <label htmlFor="edit.priceperday">Price Per Day</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="zipCode"
+                  id=""
                   placeholder="$"
                   defaultValue={editItem.priceperday}
                   onChange={this.priceperdayAdd}
                 />
               </div>
               <button type="submit" className="btn btn-primary" onClick={this.editSingleItem}>Add It</button>
-              <button type="submit" className="btn btn-danger" onClick={this.props.addNewItem}>Cancel</button>
+              <button type="submit" className="btn btn-danger" onClick={closeEditModal}>Cancel</button>
             </form>
           </ModalBody>
         </div>

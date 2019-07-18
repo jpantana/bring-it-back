@@ -72,7 +72,7 @@ class MyStuff extends React.Component {
   };
 
   editItemForm = (name, e) => {
-    const tempItem = { ...this.state.newItem };
+    const tempItem = { ...this.state.editItem };
     tempItem[name] = e.target.value;
     this.setState({ editItem: tempItem });
   };
@@ -81,9 +81,16 @@ class MyStuff extends React.Component {
   addNewItem = (e) => {
     e.preventDefault();
     this.setState({
+      isOpen: !this.state.isOpen,
+      newItem: defaultItemState,
+    });
+  };
+
+  closeEditModal = (e) => {
+    e.preventDefault();
+    this.setState({
       isOpen: false,
       editIsOpen: false,
-      newItem: defaultItemState,
       editItem: defaultItemState,
     });
   };
@@ -173,8 +180,8 @@ class MyStuff extends React.Component {
                   userid={this.state.userid}
                   getUserItems={this.getUserItems}
                   editItemForm={this.editItemForm}
-                  addNewItem={this.addNewItem}
-                />;
+                  closeEditModal={this.closeEditModal}
+                />
                 </Modal>
         <div className="col col-4 m-2">
           <span className="addNewSpan" onClick={this.addNewItem}>
