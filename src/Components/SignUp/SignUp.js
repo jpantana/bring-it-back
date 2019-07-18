@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Modal,
   ModalHeader,
@@ -22,6 +23,10 @@ const defaultState = {
 };
 
 class SignUp extends React.Component {
+  static propTypes = {
+    username: PropTypes.string.isRequired,
+  }
+
   state = {
     newItem: defaultState,
   }
@@ -31,7 +36,6 @@ class SignUp extends React.Component {
     firebase.auth().currentUser.delete()
       .then((() => {
         this.props.history.push('/auth');
-        // this.props.history.goBack();
       })).catch(err => console.error('user not deleted', err));
   };
 
