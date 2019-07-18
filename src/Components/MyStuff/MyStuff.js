@@ -7,6 +7,7 @@ import itemsData from '../../helpers/data/itemsData';
 import Items from '../Items/Items';
 import AddNewItems from '../AddNewItems/AddNewItems';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
+import EditItem from '../EditItem/EditItem';
 // STYLES
 import './MyStuff.scss';
 // PROPS
@@ -34,9 +35,11 @@ class MyStuff extends React.Component {
 
   state = {
     items: [],
+    itemId: '',
     isClicked: false,
     singleItem: defaultItemState,
     newItem: defaultItemState,
+    editItem: defaultItemState,
     isOpen: false,
     userid: '',
     categories: [],
@@ -68,10 +71,39 @@ class MyStuff extends React.Component {
     this.setState({ newItem: tempItem });
   };
 
+  editItemForm = (name, e) => {
+    const tempItem = { ...this.state.editItem };
+    tempItem[name] = e.target.value;
+    this.setState({ editItem: tempItem });
+  };
+
   // callback function. opens and closes and clears modal
   addNewItem = (e) => {
     e.preventDefault();
-    this.setState({ isOpen: !this.state.isOpen, newItem: defaultItemState });
+    this.setState({
+      isOpen: !this.state.isOpen,
+      newItem: defaultItemState,
+    });
+  };
+
+  closeEditModal = (e) => {
+    e.preventDefault();
+    this.setState({
+      isOpen: false,
+      editIsOpen: false,
+      editItem: defaultItemState,
+    });
+  };
+
+  editItemEvent = (e) => {
+    e.preventDefault();
+    const itm = e.target.id;
+    const itemId = itm.split('.', 1);
+    itemsData.getSingleItem(itemId)
+      .then((resp) => {
+        this.setState({ itemId, editItem: resp.data, editIsOpen: !this.state.editIsOpen });
+      })
+      .catch();
   };
 
   // CATEGORIES DATA SET
@@ -102,7 +134,12 @@ class MyStuff extends React.Component {
   }
 
   render() {
-    const { items, isClicked, singleItem } = this.state;
+    const {
+      items,
+      isClicked,
+      singleItem,
+      itemId,
+    } = this.state;
     const makeItemCards = items.map(item => (
       <div>
         <Items
@@ -111,6 +148,7 @@ class MyStuff extends React.Component {
           seeSingleItem={this.seeSingleItem}
           getUserItems={this.getUserItems}
           deleteItemEvent={this.deleteItemEvent}
+          editItemEvent={this.editItemEvent}
         />
       </div>
     ));
@@ -130,6 +168,21 @@ class MyStuff extends React.Component {
                     categoryId={this.state.categoryId}
                   />}
                 </Modal>
+                <Modal isOpen={this.state.editIsOpen} >
+                <EditItem
+                  keys={itemId}
+                  id={itemId}
+                  categories={this.state.categories}
+                  editItem={this.state.editItem}
+                  categoryIdStateChg={this.categoryIdStateChg}
+                  categoryId={this.state.categoryId}
+                  showCategories={this.showCategories}
+                  userid={this.state.userid}
+                  getUserItems={this.getUserItems}
+                  editItemForm={this.editItemForm}
+                  closeEditModal={this.closeEditModal}
+                />
+                </Modal>
         <div className="col col-4 m-2">
           <span className="addNewSpan" onClick={this.addNewItem}>
             Rent More Stuff {<img src={addIcon} alt="add new icon" />}
@@ -143,6 +196,7 @@ class MyStuff extends React.Component {
             isClicked={isClicked}
             unseeSingleItem={this.unseeSingleItem}
             deleteItemEvent={this.deleteItemEvent}
+            editItemEvent={this.editItemEvent}
           /> : '') }
         </div>
       </div>

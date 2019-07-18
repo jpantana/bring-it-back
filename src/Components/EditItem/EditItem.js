@@ -15,26 +15,41 @@ import itemsData from '../../helpers/data/itemsData';
 // PROPs
 import itemShape from '../../helpers/propz/itemShape';
 import categoriesShape from '../../helpers/propz/categoriesShape';
-// STYLES
-import './AddNewItems.scss';
+// STYLEs
+import './EditItem.scss';
 
-class AddNewItems extends React.Component {
+class EditItem extends React.Component {
   static propTypes = {
-    addNewItem: PropTypes.func.isRequired,
+    keys: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     getUserItems: PropTypes.func.isRequired,
     userid: PropTypes.string.isRequired,
-    newItem: itemShape.itemShape,
-    addNewItemForm: PropTypes.func.isRequired,
     categories: categoriesShape.categoriesShape,
-    showCategories: PropTypes.func.isRequired,
+    editItem: itemShape.itemShape,
     categoryIdStateChg: PropTypes.func.isRequired,
     categoryId: PropTypes.string.isRequired,
+    showCategories: PropTypes.func.isRequired,
+    editItemForm: PropTypes.func.isRequired,
+    addNewItemForm: PropTypes.func.isRequired,
+    closeEditModal: PropTypes.func.isRequired,
   }
 
   toggle = this.toggle.bind(this);
 
   state = {
     dropdownOpen: false,
+    editedItem: {
+      name: this.props.editItem.name,
+      category: this.props.editItem.category,
+      condition: this.props.editItem.condition,
+      categoryId: this.props.editItem.categoryId,
+      ownerId: this.props.editItem.ownerId,
+      description: this.props.editItem.description,
+      imageUrl: this.props.editItem.imageUrl,
+      isAvailable: this.props.editItem.isAvailable,
+      priceperday: this.props.editItem.priceperday,
+      priceperhour: this.props.editItem.priceperhour,
+    },
   }
 
   toggle() {
@@ -43,43 +58,49 @@ class AddNewItems extends React.Component {
     }));
   }
 
-  postNewItem = (e) => {
+  editSingleItem = (e) => {
     e.preventDefault();
-    const { getUserItems, addNewItem, categoryId } = this.props;
-    const saveNewItem = { ...this.props.newItem };
-    saveNewItem.ownerId = firebase.auth().currentUser.uid;
-    saveNewItem.categoryId = categoryId;
-    itemsData.addNewItem(saveNewItem)
+    const {
+      getUserItems,
+      closeEditModal,
+      categoryId,
+      userid,
+      id,
+    } = this.props;
+    const editThisItem = { ...this.props.editItem };
+    editThisItem.ownerId = firebase.auth().currentUser.uid;
+    editThisItem.categoryId = categoryId;
+    itemsData.editItem(editThisItem, id[0])
       .then(() => {
-        addNewItem(e);
-        getUserItems(this.props.userid);
+        closeEditModal(e);
+        getUserItems(userid);
       }).catch(err => console.error('item was not added', err));
   };
 
-  nameAdd = e => this.props.addNewItemForm('name', e);
+  nameAdd = e => this.props.editItemForm('name', e);
 
-  conditionAdd = e => this.props.addNewItemForm('condition', e);
+  conditionAdd = e => this.props.editItemForm('condition', e);
 
-  ownerIdAdd = e => this.props.addNewItemForm('ownerId', e);
+  ownerIdAdd = e => this.props.editItemForm('ownerId', e);
 
-  descriptionAdd = e => this.props.addNewItemForm('description', e);
+  descriptionAdd = e => this.props.editItemForm('description', e);
 
-  imageUrlAdd = e => this.props.addNewItemForm('imageUrl', e);
+  imageUrlAdd = e => this.props.editItemForm('imageUrl', e);
 
-  isAvailableAdd = e => this.props.addNewItemForm('isAvailable', e);
+  isAvailableAdd = e => this.props.editItemForm('isAvailable', e);
 
-  priceperdayAdd = e => this.props.addNewItemForm('priceperday', e);
+  priceperdayAdd = e => this.props.editItemForm('priceperday', e);
 
-  priceperhourAdd = e => this.props.addNewItemForm('priceperhour', e);
+  priceperhourAdd = e => this.props.editItemForm('priceperhour', e);
 
   addCategory = (e) => {
     e.preventDefault();
-    this.props.addNewItemForm('category', e);
+    this.props.editItemForm('category', e);
     this.props.categoryIdStateChg(e);
   };
 
   render() {
-    const { newItem, categories } = this.props;
+    const { editItem, categories, closeEditModal } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
         id={category.id}
@@ -91,18 +112,18 @@ class AddNewItems extends React.Component {
 
     return (
         <div>
-          <ModalHeader>Add A Rental!</ModalHeader>
+          <ModalHeader>Edit A Rental!</ModalHeader>
           <ModalBody>
             <form>
               <div className="form-group">
-                <label htmlFor="itemName">Item Name</label>
+                <label htmlFor="edit.itemName">Item Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="itemName"
+                  id="edit.itemName"
                   aria-describedby="firstname"
                   placeholder="Item Name"
-                  defaultValue={newItem.name}
+                  defaultValue={editItem.name}
                   onChange={this.nameAdd}
                 />
               </div>
@@ -111,9 +132,9 @@ class AddNewItems extends React.Component {
                   <DropdownToggle
                     caret
                     onClick={this.props.showCategories}
-                    defaultValue={newItem.category}
+                    defaultValue={editItem.category}
                   >
-                    {newItem.category}
+                    {editItem.category}
                   </DropdownToggle >
                   <DropdownMenu>
                     { catLoop }
@@ -121,64 +142,64 @@ class AddNewItems extends React.Component {
                 </Dropdown>
               </div>
               <div className="form-group">
-                <label htmlFor="itemDescription">A Brief Description</label>
+                <label htmlFor="edit.itemDescription">A Brief Description</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="itemDescription"
+                  id="edit.itemDescription"
                   placeholder="This thing is the greatest..."
-                  defaultValue={newItem.description}
+                  defaultValue={editItem.description}
                   onChange={this.descriptionAdd}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="itemCondition">Condition</label>
+                <label htmlFor="edit.condition">Condition</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="itemCondition
+                  id="edit.condition
                   ess" aria-describedby="streetAddress"
                   placeholder="Good, Bad,Fair, etc."
-                  defaultValue={newItem.condition}
+                  defaultValue={editItem.condition}
                   onChange={this.conditionAdd}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="itemImage">Paste An Image Url</label>
+                <label htmlFor="edit.image">Paste An Image Url</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="itemImage
-                  ess" aria-describedby="streetAddress"
+                  id="city
+                  ess" aria-describedby="edit.image"
                   placeholder="img link"
-                  defaultValue={newItem.imageUrl}
+                  defaultValue={editItem.imageUrl}
                   onChange={this.imageUrlAdd}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="itemPriceperhour">Price Per Hour</label>
+                <label htmlFor="edit.priceperhour">Price Per Hour</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="itemPriceperhour"
+                  id="edit.priceperhour"
                   placeholder="$"
-                  defaultValue={newItem.priceperhour}
+                  defaultValue={editItem.priceperhour}
                   onChange={this.priceperhourAdd}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="itemPriceperday">Price Per Day</label>
+                <label htmlFor="edit.priceperday">Price Per Day</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="itemPriceperday"
+                  id=""
                   placeholder="$"
-                  defaultValue={newItem.priceperday}
+                  defaultValue={editItem.priceperday}
                   onChange={this.priceperdayAdd}
                 />
               </div>
-              <button type="submit" className="btn btn-primary" onClick={this.postNewItem}>Add It</button>
-              <button type="submit" className="btn btn-danger" onClick={this.props.addNewItem}>Cancel</button>
+              <button type="submit" className="btn btn-primary" onClick={this.editSingleItem}>Add It</button>
+              <button type="submit" className="btn btn-danger" onClick={closeEditModal}>Cancel</button>
             </form>
           </ModalBody>
         </div>
@@ -186,4 +207,4 @@ class AddNewItems extends React.Component {
   }
 }
 
-export default AddNewItems;
+export default EditItem;

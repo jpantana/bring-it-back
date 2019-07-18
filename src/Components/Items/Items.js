@@ -16,6 +16,7 @@ class Items extends React.Component {
     seeSingleItem: PropTypes.func.isRequired,
     getUserItems: PropTypes.func.isRequired,
     deleteItemEvent: PropTypes.func.isRequired,
+    editItemEvent: PropTypes.func.isRequired,
   }
 
   singleItem = (e) => {
@@ -25,7 +26,7 @@ class Items extends React.Component {
   };
 
   render() {
-    const { item } = this.props;
+    const { item, deleteItemEvent, editItemEvent } = this.props;
     return (
       <div className="card nameCard">
         <div className="card-body" onClick={this.singleItem}>
@@ -34,8 +35,8 @@ class Items extends React.Component {
         <div className="allCardIcons">
           <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
           <span className="editDeleteSpan">
-            <img onClick={this.props.deleteItemEvent} src={deleteIcon} id={item.id} alt="delete icon"/>
-            <img src={editIcon} alt="edit icon"/>
+            <img onClick={deleteItemEvent} src={deleteIcon} id={item.id} alt="delete icon"/>
+            <img onClick={editItemEvent} src={editIcon} id={`${item.id}.edit`} alt="edit icon"/>
           </span>
         </div>
       </div>
