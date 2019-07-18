@@ -13,7 +13,6 @@ import {
   NavLink,
 } from 'reactstrap';
 // JSs
-import usersData from '../../helpers/data/usersData';
 // STYLES
 import './MyNavbar.scss';
 // SVGs
@@ -30,14 +29,6 @@ class MyNavbar extends React.Component {
     username: '',
   }
 
-  getUserName = () => {
-    usersData.getUsers(this.props.useruid)
-      .then((user) => {
-        this.setState({ username: user[0].username });
-      })
-      .catch(err => console.error('no user logged in'));
-  };
-
   toggle() {
     this.setState({ isOpen: !this.state.isOpen });
   }
@@ -48,7 +39,7 @@ class MyNavbar extends React.Component {
   };
 
   render() {
-    const { authed } = this.props;
+    const { authed, username, useruid } = this.props;
     const buildNavbar = () => {
       if (authed) {
         return (
@@ -57,7 +48,7 @@ class MyNavbar extends React.Component {
             <NavLink className="navLink hvr-shadow hvr-underline-reveal" tag={RRNavLink} to="/home">Home</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal" tag={RRNavLink} to={(`/mystuff/${this.props.useruid}`)}>My Stuff</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal" tag={RRNavLink} to={(`/mystuff/${useruid}`)}>My Stuff</NavLink>
           </NavItem>
           <NavItem>
             <NavLink className="navLink hvr-shadow  hvr-underline-reveal" onClick={this.logMeOut} href="https://github.com/reactstrap/reactstrap">Logout</NavLink>
@@ -72,10 +63,10 @@ class MyNavbar extends React.Component {
       <div className="MyNavbar">
         <div className="upperNav">
         <NavbarBrand className="navBarBrand" href="/">Bring It Back</NavbarBrand>
-          <div>{this.getUserName()}
+          <div>
             <div className="userDisplayDiv">
               <img className="userIcon" src={userIcon} alt="icon for a user"/>
-              <p className="userName">{this.state.username}</p>
+              <p className="userName">{ username }</p>
             </div>
           </div>
         </div>

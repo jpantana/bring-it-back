@@ -13,6 +13,7 @@ import fbConnection from '../helpers/data/connection';
 import Auth from '../Components/Auth/Auth';
 import MyNavbar from '../Components/MyNavbar/MyNavbar';
 import Home from '../Components/Home/Home';
+import usersData from '../helpers/data/usersData';
 // STYLES
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -48,12 +49,14 @@ class App extends React.Component {
   state = {
     authed: false,
     useruid: '',
+    username: '',
   }
 
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ authed: true, useruid: user.uid });
+        this.getUserName();
       } else {
         this.setState({ authed: false });
       }
@@ -64,14 +67,22 @@ class App extends React.Component {
     this.removeListener();
   }
 
+  getUserName = () => {
+    usersData.getUsers(this.state.useruid)
+      .then((user) => {
+        this.setState({ username: user[0].username });
+      })
+      .catch(err => console.error('no user logged in', err));
+  };
+
   render() {
-    const { authed, useruid } = this.state;
+    const { authed, useruid, username } = this.state;
 
     return (
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar authed={authed} useruid={useruid} />
+            <MyNavbar authed={authed} useruid={useruid} username={username}/>
             <div className="container">
               <div className="row">
                 <Switch>

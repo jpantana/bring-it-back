@@ -8,10 +8,12 @@ const getUsers = uid => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/users.json?orderBy="uid"&equalTo="${uid}"`)
     .then((res) => {
       const users = [];
-      Object.keys(res.data).forEach((fbKey) => {
-        res.data[fbKey].id = fbKey;
-        users.push(res.data[fbKey]);
-      });
+      if (res.data !== null) {
+        Object.keys(res.data).forEach((fbKey) => {
+          res.data[fbKey].id = fbKey;
+          users.push(res.data[fbKey]);
+        });
+      }
       resolve(users);
     })
     .catch(err => reject(err));
@@ -19,4 +21,7 @@ const getUsers = uid => new Promise((resolve, reject) => {
 
 const addNewUser = saveNewUser => axios.post(`${baseUrl}/users.json`, saveNewUser);
 
-export default { getUsers, addNewUser };
+export default {
+  getUsers,
+  addNewUser,
+};
