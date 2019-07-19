@@ -44,7 +44,14 @@ class Home extends React.Component {
 
   getItems = () => {
     itemsData.getAllItems().then((res) => {
-      this.setState({ items: res });
+      const { categoryName } = this.state;
+      if (categoryName === 'Categories') {
+        this.setState({ items: res });
+      } else {
+        const filterCategories = res.filter(item => item.category === categoryName);
+        console.error(filterCategories);
+        this.setState({ items: filterCategories });
+      }
     }).catch(err => console.error('no items to display', err));
   };
 
@@ -70,6 +77,7 @@ class Home extends React.Component {
   pickCategory = (e) => {
     e.preventDefault();
     this.setState({ categoryName: e.target.value });
+    this.getItems();
   };
 
   toggle() {
