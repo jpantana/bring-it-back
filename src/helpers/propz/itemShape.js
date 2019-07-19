@@ -9,7 +9,7 @@ const itemShape = PropTypes.shape({
   isAvailable: PropTypes.bool.isRequired,
   category: PropTypes.string.isRequired,
   condition: PropTypes.string.isRequired,
-  // categoryId: PropTypes.string.isRequired,
+  categoryId: PropTypes.string.isRequired,
   ownerId: PropTypes.string.isRequired,
 });
 

@@ -25,7 +25,7 @@ class AddNewItems extends React.Component {
     userid: PropTypes.string.isRequired,
     newItem: itemShape.itemShape,
     addNewItemForm: PropTypes.func.isRequired,
-    categories: categoriesShape.categoriesShape,
+    categories: PropTypes.arrayOf(categoriesShape.categoriesShape).isRequired,
     showCategories: PropTypes.func.isRequired,
     categoryIdStateChg: PropTypes.func.isRequired,
     categoryId: PropTypes.string.isRequired,

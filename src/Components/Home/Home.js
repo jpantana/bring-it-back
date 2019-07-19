@@ -84,7 +84,7 @@ class Home extends React.Component {
     const makeItemCards = items.map(item => (
       <div>
         <ItemCard
-          key={item.id}
+          key={`allItem.${item.id}`}
           item={ item }
         />
       </div>
@@ -95,7 +95,7 @@ class Home extends React.Component {
         <div className="form-group">
           <div>
             <SearchAndSort
-              key={categoryName}
+              key={`searchandsort.${categoryName}`}
               categoryName={categoryName}
               categories={categories}
               pickCategory={this.pickCategory}

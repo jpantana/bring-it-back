@@ -43,7 +43,7 @@ class MyStuff extends React.Component {
     isOpen: false,
     userid: '',
     categories: [],
-    categoryId: [],
+    categoryId: '',
   }
 
   // CRUD ON ITEMS DATA
@@ -98,7 +98,7 @@ class MyStuff extends React.Component {
   editItemEvent = (e) => {
     e.preventDefault();
     const itm = e.target.id;
-    const itemId = itm.split('.', 1);
+    const itemId = itm.split('.', 1)[0];
     itemsData.getSingleItem(itemId)
       .then((resp) => {
         this.setState({ itemId, editItem: resp.data, editIsOpen: !this.state.editIsOpen });
@@ -143,7 +143,7 @@ class MyStuff extends React.Component {
     const makeItemCards = items.map(item => (
       <div>
         <Items
-          key={item.id}
+          key={`items.${item.id}`}
           item={ item }
           seeSingleItem={this.seeSingleItem}
           getUserItems={this.getUserItems}
@@ -170,7 +170,7 @@ class MyStuff extends React.Component {
                 </Modal>
                 <Modal isOpen={this.state.editIsOpen} >
                 <EditItem
-                  keys={itemId}
+                  key={`editItem.${itemId}`}
                   id={itemId}
                   categories={this.state.categories}
                   editItem={this.state.editItem}
@@ -191,7 +191,7 @@ class MyStuff extends React.Component {
         </div>
         <div className="col col-6">
           { (isClicked === true ? <SingleItem
-            key={singleItem.id}
+            key={`single.${singleItem.id}`}
             singleItem={singleItem}
             isClicked={isClicked}
             unseeSingleItem={this.unseeSingleItem}
