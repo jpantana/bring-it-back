@@ -1,13 +1,10 @@
 @import '../../styles/variables.scss';
 
 .ItemCard {
-  flex-direction: row !important;
-  width: 18em !important;
-  height: 26em !important;
-  overflow: hidden;
-  .itemImg {
-    object-fit: fill;
-  }
-  
+  width: 18em;
+  height: 25em;
 }
 
+.itemImg {
+  object-fit: contain;
+}

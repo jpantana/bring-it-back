@@ -16,7 +16,7 @@ class ItemCard extends React.Component {
     return (
       <div className="ItemCard card">
         <div className="card-body" onClick={this.singleItem}>
-          <img src={item.imageUrl} alt={item.name} className="card-img-top" />
+          <img src={item.imageUrl} alt={item.name} className="card-img-top itemImg" />
           <h5 className="card-title">{item.name}</h5>
         </div>
         <div className="allCardIcons">

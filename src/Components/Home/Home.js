@@ -1,6 +1,12 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap';
 // JSs
 import usersData from '../../helpers/data/usersData';
 import itemsData from '../../helpers/data/itemsData';
@@ -25,12 +31,15 @@ class Home extends React.Component {
   state = {
     items: [],
     categories: [],
+    dropdownOpen: false,
+    categoryName: 'Categories',
   }
 
   componentDidMount() {
     const { uid } = firebase.auth().currentUser;
     this.getUser(uid);
     this.getItems();
+    this.showCategories();
   }
 
   getItems = () => {
@@ -58,9 +67,33 @@ class Home extends React.Component {
       .catch(err => console.error('no categories to speak of', err));
   };
 
+  pickCategory = (e) => {
+    e.preventDefault();
+    this.setState({ categoryName: e.target.value });
+  };
+
+  toggle() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen,
+    }));
+  }
+
+  toggle = this.toggle.bind(this);
 
   render() {
-    const { items } = this.state;
+    const {
+      items,
+      categories,
+      categoryName,
+    } = this.state;
+    const catLoop = categories.map(category => (
+      <DropdownItem
+        id={category.id}
+        value={category.name}
+        onClick={this.pickCategory}>
+        {category.name}
+      </DropdownItem>
+    ));
     const makeItemCards = items.map(item => (
       <div>
         <ItemCard
@@ -71,8 +104,22 @@ class Home extends React.Component {
     ));
 
     return (
-      <div className="Home justify-content-between">
-        <div className="row flex-nowrap">
+      <div className="Home justify-content-center">
+        <div className="form-group">
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                  <DropdownToggle
+                    caret
+                    onClick={this.showCategories}
+                    defaultValue={ categoryName }
+                  >
+                    { categoryName }
+                  </DropdownToggle >
+                  <DropdownMenu>
+                    { catLoop }
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
+        <div className="row">
           { (items.length > 0 ? makeItemCards : '') }
         </div>
         <div className="">
