@@ -1,0 +1,10 @@
+@import '../../styles/variables.scss';
+
+.ItemCard {
+  width: 18em;
+  height: 25em;
+}
+
+.itemImg {
+  object-fit: contain;
+}

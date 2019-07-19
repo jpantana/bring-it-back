@@ -87,8 +87,8 @@ class App extends React.Component {
         <BrowserRouter>
           <React.Fragment>
             <MyNavbar authed={authed} useruid={useruid} username={username} />
-            <div className="container">
-              <div className="row">
+            <div className="container d-flex">
+              <div className="col">
                 <Switch>
                   <PublicRoute path="/auth" component={Auth} authed={authed} />
                   <PrivateRoute path="/signup" component={SignUp} authed={authed} />

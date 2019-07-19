@@ -4,6 +4,17 @@ import firebaseConfig from '../apiKeys.json';
 
 const baseUrl = firebaseConfig.firebaseKeys.databaseURL;
 
+const getAllItems = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/items.json`).then((res) => {
+    const allItems = [];
+    Object.keys(res.data).forEach((fbKey) => {
+      res.data[fbKey].id = fbKey;
+      allItems.push(res.data[fbKey]);
+    });
+    resolve(allItems);
+  }).catch(err => reject(err));
+});
+
 const getItems = uid => new Promise((resolve, reject) => {
   // axios.get(`${baseUrl}/items.json?orderBy="uid"&equalTo="${uid}"`)
   axios.get(`${baseUrl}/items.json`)
@@ -30,6 +41,7 @@ const deleteItem = itemId => axios.delete(`${baseUrl}/items/${itemId}.json`);
 const editItem = (item, id) => axios.put(`${baseUrl}/items/${id}.json`, item);
 
 export default {
+  getAllItems,
   getItems,
   addNewItem,
   deleteItem,
