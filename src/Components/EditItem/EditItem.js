@@ -7,9 +7,11 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
+import FileUploader from 'react-firebase-file-uploader'; // added for image
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/storage';
 // JSs
 import itemsData from '../../helpers/data/itemsData';
 // PROPs
@@ -31,6 +33,7 @@ class EditItem extends React.Component {
     editItemForm: PropTypes.func.isRequired,
     // addNewItemForm: PropTypes.func.isRequired,
     closeEditModal: PropTypes.func.isRequired,
+    updateImageUrl: PropTypes.func.isRequired,
   }
 
   toggle = this.toggle.bind(this);
@@ -49,6 +52,9 @@ class EditItem extends React.Component {
       priceperday: this.props.editItem.priceperday,
       priceperhour: this.props.editItem.priceperhour,
     },
+    image: '',
+    imageUrl: '',
+    progress: 0,
   }
 
   toggle() {
@@ -86,7 +92,10 @@ class EditItem extends React.Component {
 
   descriptionAdd = e => this.props.editItemForm('description', e);
 
-  imageUrlAdd = e => this.props.editItemForm('imageUrl', e);
+  imageUrlAdd = () => {
+    
+    this.props.updateImageUrl(this.state.imageUrl);
+  }
 
   isAvailableAdd = e => this.props.editItemForm('isAvailable', e);
 
@@ -100,7 +109,24 @@ class EditItem extends React.Component {
     this.props.categoryIdStateChg(e);
   };
 
+  // Image Upload Section
+  handleUploadStart = () => this.setState({ progress: 0 });
+
+  handleUploadSuccess = (filename) => {
+    this.setState({
+      image: filename,
+      progress: 100,
+    });
+    firebase.storage().ref('images').child(filename).getDownloadURL()
+      .then((url) => {
+        this.setState({ imageUrl: url });
+        this.props.updateImageUrl(url);
+      })
+      .catch(err => console.error('no image url', err));
+  };
+
   render() {
+    const { image, imageUrl, progress } = this.state;
     const { editItem, categories, closeEditModal } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
@@ -144,7 +170,7 @@ class EditItem extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="edit.itemDescription">A Brief Description</label>
-                <input
+                <textarea
                   type="text"
                   className="form-control"
                   id="edit.itemDescription"
@@ -166,16 +192,22 @@ class EditItem extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="edit.image">Paste An Image Url</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="city
-                  ess" aria-describedby="edit.image"
-                  placeholder="img link"
-                  defaultValue={editItem.imageUrl}
-                  onChange={this.imageUrlAdd}
-                />
+              <label htmlFor="itemImage">Upload A New Image</label>
+              <FileUploader
+                accept='image/*'
+                name='image'
+                storageRef={firebase.storage().ref('images/')}
+                onUploadStart={this.handleUploadStart}
+                onUploadSuccess={this.handleUploadSuccess}
+              />
+                {(image === '' && progress === 0 ? <img className="img-thumbnail" src={editItem.imageUrl} alt={editItem.name} /> : '')}
+
+                {(image !== '' && progress === 100 ? <div>
+                <img
+                  className="img-thumbnail"
+                  src={imageUrl}
+                  alt="item to be rented" />
+                </div> : '')}
               </div>
               <div className="form-group">
                 <label htmlFor="edit.priceperhour">Price Per Hour</label>

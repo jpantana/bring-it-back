@@ -33,6 +33,7 @@ class SignUp extends React.Component {
 
   deleteUser = (e) => {
     e.preventDefault();
+    this.props.history.push('/auth'); // may need to call this before you delete UID
     firebase.auth().currentUser.delete()
       .then((() => {
         this.props.history.push('/auth');

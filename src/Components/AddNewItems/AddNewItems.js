@@ -31,6 +31,7 @@ class AddNewItems extends React.Component {
     showCategories: PropTypes.func.isRequired,
     categoryIdStateChg: PropTypes.func.isRequired,
     categoryId: PropTypes.string.isRequired,
+    newImageUrl: PropTypes.func.isRequired,
   }
 
   toggle = this.toggle.bind(this);
@@ -69,11 +70,6 @@ class AddNewItems extends React.Component {
 
   descriptionAdd = e => this.props.addNewItemForm('description', e);
 
-  imageUrlAdd = (e) => {
-    e.preventDefault();
-    this.props.addNewItemForm('imageUrl', e);
-  }
-
   isAvailableAdd = e => this.props.addNewItemForm('isAvailable', e);
 
   priceperdayAdd = e => this.props.addNewItemForm('priceperday', e);
@@ -95,7 +91,10 @@ class AddNewItems extends React.Component {
       progress: 100,
     });
     firebase.storage().ref('images').child(filename).getDownloadURL()
-      .then(url => this.setState({ imageUrl: url }))
+      .then((url) => {
+        this.setState({ imageUrl: url });
+        this.props.newImageUrl(url);
+      })
       .catch(err => console.error('no image url', err));
   };
 
@@ -145,7 +144,7 @@ class AddNewItems extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="itemDescription">A Brief Description</label>
-                <input
+                <textarea
                   type="text"
                   className="form-control"
                   id="itemDescription"
@@ -180,13 +179,6 @@ class AddNewItems extends React.Component {
                     className="img-thumbnail"
                     src={imageUrl}
                     alt="item to be rented" />
-                  <button
-                  className="btn btn-primary"
-                  value={imageUrl}
-                  onClick={this.imageUrlAdd}
-                  >
-                    Use This One
-                  </button>
                  </div> : '')}
               </div>
               <div className="form-group">
