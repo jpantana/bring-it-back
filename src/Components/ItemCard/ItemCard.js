@@ -4,6 +4,8 @@ import React from 'react';
 import itemShape from '../../helpers/propz/itemShape';
 // STYLEs
 import './ItemCard.scss';
+// SVGs
+import checkIcon from '../../SVGs/iconmonstr-check-mark-6.svg';
 
 class ItemCard extends React.Component {
   static propTypes = {
@@ -20,7 +22,7 @@ class ItemCard extends React.Component {
           <h5 className="card-title">{item.name}</h5>
         </div>
         <div className="allCardIcons">
-          {/* <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span> */}
+          <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
           <span className="editDeleteSpan">
             {/* <img onClick={deleteItemEvent} src={deleteIcon} id={item.id} alt="delete icon"/>
             <img onClick={editItemEvent} src={editIcon} id={`${item.id}.edit`} alt="edit icon"/> */}

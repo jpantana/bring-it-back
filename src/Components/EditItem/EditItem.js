@@ -20,17 +20,16 @@ import './EditItem.scss';
 
 class EditItem extends React.Component {
   static propTypes = {
-    keys: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     getUserItems: PropTypes.func.isRequired,
     userid: PropTypes.string.isRequired,
-    categories: categoriesShape.categoriesShape,
+    categories: PropTypes.arrayOf(categoriesShape.categoriesShape).isRequired,
     editItem: itemShape.itemShape,
     categoryIdStateChg: PropTypes.func.isRequired,
     categoryId: PropTypes.string.isRequired,
     showCategories: PropTypes.func.isRequired,
     editItemForm: PropTypes.func.isRequired,
-    addNewItemForm: PropTypes.func.isRequired,
+    // addNewItemForm: PropTypes.func.isRequired,
     closeEditModal: PropTypes.func.isRequired,
   }
 
@@ -69,8 +68,10 @@ class EditItem extends React.Component {
     } = this.props;
     const editThisItem = { ...this.props.editItem };
     editThisItem.ownerId = firebase.auth().currentUser.uid;
-    editThisItem.categoryId = categoryId;
-    itemsData.editItem(editThisItem, id[0])
+    if (categoryId !== '') {
+      editThisItem.categoryId = categoryId;
+    }
+    itemsData.editItem(editThisItem, id)
       .then(() => {
         closeEditModal(e);
         getUserItems(userid);
@@ -198,7 +199,7 @@ class EditItem extends React.Component {
                   onChange={this.priceperdayAdd}
                 />
               </div>
-              <button type="submit" className="btn btn-primary" onClick={this.editSingleItem}>Add It</button>
+              <button type="submit" className="btn btn-primary" onClick={this.editSingleItem}>Update It</button>
               <button type="submit" className="btn btn-danger" onClick={closeEditModal}>Cancel</button>
             </form>
           </ModalBody>
