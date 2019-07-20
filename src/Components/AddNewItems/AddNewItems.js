@@ -7,9 +7,11 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
+import FileUploader from 'react-firebase-file-uploader'; // added for image
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/storage';
 // JSs
 import itemsData from '../../helpers/data/itemsData';
 // PROPs
@@ -35,6 +37,9 @@ class AddNewItems extends React.Component {
 
   state = {
     dropdownOpen: false,
+    image: '',
+    imageUrl: '',
+    progress: 0,
   }
 
   toggle() {
@@ -64,7 +69,10 @@ class AddNewItems extends React.Component {
 
   descriptionAdd = e => this.props.addNewItemForm('description', e);
 
-  imageUrlAdd = e => this.props.addNewItemForm('imageUrl', e);
+  imageUrlAdd = (e) => {
+    e.preventDefault();
+    this.props.addNewItemForm('imageUrl', e);
+  }
 
   isAvailableAdd = e => this.props.addNewItemForm('isAvailable', e);
 
@@ -78,10 +86,25 @@ class AddNewItems extends React.Component {
     this.props.categoryIdStateChg(e);
   };
 
+  // Image Upload Section
+  handleUploadStart = () => this.setState({ progress: 0 });
+
+  handleUploadSuccess = (filename) => {
+    this.setState({
+      image: filename,
+      progress: 100,
+    });
+    firebase.storage().ref('images').child(filename).getDownloadURL()
+      .then(url => this.setState({ imageUrl: url }))
+      .catch(err => console.error('no image url', err));
+  };
+
   render() {
+    const { image, progress, imageUrl } = this.state;
     const { newItem, categories } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
+        key={`dropd.${category.id}`}
         id={category.id}
         value={category.name}
         onClick={this.addCategory}>
@@ -144,16 +167,27 @@ class AddNewItems extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="itemImage">Paste An Image Url</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="itemImage
-                  ess" aria-describedby="streetAddress"
-                  placeholder="img link"
-                  defaultValue={newItem.imageUrl}
-                  onChange={this.imageUrlAdd}
+                <label htmlFor="itemImage">Upload An Image</label>
+                <FileUploader
+                  accept='image/*'
+                  name='image'
+                  storageRef={firebase.storage().ref('images/')}
+                  onUploadStart={this.handleUploadStart}
+                  onUploadSuccess={this.handleUploadSuccess}
                 />
+                 {(image !== '' && progress === 100 ? <div>
+                  <img
+                    className="img-thumbnail"
+                    src={imageUrl}
+                    alt="item to be rented" />
+                  <button
+                  className="btn btn-primary"
+                  value={imageUrl}
+                  onClick={this.imageUrlAdd}
+                  >
+                    Use This One
+                  </button>
+                 </div> : '')}
               </div>
               <div className="form-group">
                 <label htmlFor="itemPriceperhour">Price Per Hour</label>
