@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Modal } from 'reactstrap';
 // JSs
 import SingleItem from '../SingleItem/SingleItem';
@@ -11,7 +10,6 @@ import EditItem from '../EditItem/EditItem';
 // STYLES
 import './MyStuff.scss';
 // PROPS
-import itemShape from '../../helpers/propz/itemShape';
 // SVGs
 import addIcon from '../../SVGs/iconmonstr-plus-circle-thin.svg';
 
@@ -29,10 +27,6 @@ const defaultItemState = {
 };
 
 class MyStuff extends React.Component {
-  static propTypes = {
-    items: PropTypes.arrayOf(itemShape.itemShape),
-  }
-
   state = {
     items: [],
     itemId: '',
@@ -141,7 +135,6 @@ class MyStuff extends React.Component {
       itemId,
     } = this.state;
     const makeItemCards = items.map(item => (
-      <div>
         <Items
           key={`items.${item.id}`}
           item={ item }
@@ -150,7 +143,6 @@ class MyStuff extends React.Component {
           deleteItemEvent={this.deleteItemEvent}
           editItemEvent={this.editItemEvent}
         />
-      </div>
     ));
     return (
       <div className="MyStuff">

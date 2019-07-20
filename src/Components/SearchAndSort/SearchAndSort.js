@@ -44,6 +44,7 @@ class SearchAndSort extends React.Component {
     } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
+        key={category.id}
         id={category.id}
         value={category.name}
         onClick={this.props.pickCategory}>
@@ -72,6 +73,13 @@ class SearchAndSort extends React.Component {
             { categoryName }
           </DropdownToggle >
           <DropdownMenu>
+            <DropdownItem
+              onClick={this.props.pickCategory}
+              value={'Categories'}
+              id={'allCategoriesSelected'}
+            >
+              All
+            </DropdownItem>
             { catLoop }
           </DropdownMenu>
         </Dropdown>
