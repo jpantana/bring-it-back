@@ -18,6 +18,8 @@ class SearchAndSort extends React.Component {
     categoryName: PropTypes.string.isRequired,
     categories: PropTypes.arrayOf(categoriesShape.categoriesShape).isRequired,
     pickCategory: PropTypes.func.isRequired,
+    searchItemInput: PropTypes.func.isRequired,
+    searchInput: PropTypes.string.isRequired,
   }
 
   state = {
@@ -32,10 +34,13 @@ class SearchAndSort extends React.Component {
 
   toggle = this.toggle.bind(this);
 
+  searchInput = e => this.props.searchItemInput(e);
+
   render() {
     const {
       categories,
       categoryName,
+      searchInput,
     } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
@@ -48,6 +53,16 @@ class SearchAndSort extends React.Component {
 
     return (
       <div>
+        <div className="md-form mt-0">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Search"
+            aria-label="Search"
+            defaultValue={searchInput}
+            onChange={this.searchInput}
+          />
+        </div>
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
           <DropdownToggle
             caret

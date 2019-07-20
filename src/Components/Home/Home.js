@@ -1,7 +1,6 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-
 // JSs
 import usersData from '../../helpers/data/usersData';
 import itemsData from '../../helpers/data/itemsData';
@@ -11,24 +10,13 @@ import SearchAndSort from '../SearchAndSort/SearchAndSort';
 // STYLEs
 import './Home.scss';
 
-// const defaultItemState = {
-//   name: '',
-//   category: 'Category',
-//   condition: '',
-//   categoryId: '',
-//   ownerId: '',
-//   description: '',
-//   imageUrl: '',
-//   isAvailable: true,
-//   priceperday: '',
-//   priceperhour: '',
-// };
 class Home extends React.Component {
   state = {
     items: [],
     categories: [],
     dropdownOpen: false,
     categoryName: 'Categories',
+    searchInput: '',
   }
 
   componentDidMount() {
@@ -75,11 +63,29 @@ class Home extends React.Component {
     this.getItems();
   };
 
+  // SEARCH BAR DATA CHANGE
+  searchItemInput = (e) => {
+    e.preventDefault();
+    this.setState({ searchInput: e.target.value });
+    this.showSearchedItems();
+  };
+
+  showSearchedItems = () => {
+    itemsData.getAllItems()
+      .then((resItems) => {
+        const search = this.state.searchInput.toLowerCase();
+        const filterSearch = resItems.filter(itm => (itm.name.toLowerCase().includes(search) || itm.description.toLowerCase().includes(search) || itm.category.toLowerCase().includes(search)));
+        this.setState({ items: filterSearch });
+      })
+      .catch(err => console.error('no items match search', err));
+  };
+
   render() {
     const {
       items,
       categories,
       categoryName,
+      searchInput,
     } = this.state;
     const makeItemCards = items.map(item => (
       <div>
@@ -99,6 +105,8 @@ class Home extends React.Component {
               categoryName={categoryName}
               categories={categories}
               pickCategory={this.pickCategory}
+              searchItemInput={this.searchItemInput}
+              searchInput={searchInput}
             />
           </div>
           <div className="row">
