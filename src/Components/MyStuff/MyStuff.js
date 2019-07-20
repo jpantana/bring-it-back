@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Modal } from 'reactstrap';
 // JSs
 import SingleItem from '../SingleItem/SingleItem';
@@ -11,7 +10,6 @@ import EditItem from '../EditItem/EditItem';
 // STYLES
 import './MyStuff.scss';
 // PROPS
-import itemShape from '../../helpers/propz/itemShape';
 // SVGs
 import addIcon from '../../SVGs/iconmonstr-plus-circle-thin.svg';
 
@@ -29,10 +27,6 @@ const defaultItemState = {
 };
 
 class MyStuff extends React.Component {
-  static propTypes = {
-    items: PropTypes.arrayOf(itemShape.itemShape),
-  }
-
   state = {
     items: [],
     itemId: '',

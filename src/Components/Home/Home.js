@@ -88,7 +88,9 @@ class Home extends React.Component {
       searchInput,
     } = this.state;
     const makeItemCards = items.map(item => (
-      <div>
+      <div
+        key={item.id}
+      >
         <ItemCard
           key={`allItem.${item.id}`}
           item={ item }
@@ -101,7 +103,7 @@ class Home extends React.Component {
         <div className="form-group">
           <div>
             <SearchAndSort
-              key={`searchandsort.${categoryName}`}
+              key={1}
               categoryName={categoryName}
               categories={categories}
               pickCategory={this.pickCategory}
