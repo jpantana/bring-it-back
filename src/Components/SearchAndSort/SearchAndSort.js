@@ -73,6 +73,13 @@ class SearchAndSort extends React.Component {
             { categoryName }
           </DropdownToggle >
           <DropdownMenu>
+            <DropdownItem
+              onClick={this.props.pickCategory}
+              value={'Categories'}
+              id={'allCategoriesSelected'}
+            >
+              All
+            </DropdownItem>
             { catLoop }
           </DropdownMenu>
         </Dropdown>

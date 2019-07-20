@@ -135,7 +135,6 @@ class MyStuff extends React.Component {
       itemId,
     } = this.state;
     const makeItemCards = items.map(item => (
-      <div>
         <Items
           key={`items.${item.id}`}
           item={ item }
@@ -144,7 +143,6 @@ class MyStuff extends React.Component {
           deleteItemEvent={this.deleteItemEvent}
           editItemEvent={this.editItemEvent}
         />
-      </div>
     ));
     return (
       <div className="MyStuff">

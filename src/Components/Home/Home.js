@@ -88,14 +88,10 @@ class Home extends React.Component {
       searchInput,
     } = this.state;
     const makeItemCards = items.map(item => (
-      <div
-        key={item.id}
-      >
         <ItemCard
           key={`allItem.${item.id}`}
           item={ item }
         />
-      </div>
     ));
 
     return (
