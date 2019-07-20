@@ -100,6 +100,18 @@ class MyStuff extends React.Component {
       .catch();
   };
 
+  updateImageUrl = (url) => {
+    const oldState = { ...this.state };
+    oldState.editItem.imageUrl = url;
+    this.setState(oldState);
+  };
+
+  newImageUrl = (url) => {
+    const oldState = { ...this.state };
+    oldState.newItem.imageUrl = url;
+    this.setState(oldState);
+  };
+
   // CATEGORIES DATA SET
   categoryIdStateChg = (e) => {
     this.setState({ categoryId: e.target.id });
@@ -158,6 +170,7 @@ class MyStuff extends React.Component {
                     categories={this.state.categories}
                     categoryIdStateChg={this.categoryIdStateChg}
                     categoryId={this.state.categoryId}
+                    newImageUrl={this.newImageUrl}
                   />}
                 </Modal>
                 <Modal isOpen={this.state.editIsOpen} >
@@ -173,11 +186,12 @@ class MyStuff extends React.Component {
                   getUserItems={this.getUserItems}
                   editItemForm={this.editItemForm}
                   closeEditModal={this.closeEditModal}
+                  updateImageUrl={this.updateImageUrl}
                 />
                 </Modal>
         <div className="col col-4 m-2">
           <span className="addNewSpan" onClick={this.addNewItem}>
-            Rent More Stuff {<img src={addIcon} alt="add new icon" />}
+            Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" />}
           </span>
           { makeItemCards }
         </div>
