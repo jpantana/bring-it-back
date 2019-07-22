@@ -3,9 +3,48 @@
 .Home {
   margin: auto;
   width: 100%;
-  // background-color: blue;
+  display: flex;
+  flex-direction: column;
+}
+
+.allCardsWrapper {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  overflow: scroll;
+}
+
+.allCardsDiv {
   display: block;
-  
+  flex-flow: row nowrap !important;
+  &:active {
+    transform: translate(50%);
+  }
+}
+
+.scrollCardsRight {
+  height: 150px;
+  width: 100px;
+  border-radius: 80px 0 0 80px;
+  position: absolute;
+  left: 92%;
+  top: 200px;
+  color: $whiteFont;
+  background-color: rgba(161, 159, 159, 0.5);
+  z-index: 10;
+  #arrow {
+    position: relative;
+    top: 23%;
+    right: -10%;
+    height: 80px;
+    filter: invert(100%);
+  }
+}
+
+.searchAndSort {
+  width: 100%;
 }
 
 // .horizontal-scroll-wrapper {

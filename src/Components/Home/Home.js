@@ -9,6 +9,8 @@ import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import SearchAndSort from '../SearchAndSort/SearchAndSort';
 // STYLEs
 import './Home.scss';
+// SVGs
+import arrow from '../../SVGs/iconmonstr-arrow-25.svg';
 
 class Home extends React.Component {
   state = {
@@ -70,6 +72,17 @@ class Home extends React.Component {
     this.showSearchedItems();
   };
 
+  clickArrow = (e) => {
+    e.preventDefault();
+    const el = document.getElementById('arrowDiv');
+    el.className += ' ';
+  };
+
+  // RENT ITEMS
+  rentThisItem = (e) => {
+    console.error(e.target.value);
+  };
+
   showSearchedItems = () => {
     itemsData.getAllItems()
       .then((resItems) => {
@@ -91,13 +104,14 @@ class Home extends React.Component {
         <ItemCard
           key={`allItem.${item.id}`}
           item={ item }
+          rentThisItem={this.rentThisItem}
         />
     ));
 
     return (
       <div className="Home justify-content-center">
         <div className="form-group">
-          <div>
+          <div className="searchAndSort">
             <SearchAndSort
               key={1}
               categoryName={categoryName}
@@ -107,12 +121,13 @@ class Home extends React.Component {
               searchInput={searchInput}
             />
           </div>
-          <div className="row">
-            { (items.length > 0 ? makeItemCards : '') }
-          </div>
-          <div className="">
-          </div>
         </div>
+       <div className="allCardsWrapper" id="arrowDiv" onClick={this.clickArrow}>
+         <span className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
+        <div className="row allCardsDiv">
+          { (items.length > 0 ? makeItemCards : '') }
+        </div>
+      </div>
       </div>
     );
   }

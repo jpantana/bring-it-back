@@ -75,6 +75,10 @@ class App extends React.Component {
       .catch(err => console.error('no user logged in', err));
   };
 
+  removeUsername = () => {
+    this.setState({ username: '' });
+  };
+
   render() {
     const {
       authed,
@@ -86,14 +90,19 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar authed={authed} useruid={useruid} username={username} />
-            <div className="container d-flex">
+            <MyNavbar
+              authed={authed}
+              useruid={useruid}
+              username={username}
+              removeUsername={this.removeUsername}
+            />
+            <div className="wrapper d-flex">
               <div className="col">
                 <Switch>
                   <PublicRoute path="/auth" component={Auth} authed={authed} />
                   <PrivateRoute path="/signup" component={SignUp} authed={authed} />
                   <PrivateRoute path="/home" component={Home} authed={authed} />
-                  <PrivateRoute path="/mystuff/:id" className="container" component={MyStuff} authed={authed} />
+                  <PrivateRoute path="/mystuff/:id" className="" component={MyStuff} authed={authed} />
                   <Redirect from="*" to="/auth" />
                 </Switch>
               </div>

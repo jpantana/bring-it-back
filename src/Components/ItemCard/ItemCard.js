@@ -1,7 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // JSs
 import itemShape from '../../helpers/propz/itemShape';
+import RentItem from '../RentItem/RentItem';
 // STYLEs
 import './ItemCard.scss';
 // SVGs
@@ -10,10 +11,11 @@ import checkIcon from '../../SVGs/iconmonstr-check-mark-6.svg';
 class ItemCard extends React.Component {
   static propTypes = {
     item: itemShape.itemShape,
+    rentThisItem: PropTypes.func.isRequired,
   }
 
   render() {
-    const { item } = this.props;
+    const { item, rentThisItem } = this.props;
 
     return (
       <div className="ItemCard card">
@@ -24,8 +26,11 @@ class ItemCard extends React.Component {
         <div className="allCardIcons">
           <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
           <span className="editDeleteSpan">
-            {/* <img onClick={deleteItemEvent} src={deleteIcon} id={item.id} alt="delete icon"/>
-            <img onClick={editItemEvent} src={editIcon} id={`${item.id}.edit`} alt="edit icon"/> */}
+          <RentItem
+            key={item.id}
+            item={item}
+            rentThisItem={rentThisItem}
+          />
           </span>
         </div>
       </div>
