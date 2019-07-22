@@ -74,8 +74,16 @@ class Home extends React.Component {
 
   clickArrow = (e) => {
     e.preventDefault();
-    const el = document.getElementById('arrowDiv');
-    el.className += ' ';
+    const el = document.getElementById('allCardsDiv');
+    el.classList.add('translateRight');
+    const back = document.getElementById('arrowBack');
+    back.classList.remove('hide');
+  };
+
+  clickArrowBack = (e) => {
+    e.preventDefault();
+    const el = document.getElementById('allCardsDiv');
+    el.classList.add('translateLeft');
   };
 
   // RENT ITEMS
@@ -113,7 +121,7 @@ class Home extends React.Component {
         <div className="form-group">
           <div className="searchAndSort">
             <SearchAndSort
-              key={1}
+              key={categoryName}
               categoryName={categoryName}
               categories={categories}
               pickCategory={this.pickCategory}
@@ -123,10 +131,12 @@ class Home extends React.Component {
           </div>
         </div>
        <div className="allCardsWrapper" id="arrowDiv" onClick={this.clickArrow}>
-         <span className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
-        <div className="row allCardsDiv">
+         <span onClick={this.clickArrow} className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
+        <div className="row allCardsDiv" id="allCardsDiv">
           { (items.length > 0 ? makeItemCards : '') }
         </div>
+        <span onClick={this.clickArrowBack} id="arrowBack" className="scrollCardsLeft hide"><img id="arrowLeft" src={arrow} alt="arrow icon" /></span>
+
       </div>
       </div>
     );

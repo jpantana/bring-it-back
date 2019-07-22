@@ -20,10 +20,9 @@
 
 .btn-secondary {
   background-color: $mainBlue !important;
-  border: none !important;
   color: $mainBlue;
-  .dropdownToggle {
-  }
+  // border: 3px solid $orange !important;
+  border: none !important;
   .dropdownMenu {
     margin-right: 30px;
     margin-top: 40px;

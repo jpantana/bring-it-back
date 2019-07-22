@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import './RentItem.scss';
 // PROPs
 import itemShape from '../../helpers/propz/itemShape';
+// SVGs
+import cart from '../../SVGs/iconmonstr-shopping-cart-3.svg';
 
 class RentItem extends React.Component {
   propTypes = {
@@ -18,10 +20,11 @@ class RentItem extends React.Component {
   };
 
   render() {
-    const { item } = this.props;
+    // const { item } = this.props;
     return (
       <div className="RentItem">
-        <button className="btn btn-outline-dark" value={item.ownerId} onClick={this.rentItem}>Rent This Item</button>
+        <img className="cartIcon" src={cart} alt="cart icon"/>
+        {/* <button className="btn btn-outline-dark" value={item.ownerId} onClick={this.rentItem}>Rent This Item</button> */}
       </div>
     );
   }
