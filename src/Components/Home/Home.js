@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import $ from 'jquery';
 // JSs
 import usersData from '../../helpers/data/usersData';
 import itemsData from '../../helpers/data/itemsData';
@@ -87,6 +88,23 @@ class Home extends React.Component {
       .catch(err => console.error('no items match search', err));
   };
 
+  // NAVIGATE SCROLL BUTTONS
+  moveRight = (e) => {
+    e.preventDefault();
+    $('#allCardsDiv').animate({
+      marginLeft: '-=300px',
+    }, 'fast');
+    $('#arrowBack').removeClass('hide');
+    $('#arrowLeft').removeClass('hide');
+  };
+
+  moveLeft = (e) => {
+    e.preventDefault();
+    $('#allCardsDiv').animate({
+      marginLeft: '+=300px',
+    }, 'fast');
+  };
+
   render() {
     const {
       items,
@@ -117,12 +135,12 @@ class Home extends React.Component {
           </div>
         </div>
        <div className="allCardsWrapper" id="arrowDiv">
-         <span onClick={this.clickArrow} className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
+          <span onClick={this.moveRight} className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
         <div className="row allCardsDiv" id="allCardsDiv">
           { (items.length > 0 ? makeItemCards : '') }
         </div>
-        <span onClick={this.clickArrowBack} id="arrowBack" className="scrollCardsLeft hide"><img id="arrowLeft" src={arrow} alt="arrow icon" /></span>
-      </div>
+          <span onClick={this.moveLeft} id="arrowBack" className="scrollCardsLeft hide"><img className="hide" id="arrowLeft" src={arrow} alt="arrow icon" /></span>
+        </div>
       </div>
     );
   }

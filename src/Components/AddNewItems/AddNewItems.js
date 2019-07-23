@@ -154,6 +154,15 @@ class AddNewItems extends React.Component {
                 />
               </div>
               <div className="form-group">
+
+              <label htmlFor="Mint">Mint</label>
+              <input type="radio" id="Mint"/>
+              <label htmlFor="Good">Good</label>
+              <input type="radio" id="Good"/>
+              <label htmlFor="Fair">Fair</label>
+              <input type="radio" id="Fair"/>
+              <label htmlFor="Relic">Relic</label>
+              <input type="radio" id="Relic"/>
                 <label htmlFor="itemCondition">Condition</label>
                 <input
                   type="text"
