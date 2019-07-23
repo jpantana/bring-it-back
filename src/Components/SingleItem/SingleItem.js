@@ -35,7 +35,7 @@ class SingleItem extends React.Component {
     return (
       <div>
         <div className="card fullCard" onClick={this.singleItemHide}>
-        <img className="card-img-top itemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} />
+        {/* <img className="card-img-top itemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} /> */}
         <div className="card-body">
           <h5 className="card-title">{singleItem.name}</h5>
           <p className="card-text">{singleItem.description}</p>

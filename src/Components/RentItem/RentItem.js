@@ -9,7 +9,7 @@ import itemShape from '../../helpers/propz/itemShape';
 import cart from '../../SVGs/iconmonstr-shopping-cart-3.svg';
 
 class RentItem extends React.Component {
-  propTypes = {
+  static propTypes = {
     item: itemShape.itemShape,
     rentThisItem: PropTypes.func.isRequired,
   }
