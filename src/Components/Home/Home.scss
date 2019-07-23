@@ -25,12 +25,12 @@
 }
 
 .translateRight {
-  transform: translate(-50%);
+  transform: translate(-15%);
   transition: .4s;
 }
 
 .translateLeft {
-  transform: translate(25%);
+  transform: translate(10%);
   transition: .4s;
 }
 
@@ -52,6 +52,7 @@
     filter: invert(100%);
   }
 }
+
 .scrollCardsLeft {
   height: 90px;
   width: 60px;

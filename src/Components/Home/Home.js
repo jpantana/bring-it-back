@@ -72,20 +72,6 @@ class Home extends React.Component {
     this.showSearchedItems();
   };
 
-  clickArrow = (e) => {
-    e.preventDefault();
-    const el = document.getElementById('allCardsDiv');
-    el.classList.add('translateRight');
-    const back = document.getElementById('arrowBack');
-    back.classList.remove('hide');
-  };
-
-  clickArrowBack = (e) => {
-    e.preventDefault();
-    const el = document.getElementById('allCardsDiv');
-    el.classList.add('translateLeft');
-  };
-
   // RENT ITEMS
   rentThisItem = (e) => {
     console.error(e.target.value);
@@ -130,13 +116,12 @@ class Home extends React.Component {
             />
           </div>
         </div>
-       <div className="allCardsWrapper" id="arrowDiv" onClick={this.clickArrow}>
+       <div className="allCardsWrapper" id="arrowDiv">
          <span onClick={this.clickArrow} className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
         <div className="row allCardsDiv" id="allCardsDiv">
           { (items.length > 0 ? makeItemCards : '') }
         </div>
         <span onClick={this.clickArrowBack} id="arrowBack" className="scrollCardsLeft hide"><img id="arrowLeft" src={arrow} alt="arrow icon" /></span>
-
       </div>
       </div>
     );

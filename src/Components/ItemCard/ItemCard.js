@@ -26,16 +26,18 @@ class ItemCard extends React.Component {
           <h5 className="card-title">{item.name}</h5>
           <div className="cardDetails">
             <table>
-              <tr>
-                <th>Condition</th>
-                <th>Price Per Hour</th>
-                <th>Prce Per Day</th>
-              </tr>
-              <tr>
-                <tb className="itemCondition">{item.condition}</tb>
-                <tb className="itemPriceHour">${item.priceperhour}</tb>
-                <tb className="itemPriceDay">${item.priceperday}</tb>
-              </tr>
+              <tbody>
+                <tr>
+                  <th className="thCondition">Condition</th>
+                  <th className="thPriceHour">Hourly</th>
+                  <th className="thPriceDay">Daily</th>
+                </tr>
+                <tr>
+                  <td className="itemCondition">{item.condition}</td>
+                  <td className="itemPriceHour">${item.priceperhour}</td>
+                  <td className="itemPriceDay">${item.priceperday}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
