@@ -24,7 +24,7 @@ const defaultState = {
 
 class SignUp extends React.Component {
   static propTypes = {
-    username: PropTypes.string.isRequired,
+    username: PropTypes.string,
   }
 
   state = {
@@ -33,10 +33,10 @@ class SignUp extends React.Component {
 
   deleteUser = (e) => {
     e.preventDefault();
-    this.props.history.push('/auth'); // may need to call this before you delete UID
+    // this.props.history.push('/auth'); // may need to call this before you delete UID
     firebase.auth().currentUser.delete()
       .then((() => {
-        this.props.history.push('/auth');
+        document.reload();
       })).catch(err => console.error('user not deleted', err));
   };
 
@@ -65,7 +65,8 @@ class SignUp extends React.Component {
     const saveNewUser = { ...this.state.newItem };
     saveNewUser.uid = firebase.auth().currentUser.uid;
     usersData.addNewUser(saveNewUser)
-      .then((resp) => {
+      .then(() => {
+        // this.props.history.push('/auth');
         this.props.history.push('/home');
       }).catch(err => console.error('no new user saved', err));
   };
@@ -75,7 +76,7 @@ class SignUp extends React.Component {
     return (
       <div>
         <Modal isOpen={true} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Create Your Account!</ModalHeader>
+          <ModalHeader className="signInBanner2" toggle={this.toggle}>Create Your Account!</ModalHeader>
           <ModalBody>
             <form>
               <div className="form-group">
@@ -158,8 +159,10 @@ class SignUp extends React.Component {
                   onChange={this.zipcodeChange}
                 />
               </div>
-              <button type="submit" className="btn btn-primary" onClick={this.formSubmit}>Submit</button>
-              <button type="submit" className="btn btn-primary" onClick={this.deleteUser}>Cancel</button>
+              <div className="signUpBtnDiv">
+                <button type="submit" className="btn signupBtn2" onClick={this.formSubmit}>Sign Up!</button>
+                <button type="submit" className="btn signupBtnCancel" onClick={this.deleteUser}>Cancel</button>
+              </div>
             </form>
           </ModalBody>
         </Modal>

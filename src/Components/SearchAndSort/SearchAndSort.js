@@ -12,6 +12,8 @@ import {
 import categoriesShape from '../../helpers/propz/categoriesShape';
 // STYLEs
 import './SearchAndSort.scss';
+// SVGs
+// import magnifier from '../../SVGs/iconmonstr-magnifier-4.svg';
 
 class SearchAndSort extends React.Component {
   static propTypes = {
@@ -53,26 +55,21 @@ class SearchAndSort extends React.Component {
     ));
 
     return (
-      <div>
-        <div className="md-form mt-0">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Search"
-            aria-label="Search"
-            defaultValue={searchInput}
-            onChange={this.searchInput}
-          />
-        </div>
-        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+      <div className="SearchAndSort">
+        <Dropdown
+          isOpen={this.state.dropdownOpen}
+          toggle={this.toggle}
+          className="catDropDown"
+        >
           <DropdownToggle
             caret
             onClick={this.showCategories}
             defaultValue={ categoryName }
+            className="dropdownToggle"
           >
             { categoryName }
           </DropdownToggle >
-          <DropdownMenu>
+          <DropdownMenu className="dropdownMenu">
             <DropdownItem
               onClick={this.props.pickCategory}
               value={'Categories'}
@@ -83,6 +80,16 @@ class SearchAndSort extends React.Component {
             { catLoop }
           </DropdownMenu>
         </Dropdown>
+        <div className="md-form mt-0">
+          <input
+            className="form-control searchInput"
+            type="text"
+            placeholder="Search"
+            aria-label="Search"
+            defaultValue={searchInput}
+            onChange={this.searchInput}
+          />
+        </div>
       </div>
     );
   }

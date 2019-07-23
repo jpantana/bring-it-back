@@ -1,10 +1,92 @@
 @import '../../styles/variables.scss';
 
 .ItemCard {
-  width: 18em;
-  height: 25em;
+  width: 15em !important;
+  height: 26em;
+  margin: 10px;
+  padding: 0;
+  box-shadow: 5px 1px 9px $shadow;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 0 !important;
+  overflow: scroll;
+  // border: .5px solid $mainBlue !important;
 }
 
-.itemImg {
-  object-fit: contain;
+.imgContainer {
+  width: 15em;
+  height: 15em;
+  overflow: hidden;
+  position: absolute;
+  top: .5px;
+  right: .5px;
+  .itemImg {
+    object-fit: contain;
+    margin: auto;
+    border-radius: 0 !important;
+  }
 }
+
+.card-title {
+  margin: 0;
+  margin-top: 13.5em;
+  padding: 0;
+  padding-bottom: 15px;
+  font-family: $font1;
+  color: $blackFont;
+  font-size: 18px;
+  border-bottom: 1px solid $shadow;
+}
+
+.cardDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .th, .tb {
+    width: 2em !important;
+    border: 1px solid black;
+  }
+  .thCondition {
+    font-family: $font1;
+    font-size: 12px;
+    color: $mainBlue;
+  }
+  .thPriceHour {
+    font-family: $font1;
+    font-size: 12px;
+    color: $mainBlue;
+  }
+  .thPriceDay {
+    font-family: $font1;
+    font-size: 12px;
+    color: $mainBlue;
+  }
+  .itemCondition {
+    font-family: $font1;
+    font-weight: 700;
+    font-size: 14px;
+    color: $orange;
+  }
+  .itemPriceHour, .itemPriceDay {
+    font-family: $font1;
+    font-weight: 700;
+    font-size: 14px;
+    color: $orange;
+  }
+}
+
+
+
+.allCardIcons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 4px;
+  .iconSvg {
+    // margin-top: -40px;
+    height: 1.3em;
+  }  
+}
+
+

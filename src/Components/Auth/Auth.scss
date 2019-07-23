@@ -1,3 +1,88 @@
+@import '../../styles/variables.scss';
+
 .Auth {
-  display: block;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid $shadow;
+  box-shadow: 1px 1px 8px $shadow;
+  border-radius: 10px;
+  width: 30%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.signInBanner {
+  font-family: $font1;
+  font-weight: 200;
+  font-size: 22px;
+  margin: 15px;
+  color: $shadow;
+}
+
+.googleBtn {
+  margin: auto;
+  margin-top: 25px;
+  width: 300px;
+  height: 67px;
+  font-family: $font1;
+  font-size: 18px !important;
+  color: $whiteFont !important;
+  background-color: $mainBlue !important;
+  border: 2px solid $mainBlue !important;
+  margin-bottom: 20px!important;
+  &:hover {
+    background-color: $whiteFont !important;
+    color: $mainBlue !important;
+    transition: .4s;
+  }
+  .googleIcon {
+    height: 50px;
+    margin-left: -38px;
+    padding: 2px;
+    padding-right: 15px;
+  }
+}
+
+.emailBtn {
+  margin: auto;
+  margin-top: 25px;
+  width: 300px;
+  height: 67px;
+  font-family: $font1;
+  font-size: 18px !important;
+  color: $whiteFont !important;
+  background-color: $mainBlue !important;
+  border: 2px solid $mainBlue !important;
+  margin-bottom: 20px!important;
+  text-align: center !important;
+  &:hover {
+    background-color: $whiteFont !important;
+    color: $mainBlue !important;
+    transition: .4s;
+  }
+  .emailIcon {
+    height: 50px;
+    margin-left: -55px;
+    padding: 2px;
+    padding-right: 25px;
+    filter: invert(90%);
+  }
+}
+
+.signUpForm {
+  width: 80% !important;
+  margin: auto;
+}
+
+.signupBtn {
+  color: $whiteFont !important;
+  background-color: $mainBlue !important;
+  font-family: $font1 !important;
+  border: 1px solid $mainBlue !important;
+  &:hover {
+    background-color: $whiteFont !important;
+    color: $mainBlue !important;
+    transition: .4s;
+  }
 }

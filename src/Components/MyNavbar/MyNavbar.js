@@ -17,16 +17,17 @@ import {
 import './MyNavbar.scss';
 // SVGs
 import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
+import brand from '../../SVGs/BringItBackTransparentWHITE.svg';
 
 class MyNavbar extends React.Component {
   static propTypes = {
     authed: PropTypes.bool,
-    useruid: PropTypes.string,
+    useruid: PropTypes.string.isRequired,
+    removeUsername: PropTypes.func.isRequired,
   }
 
   state = {
     isOpen: false,
-    username: '',
   }
 
   toggle() {
@@ -35,6 +36,7 @@ class MyNavbar extends React.Component {
 
   logMeOut = (e) => {
     e.preventDefault();
+    this.props.removeUsername();
     firebase.auth().signOut();
   };
 
@@ -62,7 +64,7 @@ class MyNavbar extends React.Component {
     return (
       <div className="MyNavbar">
         <div className="upperNav">
-        <NavbarBrand className="navBarBrand" href="/">Bring It Back</NavbarBrand>
+        <NavbarBrand className="navBarBrand" href="/"><img className="brandSVG" src={brand} alt="brand svg" /></NavbarBrand>
           <div>
             <div className="userDisplayDiv">
               <img className="userIcon" src={userIcon} alt="icon for a user"/>

@@ -3,7 +3,6 @@
 .MyNavbar {
   display: flex;
   flex-flow: row wrap;
-  // justify-content: flex-start;
 }
 
 .upperNav {
@@ -11,7 +10,8 @@
   justify-content: space-between; 
   width: 100%;
   height: auto;
-  background-color: $upperNav;
+  background-color: white;
+  border-bottom: 10px solid $orange;
 }
 
 .userDisplayDiv {
@@ -20,7 +20,7 @@
 }
 
 .userName {
-  color: $fontColor1;
+  color: $blackFont;
   font-family: $font1;
   margin: auto;
   margin-right: 10px;
@@ -30,15 +30,48 @@
   margin: 5px;
 }
 
-.navBarBrand {
-  color: $fontColor1;
-  font-family: $font1;
-  font-weight: 700;
-  margin-left: 25px;
-  text-transform: uppercase;
+// .navBarBrand {
+
+// }
+
+.brandSVG {
+  width: 200px;
+  position: absolute;
+  z-index: 100;
+  // top: 42px;
+  top: 55px;
+  left: 20px;
 }
 
 .navBar {
   width: 100%;
-  background-color: $lowerNav;
+  height: 65px;
+  background-color: $mainBlue;
+  background-position-y: 1000px;
 }
+
+.navLink {
+  font-family: $font1;
+  color: $whiteFont;
+  font-weight: 500;
+  font-size: 1.15em;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  &:hover {
+    color: $fontHoverColor;
+  }
+    &:after {
+        display:block;
+        content: '';
+        border-bottom: solid 3px $fontHoverColor;  
+        transform: scaleX(0);  
+        transition: transform 250ms ease-in-out;
+    }
+    &:hover:after { 
+        transform: scaleX(1);
+    }
+    &.fromLeft:after{  
+        transform-origin:  0% 50%; 
+    }
+  }
+

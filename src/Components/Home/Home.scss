@@ -3,9 +3,99 @@
 .Home {
   margin: auto;
   width: 100%;
-  // background-color: blue;
+  display: flex;
+  flex-direction: column;
+}
+
+.allCardsWrapper {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  overflow: auto;
+}
+
+.allCardsDiv {
   display: block;
-  
+  flex-flow: row nowrap !important;
+  // &:active {
+  //   transform: translate(50%);
+  // }
+}
+
+.translateRight {
+  transform: translate(-15%);
+  transition: .4s;
+}
+
+.translateLeft {
+  transform: translate(10%);
+  transition: .4s;
+}
+
+.scrollCardsRight {
+  height: 90px;
+  width: 60px;
+  border-radius: 80px 0 0 80px;
+  position: absolute;
+  left: 95%;
+  top: 250px;
+  color: $whiteFont;
+  background-color: rgba(161, 159, 159, 0.8);
+  z-index: 10;
+  #arrow {
+    position: relative;
+    top: 23%;
+    right: -10%;
+    height: 50px;
+    filter: invert(100%);
+  }
+}
+
+.scrollCardsLeft {
+  height: 90px;
+  width: 60px;
+  border-radius: 0 80px 80px 0;
+  position: absolute;
+  right: 95%;
+  top: 250px;
+  color: $whiteFont;
+  background-color: rgba(161, 159, 159, 0.5);
+  z-index: 10;
+  #arrowLeft {
+    position: relative;
+    transform: rotate(180deg);
+    top: 23%;
+    right: 10%;
+    height: 50px;
+    filter: invert(100%);
+  }
+}
+
+// .overflowing-row__control {
+//   position: absolute;
+//   top: 50%;
+//   z-index: 2;
+//   transition: opacity .3s,background .3s;
+//     transition-property: opacity, background;
+//     transition-duration: 0.3s, 0.3s;
+//     transition-timing-function: ease, ease;
+//     transition-delay: 0s, 0s;
+//   cursor: pointer;
+//   opacity: .8;
+//   border: .1rem solid #dadada;
+//   width: 4rem;
+//   height: 8rem;
+//   background: #fff 40% no-repeat url(data:image/svg+xml;charset=utf8,%3Csvg version='1.1' xmlns='http://www.w3.o…,0,0,1,15.08,7L4.1,18l11,11A1.5,1.5,0,0,1,14,31.54Z'/%3E%3C/g%3E%3C/svg%3E);
+//   background-size: 30% auto;
+//   border-left: none;
+//   border-top-right-radius: 4rem;
+//   border-bottom-right-radius: 4rem;
+// }
+
+.searchAndSort {
+  width: 100%;
 }
 
 // .horizontal-scroll-wrapper {
