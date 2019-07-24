@@ -94,9 +94,13 @@ class Home extends React.Component {
   // NAVIGATE SCROLL BUTTONS
   moveRight = (e) => {
     e.preventDefault();
-    const { counter } = this.state;
-    this.setState({ counter: this.state.counter + 1 });
     const howManyClicks = this.mathyMathMath();
+    const { counter } = this.state;
+    if (counter >= howManyClicks) {
+      this.setState({ counter: howManyClicks });
+    } else {
+      this.setState({ counter: this.state.counter + 1 });
+    }
     if (counter >= howManyClicks) {
       $('#allCardsDiv').animate({
         marginLeft: '-=0px',
@@ -113,7 +117,11 @@ class Home extends React.Component {
   moveLeft = (e) => {
     e.preventDefault();
     const { counter } = this.state;
-    this.setState({ counter: this.state.counter - 1 });
+    if (counter <= 0) {
+      this.setState({ counter: 0 });
+    } else {
+      this.setState({ counter: this.state.counter - 1 });
+    }
     if (counter <= 0) {
       $('#allCardsDiv').animate({
         marginLeft: '+=0px',

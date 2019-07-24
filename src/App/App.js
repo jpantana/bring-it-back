@@ -101,6 +101,7 @@ class App extends React.Component {
                 <Switch>
                   <PublicRoute path="/auth" component={Auth} authed={authed} />
                   <PrivateRoute path="/signup" component={SignUp} authed={authed} />
+                  {/* <PrivateRoute path="/signup" component={() => (<SignUp />)} authed={authed} /> */}
                   <PrivateRoute path="/home" component={Home} authed={authed} />
                   <PrivateRoute path="/mystuff/:id" className="" component={MyStuff} authed={authed} />
                   <Redirect from="*" to="/auth" />
