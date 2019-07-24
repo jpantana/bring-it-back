@@ -7,3 +7,27 @@
 .cartIcon {
   height: 1.3em;
 }
+
+.rentBtn {
+  width: 100px;
+  margin: auto !important;
+  margin-bottom: 15px !important;
+  color: $whiteFont !important;
+  background-color: $mainBlue !important;
+  font-family: $font1 !important;
+  border: 1px solid $mainBlue !important;
+  &:hover {
+    background-color: $whiteFont !important;
+    color: $mainBlue !important;
+    transition: .4s;
+  }
+}
+
+.cancelRental {
+  font-size: 24px;
+  padding: 10px;
+  color: $orange;
+  border: 1px solid $orange;
+  border-radius: 5px;
+  cursor: pointer;
+}

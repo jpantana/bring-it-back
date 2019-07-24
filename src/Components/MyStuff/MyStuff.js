@@ -20,7 +20,7 @@ const defaultItemState = {
   categoryId: '',
   ownerId: '',
   description: '',
-  imageUrl: '',
+  imageUrl: 'https://via.placeholder.com/200x200',
   isAvailable: true,
   priceperday: '',
   priceperhour: '',

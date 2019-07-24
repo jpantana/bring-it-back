@@ -8,6 +8,7 @@ import itemsData from '../../helpers/data/itemsData';
 import ItemCard from '../ItemCard/ItemCard';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import SearchAndSort from '../SearchAndSort/SearchAndSort';
+import itemsRented from '../../helpers/data/itemsRented';
 // STYLEs
 import './Home.scss';
 // SVGs
@@ -76,8 +77,9 @@ class Home extends React.Component {
   };
 
   // RENT ITEMS
-  rentThisItem = (e) => {
-    console.error(e.target.value);
+  rentThisItem = (rentedObj) => {
+    itemsRented.newRental(rentedObj)
+      .then().catch(err => console.error('no item rented', err));
   };
 
   showSearchedItems = () => {
