@@ -20,6 +20,8 @@ class Home extends React.Component {
     dropdownOpen: false,
     categoryName: 'Categories',
     searchInput: '',
+    itemsLength: 0,
+    counter: 0,
   }
 
   componentDidMount() {
@@ -33,7 +35,7 @@ class Home extends React.Component {
     itemsData.getAllItems().then((res) => {
       const { categoryName } = this.state;
       if (categoryName === 'Categories') {
-        this.setState({ items: res });
+        this.setState({ items: res, itemsLength: res.length });
       } else {
         const filterCategories = res.filter(item => item.category === categoryName);
         this.setState({ items: filterCategories });
@@ -88,21 +90,52 @@ class Home extends React.Component {
       .catch(err => console.error('no items match search', err));
   };
 
+
   // NAVIGATE SCROLL BUTTONS
   moveRight = (e) => {
     e.preventDefault();
-    $('#allCardsDiv').animate({
-      marginLeft: '-=300px',
-    }, 'fast');
+    const { counter } = this.state;
+    this.setState({ counter: this.state.counter + 1 });
+    const howManyClicks = this.mathyMathMath();
+    if (counter >= howManyClicks) {
+      $('#allCardsDiv').animate({
+        marginLeft: '-=0px',
+      }, 'fast');
+    } else {
+      $('#allCardsDiv').animate({
+        marginLeft: '-=300px',
+      }, 'fast');
+    }
     $('#arrowBack').removeClass('hide');
     $('#arrowLeft').removeClass('hide');
   };
 
   moveLeft = (e) => {
     e.preventDefault();
-    $('#allCardsDiv').animate({
-      marginLeft: '+=300px',
-    }, 'fast');
+    const { counter } = this.state;
+    this.setState({ counter: this.state.counter - 1 });
+    if (counter <= 0) {
+      $('#allCardsDiv').animate({
+        marginLeft: '+=0px',
+      }, 'fast');
+    } else {
+      $('#allCardsDiv').animate({
+        marginLeft: '+=300px',
+      }, 'fast');
+    }
+  };
+
+  widthMath = () => {
+    const divLength = this.state.itemsLength;
+    const makeNum = divLength * 1;
+    const theMath = makeNum * 185;
+    return theMath;
+  };
+
+  mathyMathMath = () => {
+    const total = this.widthMath();
+    const theMath = total / 300;
+    return Math.floor(theMath);
   };
 
   render() {

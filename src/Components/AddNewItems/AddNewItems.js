@@ -154,25 +154,17 @@ class AddNewItems extends React.Component {
                 />
               </div>
               <div className="form-group">
-
-              <label htmlFor="Mint">Mint</label>
-              <input type="radio" id="Mint"/>
-              <label htmlFor="Good">Good</label>
-              <input type="radio" id="Good"/>
-              <label htmlFor="Fair">Fair</label>
-              <input type="radio" id="Fair"/>
-              <label htmlFor="Relic">Relic</label>
-              <input type="radio" id="Relic"/>
-                <label htmlFor="itemCondition">Condition</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="itemCondition
-                  ess" aria-describedby="streetAddress"
-                  placeholder="Good, Bad,Fair, etc."
-                  defaultValue={newItem.condition}
-                  onChange={this.conditionAdd}
-                />
+                <div className="radioDiv">
+                  <h3>Condition</h3>
+                  <label htmlFor="Mint">Mint</label>
+                  <input name="radioBtn" type="radio" id="Mint" defaultValue="Mint" onClick={this.conditionAdd}/>
+                  <label htmlFor="Good">Good</label>
+                  <input name="radioBtn" type="radio" id="Good" defaultValue="Good" onClick={this.conditionAdd}/>
+                  <label htmlFor="Fair">Fair</label>
+                  <input name="radioBtn" type="radio" id="Fair" defaultValue="Fair" onClick={this.conditionAdd}/>
+                  <label htmlFor="Relic">Relic</label>
+                  <input name="radioBtn" type="radio" id="Relic" defaultValue="Relic" onClick={this.conditionAdd}/>
+                </div>
               </div>
               <div className="form-group">
                 <label htmlFor="itemImage">Upload An Image</label>
