@@ -23,10 +23,13 @@ class Home extends React.Component {
     searchInput: '',
     itemsLength: 0,
     counter: 0,
+    useruid: '',
+    isRentedId: '',
   }
 
   componentDidMount() {
     const { uid } = firebase.auth().currentUser;
+    this.setState({ useruid: uid });
     this.getUser(uid);
     this.getItems();
     this.showCategories();
@@ -41,6 +44,14 @@ class Home extends React.Component {
         const filterCategories = res.filter(item => item.category === categoryName);
         this.setState({ items: filterCategories });
       }
+      if (this.state.isRentedId !== '') {
+        const changeAvailability = res.find(item => this.state.isRentedId === item.id);
+        // console.error(changeAvailability.id, false);
+        itemsData.changeItemAvailability(changeAvailability.id, false)
+          .then()
+          .catch(err => console.error('availability not changed', err));
+      }
+      // then axios to itemid and change isAvaliable to false then write function that adds badge
     }).catch(err => console.error('no items to display', err));
   };
 
@@ -79,7 +90,13 @@ class Home extends React.Component {
   // RENT ITEMS
   rentThisItem = (rentedObj) => {
     itemsRented.newRental(rentedObj)
-      .then().catch(err => console.error('no item rented', err));
+      .then(() => this.displayRentedBadge(rentedObj))
+      .catch(err => console.error('no item rented', err));
+  };
+
+  displayRentedBadge = (rentedItem) => {
+    this.setState({ isRentedId: rentedItem.itemId });
+    this.getItems();
   };
 
   showSearchedItems = () => {

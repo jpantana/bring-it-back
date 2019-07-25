@@ -38,7 +38,7 @@ class RentItem extends React.Component {
     zipcode: '',
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     usersData.getUsers(this.props.item.ownerId)
       .then((resp) => {
         this.setState({
