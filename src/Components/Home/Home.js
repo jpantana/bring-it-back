@@ -8,29 +8,29 @@ import itemsData from '../../helpers/data/itemsData';
 import ItemCard from '../ItemCard/ItemCard';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import SearchAndSort from '../SearchAndSort/SearchAndSort';
-import itemsRented from '../../helpers/data/itemsRented';
+import itemsRentedData from '../../helpers/data/itemsRentedData';
 // STYLEs
 import './Home.scss';
 // SVGs
 import arrow from '../../SVGs/iconmonstr-arrow-25.svg';
 
-const defaultStateItemsRented = {
-  hoursRented: '',
-  pickupDate: '',
-  overDue: false,
-  renterId: '',
-  ownerAddress: {},
-  category: '',
-  categoryId: '',
-  condition: '',
-  description: '',
-  itemId: '',
-  imageUrl: '',
-  name: '',
-  ownerId: '',
-  priceperday: '',
-  priceperhour: '',
-};
+// const defaultStateItemsRented = {
+//   hoursRented: '',
+//   pickupDate: '',
+//   overDue: false,
+//   renterId: '',
+//   ownerAddress: {},
+//   category: '',
+//   categoryId: '',
+//   condition: '',
+//   description: '',
+//   itemId: '',
+//   imageUrl: '',
+//   name: '',
+//   ownerId: '',
+//   priceperday: '',
+//   priceperhour: '',
+// };
 
 class Home extends React.Component {
   state = {
@@ -42,8 +42,7 @@ class Home extends React.Component {
     itemsLength: 0,
     counter: 0,
     useruid: '',
-    isRentedId: '',
-    itemsRented: defaultStateItemsRented,
+    itemsRented: [],
   }
 
   componentDidMount() {
@@ -52,6 +51,7 @@ class Home extends React.Component {
     this.getUser(uid);
     this.getItems();
     this.showCategories();
+    this.getRentedItemsData();
   }
 
   getItems = () => {
@@ -64,21 +64,6 @@ class Home extends React.Component {
         this.setState({ items: filterCategories, itemsLength: filterCategories.length });
       }
     }).catch(err => console.error('no items to display', err));
-  };
-
-  isOrIsntRentedBadge = () => {
-    itemsData.getAllItems()
-      .then((items) => {
-        if (this.state.isRentedId !== '') {
-          const changeAvailability = items.find(item => this.state.isRentedId === item.id);
-          itemsData.changeItemAvailability(changeAvailability.id, false)
-            .then(() => {
-              this.getItems();
-            })
-            .catch(err => console.error('availability not changed', err));
-        }
-      })
-      .catch(err => console.error('no items data returned', err));
   };
 
   // Callback function displays users name in top nav
@@ -113,17 +98,43 @@ class Home extends React.Component {
     this.showSearchedItems();
   };
 
-  // RENT ITEMS
-  rentThisItem = (rentedObj) => {
-    this.setState({ itemsRented: rentedObj });
-    itemsRented.newRental(rentedObj)
-      .then(() => this.displayRentedBadge(rentedObj))
-      .catch(err => console.error('no item rented', err));
+  // RENTED ITEMS
+  getRentedItemsData = () => {
+    itemsRentedData.getRentals()
+      .then((res) => {
+        this.setState({ itemsRented: res });
+      })
+      .catch(err => console.error('no rented items data', err));
   };
 
-  displayRentedBadge = (rentedItem) => {
-    this.setState({ isRentedId: rentedItem.itemId });
-    this.isOrIsntRentedBadge();
+  itemIsOrIsntRentedBadge = (rentedItem) => {
+    itemsData.getAllItems()
+      .then((items) => {
+        const changeAvailability = items.find(item => item.id === rentedItem);
+        itemsData.changeItemAvailability(changeAvailability.id, false)
+          .then(() => {
+            this.getItems();
+          })
+          .catch(err => console.error('availability not changed', err));
+      })
+      .catch(err => console.error('no items data returned', err));
+  };
+
+  rentThisItem = (rentedObj) => {
+    itemsRentedData.newRental(rentedObj)
+      .then((resp) => {
+        const rentalId = resp.data.name;
+        console.error(rentalId, 'rental id'); // name of new post ( that is 'id')
+        itemsRentedData.getRentals()
+          .then((rents) => {
+            this.setState({ itemsRented: rents });
+            const singleRental = rents.filter(r => r.id === rentalId);
+            console.error(singleRental[0], 'single item');
+            this.itemIsOrIsntRentedBadge(singleRental[0].itemId);
+          })
+          .catch(err => console.error('no rented item response', err));
+      })
+      .catch(err => console.error('no item rented', err));
   };
 
   showSearchedItems = () => {
@@ -197,13 +208,14 @@ class Home extends React.Component {
       categories,
       categoryName,
       searchInput,
+      itemsRented,
     } = this.state;
     const makeItemCards = items.map(item => (
         <ItemCard
           key={`allItem.${item.id}`}
           item={ item }
           rentThisItem={this.rentThisItem}
-          itemsRented={this.state.itemsRented}
+          itemsRented={itemsRented}
         />
     ));
 

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 // JSs
 import itemShape from '../../helpers/propz/itemShape';
 import RentItem from '../RentItem/RentItem';
-import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
+// import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
+// import itemsRentedData from '../../helpers/data/itemsRentedData';
 // STYLEs
 import './ItemCard.scss';
 // SVGs
@@ -13,13 +14,13 @@ class ItemCard extends React.Component {
   static propTypes = {
     item: itemShape.itemShape,
     rentThisItem: PropTypes.func.isRequired,
-    itemsRented: itemsRentedShape.itemsRentedShape,
+    // itemsRented: itemsRentedShape.itemsRentedShape,
   }
 
   rentedInfo = () => {
-    const { itemsRented } = this.props;
-    const hours = itemsRented.hoursRented;
-    const startTime = itemsRented.pickupDate;
+    // const { itemsRented } = this.props;
+    // const hours = itemsRented.hoursRented;
+    // const startTime = itemsRented.pickupDate;
     // <div>
     //         <p>{itemsRented.hoursRented}</p>
     //         <p>{itemsRented.pickupDate}</p>
