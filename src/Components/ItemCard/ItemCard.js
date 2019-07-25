@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // JSs
 import itemShape from '../../helpers/propz/itemShape';
 import RentItem from '../RentItem/RentItem';
+import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './ItemCard.scss';
 // SVGs
@@ -12,7 +13,21 @@ class ItemCard extends React.Component {
   static propTypes = {
     item: itemShape.itemShape,
     rentThisItem: PropTypes.func.isRequired,
+    itemsRented: itemsRentedShape.itemsRentedShape,
   }
+
+  rentedInfo = () => {
+    const { itemsRented } = this.props;
+    const hours = itemsRented.hoursRented;
+    const startTime = itemsRented.pickupDate;
+    // <div>
+    //         <p>{itemsRented.hoursRented}</p>
+    //         <p>{itemsRented.pickupDate}</p>
+    //       </div>;
+    // itemsRented.forEach((rental) => {
+    //   console.error(rental);
+    // });
+  };
 
   render() {
     const { item, rentThisItem } = this.props;
@@ -43,7 +58,7 @@ class ItemCard extends React.Component {
           </div>
         </div>
         <div className="allCardIcons">
-          <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" /> : 'Rented' }</span>
+          <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" /> : this.rentedInfo() }</span>
           <span className="editDeleteSpan">
           <RentItem
             key={item.id}

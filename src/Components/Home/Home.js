@@ -14,6 +14,24 @@ import './Home.scss';
 // SVGs
 import arrow from '../../SVGs/iconmonstr-arrow-25.svg';
 
+const defaultStateItemsRented = {
+  hoursRented: '',
+  pickupDate: '',
+  overDue: false,
+  renterId: '',
+  ownerAddress: {},
+  category: '',
+  categoryId: '',
+  condition: '',
+  description: '',
+  itemId: '',
+  imageUrl: '',
+  name: '',
+  ownerId: '',
+  priceperday: '',
+  priceperhour: '',
+};
+
 class Home extends React.Component {
   state = {
     items: [],
@@ -25,6 +43,7 @@ class Home extends React.Component {
     counter: 0,
     useruid: '',
     isRentedId: '',
+    itemsRented: defaultStateItemsRented,
   }
 
   componentDidMount() {
@@ -42,7 +61,7 @@ class Home extends React.Component {
         this.setState({ items: res, itemsLength: res.length });
       } else {
         const filterCategories = res.filter(item => item.category === categoryName);
-        this.setState({ items: filterCategories });
+        this.setState({ items: filterCategories, itemsLength: filterCategories.length });
       }
     }).catch(err => console.error('no items to display', err));
   };
@@ -96,6 +115,7 @@ class Home extends React.Component {
 
   // RENT ITEMS
   rentThisItem = (rentedObj) => {
+    this.setState({ itemsRented: rentedObj });
     itemsRented.newRental(rentedObj)
       .then(() => this.displayRentedBadge(rentedObj))
       .catch(err => console.error('no item rented', err));
@@ -183,6 +203,7 @@ class Home extends React.Component {
           key={`allItem.${item.id}`}
           item={ item }
           rentThisItem={this.rentThisItem}
+          itemsRented={this.state.itemsRented}
         />
     ));
 

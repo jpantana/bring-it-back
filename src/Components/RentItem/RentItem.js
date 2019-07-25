@@ -61,6 +61,7 @@ class RentItem extends React.Component {
     } = this.state;
     const rentedObj = {
       hoursRented: this.state.itemToRent.hoursRented,
+      pickupDate: this.state.itemToRent.pickupDate,
       overDue: false,
       renterId: firebase.auth().currentUser.uid,
       ownerAddress: {
@@ -76,7 +77,6 @@ class RentItem extends React.Component {
       description: this.props.item.description,
       itemId: this.props.item.id,
       imageUrl: this.props.item.imageUrl,
-      isAvailable: this.props.item.isAvailable,
       name: this.props.item.name,
       ownerId: this.props.item.ownerId,
       priceperday: this.props.item.priceperday,
