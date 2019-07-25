@@ -25,6 +25,7 @@ const defaultState = {
 class SignUp extends React.Component {
   static propTypes = {
     username: PropTypes.string,
+    // getUserName: PropTypes.func.isRequired,
   }
 
   state = {
@@ -33,7 +34,6 @@ class SignUp extends React.Component {
 
   deleteUser = (e) => {
     e.preventDefault();
-    // this.props.history.push('/auth'); // may need to call this before you delete UID
     firebase.auth().currentUser.delete()
       .then((() => {
         document.reload();
@@ -66,8 +66,8 @@ class SignUp extends React.Component {
     saveNewUser.uid = firebase.auth().currentUser.uid;
     usersData.addNewUser(saveNewUser)
       .then(() => {
-        // this.props.history.push('/auth');
         this.props.history.push('/home');
+        // this.props.getUserName();
       }).catch(err => console.error('no new user saved', err));
   };
 

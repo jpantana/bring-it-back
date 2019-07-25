@@ -32,6 +32,8 @@ const getItems = uid => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
+const changeItemAvailability = (id, change) => axios.put(`${baseUrl}/items/${id}/isAvailable.json`, change);
+
 const getSingleItem = itemId => axios.get(`${baseUrl}/items/${itemId}.json`);
 
 const addNewItem = item => axios.post(`${baseUrl}/items.json`, item);
@@ -47,4 +49,5 @@ export default {
   deleteItem,
   getSingleItem,
   editItem,
+  changeItemAvailability,
 };

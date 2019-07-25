@@ -1,12 +1,14 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import $ from 'jquery';
 // JSs
 import usersData from '../../helpers/data/usersData';
 import itemsData from '../../helpers/data/itemsData';
 import ItemCard from '../ItemCard/ItemCard';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import SearchAndSort from '../SearchAndSort/SearchAndSort';
+import itemsRented from '../../helpers/data/itemsRented';
 // STYLEs
 import './Home.scss';
 // SVGs
@@ -19,10 +21,15 @@ class Home extends React.Component {
     dropdownOpen: false,
     categoryName: 'Categories',
     searchInput: '',
+    itemsLength: 0,
+    counter: 0,
+    useruid: '',
+    isRentedId: '',
   }
 
   componentDidMount() {
     const { uid } = firebase.auth().currentUser;
+    this.setState({ useruid: uid });
     this.getUser(uid);
     this.getItems();
     this.showCategories();
@@ -32,12 +39,27 @@ class Home extends React.Component {
     itemsData.getAllItems().then((res) => {
       const { categoryName } = this.state;
       if (categoryName === 'Categories') {
-        this.setState({ items: res });
+        this.setState({ items: res, itemsLength: res.length });
       } else {
         const filterCategories = res.filter(item => item.category === categoryName);
         this.setState({ items: filterCategories });
       }
     }).catch(err => console.error('no items to display', err));
+  };
+
+  isOrIsntRentedBadge = () => {
+    itemsData.getAllItems()
+      .then((items) => {
+        if (this.state.isRentedId !== '') {
+          const changeAvailability = items.find(item => this.state.isRentedId === item.id);
+          itemsData.changeItemAvailability(changeAvailability.id, false)
+            .then(() => {
+              this.getItems();
+            })
+            .catch(err => console.error('availability not changed', err));
+        }
+      })
+      .catch(err => console.error('no items data returned', err));
   };
 
   // Callback function displays users name in top nav
@@ -73,8 +95,15 @@ class Home extends React.Component {
   };
 
   // RENT ITEMS
-  rentThisItem = (e) => {
-    console.error(e.target.value);
+  rentThisItem = (rentedObj) => {
+    itemsRented.newRental(rentedObj)
+      .then(() => this.displayRentedBadge(rentedObj))
+      .catch(err => console.error('no item rented', err));
+  };
+
+  displayRentedBadge = (rentedItem) => {
+    this.setState({ isRentedId: rentedItem.itemId });
+    this.isOrIsntRentedBadge();
   };
 
   showSearchedItems = () => {
@@ -85,6 +114,61 @@ class Home extends React.Component {
         this.setState({ items: filterSearch });
       })
       .catch(err => console.error('no items match search', err));
+  };
+
+  // NAVIGATE SCROLL BUTTONS
+  moveRight = (e) => {
+    e.preventDefault();
+    const howManyClicks = this.mathyMathMath();
+    const { counter } = this.state;
+    if (counter >= howManyClicks) {
+      this.setState({ counter: howManyClicks });
+    } else {
+      this.setState({ counter: this.state.counter + 1 });
+    }
+    if (counter >= howManyClicks) {
+      $('#allCardsDiv').animate({
+        marginLeft: '-=0px',
+      }, 'fast');
+    } else {
+      $('#allCardsDiv').animate({
+        marginLeft: '-=300px',
+      }, 'fast');
+    }
+    $('#arrowBack').removeClass('hide');
+    $('#arrowLeft').removeClass('hide');
+  };
+
+  moveLeft = (e) => {
+    e.preventDefault();
+    const { counter } = this.state;
+    if (counter <= 0) {
+      this.setState({ counter: 0 });
+    } else {
+      this.setState({ counter: this.state.counter - 1 });
+    }
+    if (counter <= 0) {
+      $('#allCardsDiv').animate({
+        marginLeft: '+=0px',
+      }, 'fast');
+    } else {
+      $('#allCardsDiv').animate({
+        marginLeft: '+=300px',
+      }, 'fast');
+    }
+  };
+
+  widthMath = () => {
+    const divLength = this.state.itemsLength;
+    const makeNum = divLength * 1;
+    const theMath = makeNum * 185;
+    return theMath;
+  };
+
+  mathyMathMath = () => {
+    const total = this.widthMath();
+    const theMath = total / 300;
+    return Math.floor(theMath);
   };
 
   render() {
@@ -117,12 +201,12 @@ class Home extends React.Component {
           </div>
         </div>
        <div className="allCardsWrapper" id="arrowDiv">
-         <span onClick={this.clickArrow} className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
+          <span onClick={this.moveRight} className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
         <div className="row allCardsDiv" id="allCardsDiv">
           { (items.length > 0 ? makeItemCards : '') }
         </div>
-        <span onClick={this.clickArrowBack} id="arrowBack" className="scrollCardsLeft hide"><img id="arrowLeft" src={arrow} alt="arrow icon" /></span>
-      </div>
+          <span onClick={this.moveLeft} id="arrowBack" className="scrollCardsLeft hide"><img className="hide" id="arrowLeft" src={arrow} alt="arrow icon" /></span>
+        </div>
       </div>
     );
   }
