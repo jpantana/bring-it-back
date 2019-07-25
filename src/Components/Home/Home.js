@@ -44,15 +44,22 @@ class Home extends React.Component {
         const filterCategories = res.filter(item => item.category === categoryName);
         this.setState({ items: filterCategories });
       }
-      if (this.state.isRentedId !== '') {
-        const changeAvailability = res.find(item => this.state.isRentedId === item.id);
-        // console.error(changeAvailability.id, false);
-        itemsData.changeItemAvailability(changeAvailability.id, false)
-          .then()
-          .catch(err => console.error('availability not changed', err));
-      }
-      // then axios to itemid and change isAvaliable to false then write function that adds badge
     }).catch(err => console.error('no items to display', err));
+  };
+
+  isOrIsntRentedBadge = () => {
+    itemsData.getAllItems()
+      .then((items) => {
+        if (this.state.isRentedId !== '') {
+          const changeAvailability = items.find(item => this.state.isRentedId === item.id);
+          itemsData.changeItemAvailability(changeAvailability.id, false)
+            .then(() => {
+              this.getItems();
+            })
+            .catch(err => console.error('availability not changed', err));
+        }
+      })
+      .catch(err => console.error('no items data returned', err));
   };
 
   // Callback function displays users name in top nav
@@ -96,7 +103,7 @@ class Home extends React.Component {
 
   displayRentedBadge = (rentedItem) => {
     this.setState({ isRentedId: rentedItem.itemId });
-    this.getItems();
+    this.isOrIsntRentedBadge();
   };
 
   showSearchedItems = () => {
@@ -108,7 +115,6 @@ class Home extends React.Component {
       })
       .catch(err => console.error('no items match search', err));
   };
-
 
   // NAVIGATE SCROLL BUTTONS
   moveRight = (e) => {
