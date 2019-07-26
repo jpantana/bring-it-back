@@ -14,24 +14,6 @@ import './Home.scss';
 // SVGs
 import arrow from '../../SVGs/iconmonstr-arrow-25.svg';
 
-// const defaultStateItemsRented = {
-//   hoursRented: '',
-//   pickupDate: '',
-//   overDue: false,
-//   renterId: '',
-//   ownerAddress: {},
-//   category: '',
-//   categoryId: '',
-//   condition: '',
-//   description: '',
-//   itemId: '',
-//   imageUrl: '',
-//   name: '',
-//   ownerId: '',
-//   priceperday: '',
-//   priceperhour: '',
-// };
-
 class Home extends React.Component {
   state = {
     items: [],
@@ -124,12 +106,10 @@ class Home extends React.Component {
     itemsRentedData.newRental(rentedObj)
       .then((resp) => {
         const rentalId = resp.data.name;
-        console.error(rentalId, 'rental id'); // name of new post ( that is 'id')
         itemsRentedData.getRentals()
           .then((rents) => {
             this.setState({ itemsRented: rents });
             const singleRental = rents.filter(r => r.id === rentalId);
-            console.error(singleRental[0], 'single item');
             this.itemIsOrIsntRentedBadge(singleRental[0].itemId);
           })
           .catch(err => console.error('no rented item response', err));
@@ -168,6 +148,11 @@ class Home extends React.Component {
     }
     $('#arrowBack').removeClass('hide');
     $('#arrowLeft').removeClass('hide');
+    // if (counter >= howManyClicks) {
+    //   $('#arrowRight').addClass('hide');
+    // } else if (counter < howManyClicks) {
+    //   $('#arrowRight').removeClass('hide');
+    // }
   };
 
   moveLeft = (e) => {
@@ -192,7 +177,7 @@ class Home extends React.Component {
   widthMath = () => {
     const divLength = this.state.itemsLength;
     const makeNum = divLength * 1;
-    const theMath = makeNum * 185;
+    const theMath = makeNum * 150;
     return theMath;
   };
 
@@ -234,7 +219,7 @@ class Home extends React.Component {
           </div>
         </div>
        <div className="allCardsWrapper" id="arrowDiv">
-          <span onClick={this.moveRight} className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
+          <span onClick={this.moveRight} className="scrollCardsRight" id="arrowRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
         <div className="row allCardsDiv" id="allCardsDiv">
           { (items.length > 0 ? makeItemCards : '') }
         </div>

@@ -2,11 +2,12 @@ import PropTypes from 'prop-types';
 
 
 const itemsRentedShape = PropTypes.shape({
-  hoursRented: PropTypes.number.isRequired,
+  hoursRented: PropTypes.string.isRequired,
   pickupDate: PropTypes.string.isRequired,
   overDue: PropTypes.bool.isRequired,
   renterId: PropTypes.string.isRequired,
   ownerAddress: PropTypes.objectOf.isRequired,
+  returnTime: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   categoryId: PropTypes.string.isRequired,
   condition: PropTypes.string.isRequired,

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 // JSs
 import itemShape from '../../helpers/propz/itemShape';
 import RentItem from '../RentItem/RentItem';
-// import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
-// import itemsRentedData from '../../helpers/data/itemsRentedData';
+import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './ItemCard.scss';
 // SVGs
@@ -14,20 +13,17 @@ class ItemCard extends React.Component {
   static propTypes = {
     item: itemShape.itemShape,
     rentThisItem: PropTypes.func.isRequired,
-    // itemsRented: itemsRentedShape.itemsRentedShape,
+    itemsRented: PropTypes.arrayOf(itemsRentedShape.itemsRentedShape).isRequired,
   }
 
   rentedInfo = () => {
-    // const { itemsRented } = this.props;
-    // const hours = itemsRented.hoursRented;
-    // const startTime = itemsRented.pickupDate;
-    // <div>
-    //         <p>{itemsRented.hoursRented}</p>
-    //         <p>{itemsRented.pickupDate}</p>
-    //       </div>;
-    // itemsRented.forEach((rental) => {
-    //   console.error(rental);
-    // });
+    const returnTime = [];
+    this.props.itemsRented.forEach((i) => {
+      if (i.itemId === this.props.item.id) {
+        returnTime.push(i.returnTime);
+      }
+    });
+    return returnTime;
   };
 
   render() {
@@ -59,13 +55,15 @@ class ItemCard extends React.Component {
           </div>
         </div>
         <div className="allCardIcons">
-          <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" /> : this.rentedInfo() }</span>
+          <span>{item.isAvailable === true
+            ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" />
+            : <p className="availableAgainDate">Available after {this.rentedInfo()}</p> }</span>
           <span className="editDeleteSpan">
-          <RentItem
+          {item.isAvailable === true ? <RentItem
             key={item.id}
             item={item}
             rentThisItem={rentThisItem}
-          />
+          /> : ''}
           </span>
         </div>
       </div>

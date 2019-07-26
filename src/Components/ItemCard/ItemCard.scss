@@ -1,8 +1,8 @@
 @import '../../styles/variables.scss';
 
 .ItemCard {
-  width: 15em !important;
-  height: 28em;
+  width: 14em !important;
+  height: 22em;
   margin: 10px;
   // margin-top: -10px;
   padding: 0;
@@ -16,8 +16,8 @@
 }
 
 .imgContainer {
-  width: 15em;
-  height: 15em;
+  width: 14em;
+  height: 14em;
   overflow: hidden;
   position: absolute;
   top: .5px;
@@ -31,43 +31,44 @@
 
 .card-title {
   margin: 0;
-  margin-top: 13.5em;
+  margin-top: 15.5em;
   padding: 0;
-  padding-bottom: 15px;
+  padding-bottom: 0px;
   font-family: $font1;
   color: $blackFont;
-  font-size: 18px;
+  font-size: 15px;
   height: 35px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: 1px solid $shadow;
+  // border-bottom: 1px solid $shadow;
 }
 
 .cardDetails {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 10px;
+  padding: 7px;
   border: .5px solid $shadow;
   border-radius: 5px;
+  margin-top: -20px !important;
   .thCondition {
     font-family: $font1;
-    font-size: 12px;
+    font-size: 10px;
     color: $mainBlue;
     padding: 10px;
     text-decoration: underline;
   }
   .thPriceHour {
     font-family: $font1;
-    font-size: 12px;
+    font-size: 10px;
     color: $mainBlue;
     padding: 10px;
     text-decoration: underline;
   }
   .thPriceDay {
     font-family: $font1;
-    font-size: 12px;
+    font-size: 10px;
     color: $mainBlue;
     padding: 10px;
     text-decoration: underline;
@@ -75,27 +76,36 @@
   .itemCondition {
     font-family: $font1;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 12px;
     color: $orange;
   }
   .itemPriceHour, .itemPriceDay {
     font-family: $font1;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 12px;
     color: $orange;
   }
 }
 
-
+.availableAgainDate {
+  font-size: 10px;
+  font-style: italic;
+  font-family: $font1;
+  color: $mainBlue;
+  text-shadow: 2px 2px 5px $shadow;
+}
 
 .allCardIcons {
+  position: absolute;
+  top: 0em;
+  z-index: 100;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 4px;
   .iconSvg {
-    // margin-top: -40px;
-    height: 1.3em;
+    height: 1.5em;
+    padding: 5px;
   }  
 }
 
