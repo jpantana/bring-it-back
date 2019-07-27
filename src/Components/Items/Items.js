@@ -7,6 +7,7 @@ import itemShape from '../../helpers/propz/itemShape';
 import checkIcon from '../../SVGs/iconmonstr-check-mark-6.svg';
 import deleteIcon from '../../SVGs/iconmonstr-x-mark-4.svg';
 import editIcon from '../../SVGs/iconmonstr-edit-10.svg';
+import ticket from '../../SVGs/iconmonstr-tags-thin.svg';
 // STYLES
 import './Items.scss';
 
@@ -31,13 +32,11 @@ class Items extends React.Component {
       <div className="card nameCard">
         <div className="card-body" onClick={this.singleItem}>
           <h5 className="card-title">{item.name}</h5>
+          <div className="allCardIcons">
+          <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" className="icon" /> : <img src={ticket} alt="ticket icon svg" className="icon" /> }</span>
+          <img onClick={deleteItemEvent} src={deleteIcon} id={item.id} alt="delete icon" className="icon" />
+          <img onClick={editItemEvent} src={editIcon} id={`${item.id}.edit`} alt="edit icon" className="icon" />
         </div>
-        <div className="allCardIcons">
-          <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
-          <span className="editDeleteSpan">
-            <img onClick={deleteItemEvent} src={deleteIcon} id={item.id} alt="delete icon"/>
-            <img onClick={editItemEvent} src={editIcon} id={`${item.id}.edit`} alt="edit icon"/>
-          </span>
         </div>
       </div>
     );

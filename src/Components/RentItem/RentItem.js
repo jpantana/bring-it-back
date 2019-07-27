@@ -18,10 +18,11 @@ import cart from '../../SVGs/iconmonstr-shopping-cart-3.svg';
 import usersData from '../../helpers/data/usersData';
 
 const defaultStateRental = {
-  hoursRented: 0,
+  hoursRented: '0',
   pickupDate: '',
   isOverDue: false,
   ownerAddress: '',
+  returnTime: '',
 };
 class RentItem extends React.Component {
   static propTypes = {
@@ -61,6 +62,7 @@ class RentItem extends React.Component {
     } = this.state;
     const rentedObj = {
       hoursRented: this.state.itemToRent.hoursRented,
+      pickupDate: this.state.itemToRent.pickupDate,
       overDue: false,
       renterId: firebase.auth().currentUser.uid,
       ownerAddress: {
@@ -69,6 +71,7 @@ class RentItem extends React.Component {
         state,
         zipcode,
       },
+      returnTime: this.state.itemToRent.returnTime,
       // item obj info below
       category: this.props.item.category,
       categoryId: this.props.item.categoryId,
@@ -76,7 +79,6 @@ class RentItem extends React.Component {
       description: this.props.item.description,
       itemId: this.props.item.id,
       imageUrl: this.props.item.imageUrl,
-      isAvailable: this.props.item.isAvailable,
       name: this.props.item.name,
       ownerId: this.props.item.ownerId,
       priceperday: this.props.item.priceperday,
@@ -97,9 +99,25 @@ class RentItem extends React.Component {
     this.setState({ itemToRent: tempItem });
   };
 
-  pickupDate = e => this.itemToRentDataUpdate('pickupDate', e);
+  determineDueDate = (e) => {
+    const { itemToRent } = this.state;
+    const firstDate = itemToRent.pickupDate;
+    const hours = e * 1;
+    const bringItBack = moment(firstDate, 'MM/DD/YYYY - h:mm a').add(hours, 'hours').calendar();
+    const tempItem = { ...this.state.itemToRent };
+    tempItem.returnTime = bringItBack;
+    this.setState({ itemToRent: tempItem });
+  };
 
-  rentThisLong = e => this.itemToRentDataUpdate('hoursRented', e);
+
+  pickupDate = (e) => {
+    this.itemToRentDataUpdate('pickupDate', e);
+  };
+
+  rentThisLong = (e) => {
+    this.itemToRentDataUpdate('hoursRented', e);
+    this.determineDueDate(e.target.value);
+  };
 
   render() {
     const {
@@ -122,8 +140,8 @@ class RentItem extends React.Component {
                   className="form-control"
                   id="rentalDate"
                   aria-describedby="rental date"
-                  placeholder="January 1, 2020"
-                  defaultValue={moment().format('MMMM Do YYYY, h:mm a')}
+                  placeholder=''
+                  defaultValue={moment().format('MM/DD/YYYY - h:mm a')}
                   onChange={this.pickupDate}
                 />
               </div>
@@ -138,6 +156,7 @@ class RentItem extends React.Component {
                   defaultValue={0}
                   onChange={this.rentThisLong}
                 />
+                <p className="returnTime">{this.state.itemToRent.returnTime}</p>
               </div>
               <div>
                 <h3>Your Pickup/Return Location</h3>

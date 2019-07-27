@@ -15,6 +15,7 @@ import {
 // JSs
 // STYLES
 import './MyNavbar.scss';
+import 'animate.css';
 // SVGs
 import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 import brand from '../../SVGs/BringItBackTransparentWHITE.svg';
@@ -47,13 +48,13 @@ class MyNavbar extends React.Component {
         return (
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal" tag={RRNavLink} to="/home">Home</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to="/home">Home</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal" tag={RRNavLink} to={(`/mystuff/${useruid}`)}>My Stuff</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/mystuff/${useruid}`)}>My Stuff</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow  hvr-underline-reveal" onClick={this.logMeOut} href="https://github.com/reactstrap/reactstrap">Logout</NavLink>
+            <NavLink className="navLink hvr-shadow  hvr-underline-reveal bounceIn" onClick={this.logMeOut} href="https://github.com/reactstrap/reactstrap">Logout</NavLink>
           </NavItem>
         </Nav>
         );
@@ -64,7 +65,7 @@ class MyNavbar extends React.Component {
     return (
       <div className="MyNavbar">
         <div className="upperNav">
-        <NavbarBrand className="navBarBrand" href="/"><img className="brandSVG" src={brand} alt="brand svg" /></NavbarBrand>
+        <NavbarBrand className="navBarBrand" href="/"><img className="bounceIn brandSVG" src={brand} alt="brand svg" /></NavbarBrand>
           <div>
             <div className="userDisplayDiv">
               <img className="userIcon" src={userIcon} alt="icon for a user"/>

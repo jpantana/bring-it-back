@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // JSs
 import itemShape from '../../helpers/propz/itemShape';
 import RentItem from '../RentItem/RentItem';
+import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './ItemCard.scss';
 // SVGs
@@ -12,7 +13,18 @@ class ItemCard extends React.Component {
   static propTypes = {
     item: itemShape.itemShape,
     rentThisItem: PropTypes.func.isRequired,
+    itemsRented: PropTypes.arrayOf(itemsRentedShape.itemsRentedShape).isRequired,
   }
+
+  rentedInfo = () => {
+    const returnTime = [];
+    this.props.itemsRented.forEach((i) => {
+      if (i.itemId === this.props.item.id) {
+        returnTime.push(i.returnTime);
+      }
+    });
+    return returnTime;
+  };
 
   render() {
     const { item, rentThisItem } = this.props;
@@ -24,7 +36,7 @@ class ItemCard extends React.Component {
             {/* <img src={item.imageUrl} alt={item.name} className="card-img-top itemImg" /> */}
             <img src="https://via.placeholder.com/300x300" alt="placeholder img" />
           </div>
-          <h5 className="card-title">{item.name}</h5>
+          <h5 className="card-title allCardsTitle">{item.name}</h5>
           <div className="cardDetails">
             <table>
               <tbody>
@@ -42,14 +54,16 @@ class ItemCard extends React.Component {
             </table>
           </div>
         </div>
-        <div className="allCardIcons">
-          <span>{item.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" /> : 'Rented' }</span>
+        <div className="allCardIconsHome">
+          <span>{item.isAvailable === true
+            ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" />
+            : <p className="availableAgainDate">Available after {this.rentedInfo()}</p> }</span>
           <span className="editDeleteSpan">
-          <RentItem
+          {item.isAvailable === true ? <RentItem
             key={item.id}
             item={item}
             rentThisItem={rentThisItem}
-          />
+          /> : ''}
           </span>
         </div>
       </div>

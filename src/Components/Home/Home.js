@@ -8,7 +8,7 @@ import itemsData from '../../helpers/data/itemsData';
 import ItemCard from '../ItemCard/ItemCard';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import SearchAndSort from '../SearchAndSort/SearchAndSort';
-import itemsRented from '../../helpers/data/itemsRented';
+import itemsRentedData from '../../helpers/data/itemsRentedData';
 // STYLEs
 import './Home.scss';
 // SVGs
@@ -24,7 +24,7 @@ class Home extends React.Component {
     itemsLength: 0,
     counter: 0,
     useruid: '',
-    isRentedId: '',
+    itemsRented: [],
   }
 
   componentDidMount() {
@@ -33,6 +33,7 @@ class Home extends React.Component {
     this.getUser(uid);
     this.getItems();
     this.showCategories();
+    this.getRentedItemsData();
   }
 
   getItems = () => {
@@ -42,24 +43,9 @@ class Home extends React.Component {
         this.setState({ items: res, itemsLength: res.length });
       } else {
         const filterCategories = res.filter(item => item.category === categoryName);
-        this.setState({ items: filterCategories });
+        this.setState({ items: filterCategories, itemsLength: filterCategories.length });
       }
     }).catch(err => console.error('no items to display', err));
-  };
-
-  isOrIsntRentedBadge = () => {
-    itemsData.getAllItems()
-      .then((items) => {
-        if (this.state.isRentedId !== '') {
-          const changeAvailability = items.find(item => this.state.isRentedId === item.id);
-          itemsData.changeItemAvailability(changeAvailability.id, false)
-            .then(() => {
-              this.getItems();
-            })
-            .catch(err => console.error('availability not changed', err));
-        }
-      })
-      .catch(err => console.error('no items data returned', err));
   };
 
   // Callback function displays users name in top nav
@@ -94,16 +80,41 @@ class Home extends React.Component {
     this.showSearchedItems();
   };
 
-  // RENT ITEMS
-  rentThisItem = (rentedObj) => {
-    itemsRented.newRental(rentedObj)
-      .then(() => this.displayRentedBadge(rentedObj))
-      .catch(err => console.error('no item rented', err));
+  // RENTED ITEMS
+  getRentedItemsData = () => {
+    itemsRentedData.getRentals()
+      .then((res) => {
+        this.setState({ itemsRented: res });
+      })
+      .catch(err => console.error('no rented items data', err));
   };
 
-  displayRentedBadge = (rentedItem) => {
-    this.setState({ isRentedId: rentedItem.itemId });
-    this.isOrIsntRentedBadge();
+  itemIsOrIsntRentedBadge = (rentedItem) => {
+    itemsData.getAllItems()
+      .then((items) => {
+        const changeAvailability = items.find(item => item.id === rentedItem);
+        itemsData.changeItemAvailability(changeAvailability.id, false)
+          .then(() => {
+            this.getItems();
+          })
+          .catch(err => console.error('availability not changed', err));
+      })
+      .catch(err => console.error('no items data returned', err));
+  };
+
+  rentThisItem = (rentedObj) => {
+    itemsRentedData.newRental(rentedObj)
+      .then((resp) => {
+        const rentalId = resp.data.name;
+        itemsRentedData.getRentals()
+          .then((rents) => {
+            this.setState({ itemsRented: rents });
+            const singleRental = rents.filter(r => r.id === rentalId);
+            this.itemIsOrIsntRentedBadge(singleRental[0].itemId);
+          })
+          .catch(err => console.error('no rented item response', err));
+      })
+      .catch(err => console.error('no item rented', err));
   };
 
   showSearchedItems = () => {
@@ -137,6 +148,11 @@ class Home extends React.Component {
     }
     $('#arrowBack').removeClass('hide');
     $('#arrowLeft').removeClass('hide');
+    // if (counter >= howManyClicks) {
+    //   $('#arrowRight').addClass('hide');
+    // } else if (counter < howManyClicks) {
+    //   $('#arrowRight').removeClass('hide');
+    // }
   };
 
   moveLeft = (e) => {
@@ -161,7 +177,7 @@ class Home extends React.Component {
   widthMath = () => {
     const divLength = this.state.itemsLength;
     const makeNum = divLength * 1;
-    const theMath = makeNum * 185;
+    const theMath = makeNum * 150;
     return theMath;
   };
 
@@ -177,12 +193,14 @@ class Home extends React.Component {
       categories,
       categoryName,
       searchInput,
+      itemsRented,
     } = this.state;
     const makeItemCards = items.map(item => (
         <ItemCard
           key={`allItem.${item.id}`}
           item={ item }
           rentThisItem={this.rentThisItem}
+          itemsRented={itemsRented}
         />
     ));
 
@@ -201,7 +219,7 @@ class Home extends React.Component {
           </div>
         </div>
        <div className="allCardsWrapper" id="arrowDiv">
-          <span onClick={this.moveRight} className="scrollCardsRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
+          <span onClick={this.moveRight} className="scrollCardsRight" id="arrowRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
         <div className="row allCardsDiv" id="allCardsDiv">
           { (items.length > 0 ? makeItemCards : '') }
         </div>

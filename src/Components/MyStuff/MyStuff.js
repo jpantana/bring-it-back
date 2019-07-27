@@ -139,6 +139,7 @@ class MyStuff extends React.Component {
     this.getUserItems(uid); // only shows your user's items
   }
 
+
   render() {
     const {
       items,
@@ -189,9 +190,9 @@ class MyStuff extends React.Component {
                   updateImageUrl={this.updateImageUrl}
                 />
                 </Modal>
-        <div className="col col-4 m-2">
+        <div className="">
           <span className="addNewSpan" onClick={this.addNewItem}>
-            Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" />}
+            Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
           </span>
           { makeItemCards }
         </div>
@@ -205,6 +206,7 @@ class MyStuff extends React.Component {
             editItemEvent={this.editItemEvent}
           /> : '') }
         </div>
+        <div id="leafletMap"></div>
       </div>
     );
   }
