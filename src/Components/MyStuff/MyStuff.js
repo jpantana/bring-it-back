@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal } from 'reactstrap';
 // JSs
+import Map from '../Leaflet/Leaflet';
 import SingleItem from '../SingleItem/SingleItem';
 import itemsData from '../../helpers/data/itemsData';
 import Items from '../Items/Items';
@@ -146,6 +147,7 @@ class MyStuff extends React.Component {
       isClicked,
       singleItem,
       itemId,
+      userid,
     } = this.state;
     const makeItemCards = items.map(item => (
         <Items
@@ -206,7 +208,7 @@ class MyStuff extends React.Component {
             editItemEvent={this.editItemEvent}
           /> : '') }
         </div>
-        <div id="leafletMap"></div>
+        <Map userid={userid}/>
       </div>
     );
   }
