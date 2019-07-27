@@ -36,7 +36,7 @@ class ItemCard extends React.Component {
             {/* <img src={item.imageUrl} alt={item.name} className="card-img-top itemImg" /> */}
             <img src="https://via.placeholder.com/300x300" alt="placeholder img" />
           </div>
-          <h5 className="card-title">{item.name}</h5>
+          <h5 className="card-title allCardsTitle">{item.name}</h5>
           <div className="cardDetails">
             <table>
               <tbody>
