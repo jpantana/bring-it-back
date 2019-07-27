@@ -6,6 +6,8 @@ import itemShape from '../../helpers/propz/itemShape';
 import checkIcon from '../../SVGs/iconmonstr-check-mark-6.svg';
 import deleteIcon from '../../SVGs/iconmonstr-x-mark-4.svg';
 import editIcon from '../../SVGs/iconmonstr-edit-10.svg';
+// STYLEs
+import './SingleItem.scss';
 
 class SingleItem extends React.Component {
   static propTypes = {
@@ -33,25 +35,59 @@ class SingleItem extends React.Component {
     // IDEAS: carousel of imgs; calculator for price booking; messaging users
     const { singleItem, editItemEvent } = this.props;
     return (
-      <div>
-        <div className="card fullCard" onClick={this.singleItemHide}>
-        {/* <img className="card-img-top itemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} /> */}
-        <img src="https://via.placeholder.com/200x200" alt="placeholder img" />
-        <div className="card-body">
-          <h5 className="card-title">{singleItem.name}</h5>
-          <p className="card-text">{singleItem.description}</p>
-          <p className="card-text">{singleItem.condition}</p>
-          <p className="card-text">Per Day: ${singleItem.priceperhour}.00</p>
-          <p className="card-text">Per Day: ${singleItem.priceperday}.00</p>
+      <div className="SingleItem">
+        <div className="cardHeader">
+
+          <h1 className="full-card-title">{singleItem.name}</h1>
+
+          <div className="allCardIcons">
+
+            <span className="editDeleteSpan">
+              <img onClick={this.deleteEvent} src={deleteIcon} id={singleItem.id} alt="delete icon" className="singleIcon"/>
+              <img onClick={editItemEvent} src={editIcon} id={`${singleItem.id}.edit`} alt="edit icon" className="singleIcon"/>
+            </span>
+            <span className="conditionalIconSpan">{singleItem.isAvailable === true
+              ? <img src={checkIcon} alt="checkbox icon svg" className="singleIcon" />
+              : <p className="isRented">Rented</p> }</span>
+
+          </div>
+
         </div>
-      </div>
-      <div className="allCardIcons">
-        <span>{singleItem.isAvailable === true ? <img src={checkIcon} alt="checkbox icon svg" /> : 'Rented' }</span>
-        <span className="editDeleteSpan">
-          <img onClick={this.deleteEvent} src={deleteIcon} id={singleItem.id} alt="delete icon"/>
-          <img onClick={editItemEvent} src={editIcon} id={`${singleItem.id}.edit`} alt="edit icon"/>
-        </span>
-      </div>
+
+        <div className="mainCard" onClick={this.singleItemHide}>
+
+          <div className="imgDiv">
+            {/* <img className="card-img-top SingleItemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} /> */}
+            <img src="https://via.placeholder.com/200x250" className="card-img-top SingleItemImg" alt="placeholder img" />
+          </div>
+
+          <div className="card singleItemDetails">
+            <span className="priceSpan">
+              <p className="card-text price">${singleItem.priceperhour}.00<span className="afterPrice"> hourly</span></p>
+              <p className="card-text price">${singleItem.priceperday}.00<span className="afterPrice"> daily</span></p>
+            </span>
+            <p className="aboutSpan">description</p>
+            <p className="card-text itemDescription">{singleItem.description}</p>
+            <table classname="singleItemTable">
+              <tbody>
+                <tr>
+                  <td className="thConditionSI">Condition</td>
+                  <td className="singleItemCondition">{singleItem.condition}</td>
+                </tr>
+                <tr>
+                  <td className="thCategorySI">Category</td>
+                  <td className="singleItemCategory">{singleItem.category}</td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            {/* <p className="card-text"><span className="aboutSpan">About</span>{singleItem.description}</p>
+            <p className="card-text"><span className="conditionSpan">Condition</span>{singleItem.condition}</p>
+            <p className="card-text"><span className="categorySpan">Category</span>{singleItem.category}</p> */}
+          </div>
+        </div>
+
     </div>
     );
   }

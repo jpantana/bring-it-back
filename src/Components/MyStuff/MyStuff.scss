@@ -5,8 +5,12 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .addNewSpan {
   margin: 5px;
+  margin-bottom: 15px !important;
+  text-align: left !important;
+  text-shadow: 2px 2px 5px $shadow
 }

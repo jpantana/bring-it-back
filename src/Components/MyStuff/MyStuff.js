@@ -189,7 +189,7 @@ class MyStuff extends React.Component {
                   updateImageUrl={this.updateImageUrl}
                 />
                 </Modal>
-        <div className="col col-4 m-2">
+        <div className="">
           <span className="addNewSpan" onClick={this.addNewItem}>
             Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" />}
           </span>

@@ -54,7 +54,7 @@ class ItemCard extends React.Component {
             </table>
           </div>
         </div>
-        <div className="allCardIcons">
+        <div className="allCardIconsHome">
           <span>{item.isAvailable === true
             ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" />
             : <p className="availableAgainDate">Available after {this.rentedInfo()}</p> }</span>
