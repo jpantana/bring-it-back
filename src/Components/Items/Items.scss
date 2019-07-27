@@ -2,6 +2,7 @@
 
 .Items {
   display: block;
+  margin-top: 1em !important;
 }
 
 .nameCard {
@@ -12,7 +13,7 @@
   height: 5em;
   margin: 10px;
   padding: 0;
-  box-shadow: 5px 1px 9px $shadow;
+  box-shadow: -3px -1px 9px $shadow;
   display: flex;
   flex-direction: column;
   justify-content: center;

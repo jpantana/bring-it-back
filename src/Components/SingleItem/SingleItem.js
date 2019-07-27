@@ -35,7 +35,7 @@ class SingleItem extends React.Component {
     // IDEAS: carousel of imgs; calculator for price booking; messaging users
     const { singleItem, editItemEvent } = this.props;
     return (
-      <div className="SingleItem">
+      <div className="SingleItem" onClick={this.singleItemHide}>
         <div className="cardHeader">
 
           <h1 className="full-card-title">{singleItem.name}</h1>
@@ -54,7 +54,7 @@ class SingleItem extends React.Component {
 
         </div>
 
-        <div className="mainCard" onClick={this.singleItemHide}>
+        <div className="mainCard">
 
           <div className="imgDiv">
             {/* <img className="card-img-top SingleItemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} /> */}
