@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+
+.ReceivedMessage {
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  width: 20em;
+}
+
+.receivedtMsg {
+  border-radius: 8px;
+  background-color: $msgBackground2;
+  width: 14em;
+  .textLeft {
+    text-align: left;
+  }
+}
+
+.sentMsg {
+  border-radius: 8px;
+  background-color: $msgBackground1;
+  width: 14em;
+  margin-left: auto;
+  .textRight {
+    text-align: right;
+  }
+}
+

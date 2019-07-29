@@ -1,138 +1,122 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// JSs
+import moment from 'moment';
+import ReceivedMessage from '../ReceivedMessage/ReceivedMessage';
 import messagesData from '../../helpers/data/messagesData';
-import itemsRentedData from '../../helpers/data/itemsRentedData';
 import usersData from '../../helpers/data/usersData';
+// STYLEs
+import './Messages.scss';
 
 class Messages extends React.Component {
-  static propTypes = {
-    userid: PropTypes.string.isRequired,
-  }
-
   state = {
-    newMessage: {},
+    newMessage: '',
     canMessage: false,
-    renterId: '',
-    ownerId: '',
-    ownerUsername: '',
-    renterUsername: '',
+    paramOwnerId: '',
     messagePostId: '',
     sentBy: '',
-    isGetting: [],
-    hasSent: [],
+    // receivedMessages: [],
+    // sentMessages: [],
+    userid: '',
+    user: {},
+    owner: {},
+    messages: [],
   }
 
   componentDidMount() {
-    this.getItemsRented();
-    this.getReceievedMessages();
+    const uid = this.props.match.params.id;
+    if (this.props.location.state) {
+      const { ownersId } = this.props.location.state;
+      this.setState({ paramOwnerId: ownersId });
+    }
+    this.setState({ userid: uid, sentBy: uid });
+    this.getItemsRented(uid);
+    this.showAllMessages(uid);
   }
 
-  getItemsRented = () => {
-    itemsRentedData.getRentals()
+  getItemsRented = (uid) => {
+    usersData.getUsers(uid)
       .then((res) => {
-        const { renterId } = res[0];
-        const { ownerId } = res[0];
-        const { userid } = this.props;
-        if (renterId === userid) {
-          usersData.getUsers(userid).then((resp) => {
-            this.setState({ renterUsername: resp[0].username });
-            usersData.getUsers(ownerId).then((resp2) => {
-              this.setState({ ownerUsername: resp2[0].username });
-            });
-          }).catch(err => console.error('no user in messages.js', err));
-          this.setState({
-            canMessage: true,
-            renterId: res[0].renterId,
-            ownerId: res[0].ownerId,
+        this.setState({ user: res[0] });
+        usersData.getUsers(this.state.paramOwnerId)
+          .then((resp) => {
+            this.setState({ owner: resp[0] });
           });
-        }
       })
       .catch(err => console.error('no items rented', err));
   };
 
-  getReceievedMessages = () => {
-    const { userid } = this.props;
+  showAllMessages = (uid) => {
     messagesData.getMessages()
       .then((resp) => {
-        const isGettingMsg = resp.filter(message => userid !== this.state.sentBy);
-        const hasSentMsg = resp.filter(message => userid === this.state.sentBy);
-        this.setState({ isGetting: isGettingMsg, hasSent: hasSentMsg });
+        this.setState({ messages: resp });
       })
       .catch(err => console.error('no messages for user', err));
   };
 
-  // displayMessages = () => {
-  //   // const { messagePostId } = this.state;
-  //   const { userid } = this.props;
-  //   messagesData.getMessages()
-  //     .then((resp) => {
-  //       const ownerMessages = resp.filter(m => m.ownerId === userid);
-  //       const renterMessages = resp.filter(m => m.renterId === userid);
-  //       console.error(ownerMessages, 'display messages owner');
-  //       console.error(renterMessages, 'display messages renter');
-  //     })
-  //     .catch(err => console.error('no messages for user', err));
-  // };
-
   myMessage = (e) => {
     e.preventDefault();
     const message = e.target.value;
-    this.setState({ newMessage: { message } });
+    this.setState({ newMessage: message });
   };
 
   sendMessage = (e) => {
     e.preventDefault();
-    if (this.state.canMessage === true) {
-      const messagesBetweenObj = {
-        newMessage: this.state.newMessage,
-        renterId: this.state.renterId,
-        ownerId: this.state.ownerId,
-        ownerUsername: this.state.ownerUsername,
-        renterUsername: this.state.renterUsername,
-        sentBy: this.props.userid,
-      };
-      messagesData.newMessage(messagesBetweenObj)
-        .then((res) => {
-          this.setState({ messagePostId: res.data.name });
-          console.error(res.data.name, 'send message');
-        })
-        .catch(err => console.error('no new message', err));
-    }
-  };
+    const messagesBetweenObj = {
+      userid1: this.state.user.uid,
+      username1: this.state.user.username,
+      userid2: this.state.owner.uid,
+      username2: this.state.owner.username,
+      newMessage: this.state.newMessage,
+      timestamp: moment().format('x'),
+    };
 
-  showWholeMessage = (e) => {
-    e.preventDefault();
+    messagesData.newMessage(messagesBetweenObj)
+      .then((res) => {
+        this.setState({ messagePostId: res.data.name });
+      })
+      .catch(err => console.error('no new message', err));
   };
 
   render() {
-    const { newMessage, isGetting } = this.state;
+    const {
+      userid,
+      newMessage,
+      paramOwnerId,
+      messages,
+    } = this.state;
 
-    const showMessagesReceived = isGetting.map(got => (
-      <div>{got}</div>
+    const showMessageConversation = messages.map(message => (
+      <ReceivedMessage
+        key={message.id}
+        message={message}
+        userid={userid}
+        paramOwnerId={paramOwnerId}
+      />
     ));
 
     return (
       <div className="Messages">
-        <h2>Messages</h2>
-        <div className="displayMessagesDiv" onClick={this.showWholeMessage}>
-          {this.messagesSmall}
-        </div>
+        <h2 className="msgsHeader">Messages</h2>
+
         <div className="displayMessagesDiv">
-          {/* {showMessagesReceived} */}
+          {showMessageConversation}
         </div>
-        <div>
-          <label htmlFor="messageInput">Send Message</label>
-          <input
-          type="text"
-          id="messageInput"
-          defaultValue={newMessage.message}
-          onChange={this.myMessage}
-        />
-          <button
-            className="btn btn-primary sendMessageBtn"
-            onClick={this.sendMessage}
-          >Send</button>
-        </div>
+
+          <div className="sendMessageForm">
+            <label htmlFor="messageInput">Send Message{paramOwnerId !== '' ? paramOwnerId : ''}</label>
+            <input
+            type="text"
+            id="messageInput"
+            defaultValue={newMessage.message}
+            onChange={this.myMessage}
+          />
+            <button
+              className="btn btn-primary sendMessageBtn"
+              onClick={this.sendMessage}
+            >Send</button>
+          </div>
+
+
       </div>
     );
   }

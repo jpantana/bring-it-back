@@ -38,6 +38,13 @@ class Home extends React.Component {
     this.getRentedItemsData();
   }
 
+  messageUserRedirect = (ownerId) => {
+    this.props.history.push({
+      pathname: `/messages/${this.state.useruid}`,
+      state: { ownersId: ownerId },
+    });
+  };
+
   getItems = () => {
     itemsData.getAllItems().then((res) => {
       const { categoryName } = this.state;
@@ -50,7 +57,6 @@ class Home extends React.Component {
     }).catch(err => console.error('no items to display', err));
   };
 
-  // Callback function displays users name in top nav
   getUser = (uid) => {
     usersData.getUsers(uid)
       .then((resp) => {
@@ -210,6 +216,7 @@ class Home extends React.Component {
           rentThisItem={this.rentThisItem}
           itemsRented={itemsRented}
           useruid={useruid}
+          messageUserRedirect={this.messageUserRedirect}
         />
     ));
 

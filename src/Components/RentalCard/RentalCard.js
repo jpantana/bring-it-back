@@ -22,7 +22,7 @@ class RentalCard extends React.Component {
   };
 
   render() {
-    const { rental, userid } = this.props;
+    const { rental } = this.props;
     const { sendMessage } = this.state;
 
     return (
