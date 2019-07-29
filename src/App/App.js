@@ -7,6 +7,8 @@ import {
 } from 'react-router-dom';
 import firebase from 'firebase/app';
 // JS files
+import Messages from '../Components/Messages/Messages';
+import MyRentals from '../Components/MyRentals/MyRentals';
 import MyStuff from '../Components/MyStuff/MyStuff';
 import SignUp from '../Components/SignUp/SignUp';
 import fbConnection from '../helpers/data/connection';
@@ -104,6 +106,8 @@ class App extends React.Component {
                   {/* <PrivateRoute path="/signup" component={() => (<SignUp />)} authed={authed} /> */}
                   <PrivateRoute path="/home" component={Home} authed={authed} />
                   <PrivateRoute path="/mystuff/:id" className="" component={MyStuff} authed={authed} />
+                  <PrivateRoute path="/myrentals/:id" className="" component={MyRentals} authed={authed} />
+                  <PrivateRoute path="/messages/:id" className="" component={Messages} authed={authed} />
                   <Redirect from="*" to="/auth" />
                 </Switch>
               </div>

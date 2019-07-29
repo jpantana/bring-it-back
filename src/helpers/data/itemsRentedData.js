@@ -19,6 +19,8 @@ const getRentals = () => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
+const deleteRentals = itemId => axios.delete(`${baseUrl}/itemsRented/${itemId}.json`);
+
 // const getRentals = rentalId => new Promise((resolve, reject) => {
 //   // axios.get(`${baseUrl}/itemsRented.json?orderBy="rentalId"&equalTo="${rentalId}"`)
 //   axios.get(`${baseUrl}/itemsRented.json`)
@@ -35,4 +37,4 @@ const getRentals = () => new Promise((resolve, reject) => {
 //     .catch(err => reject(err));
 // });
 
-export default { newRental, getRentals };
+export default { newRental, getRentals, deleteRentals };

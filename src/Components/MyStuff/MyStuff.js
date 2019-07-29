@@ -208,7 +208,7 @@ class MyStuff extends React.Component {
             editItemEvent={this.editItemEvent}
           /> : '') }
         </div>
-        <Map userid={userid}/>
+        <Map key={'unique4'} userid={userid}/>
       </div>
     );
   }

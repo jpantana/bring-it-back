@@ -14,6 +14,7 @@ class ItemCard extends React.Component {
     item: itemShape.itemShape,
     rentThisItem: PropTypes.func.isRequired,
     itemsRented: PropTypes.arrayOf(itemsRentedShape.itemsRentedShape).isRequired,
+    useruid: PropTypes.string.isRequired,
   }
 
   rentedInfo = () => {
@@ -24,6 +25,11 @@ class ItemCard extends React.Component {
       }
     });
     return returnTime;
+  };
+
+  messageThisUser = (e) => {
+    e.preventDefault();
+    // this.props.history.replace(`/messages/${this.state.useruid}`);
   };
 
   render() {
@@ -66,6 +72,14 @@ class ItemCard extends React.Component {
           /> : ''}
           </span>
         </div>
+        {
+          this.props.useruid !== this.props.item.ownerId
+            ? <span className="msgUserSpan">
+            <button
+              className="btn msgUserBtn"
+              onClick={this.messageThisUser}
+            >Message Owner</button>
+            </span> : ''}
       </div>
     );
   }

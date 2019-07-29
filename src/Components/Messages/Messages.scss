@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+
+.Messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.displayMessagesDiv {
+  height: 40em;
+  width: 50em;
+  background-color: $shadow;
+}

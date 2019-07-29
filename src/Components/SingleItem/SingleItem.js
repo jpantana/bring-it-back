@@ -68,7 +68,7 @@ class SingleItem extends React.Component {
             </span>
             <p className="aboutSpan">description</p>
             <p className="card-text itemDescription">{singleItem.description}</p>
-            <table classname="singleItemTable">
+            <table className="singleItemTable">
               <tbody>
                 <tr>
                   <td className="thConditionSI">Condition</td>

@@ -2,21 +2,21 @@
   "user1": {
     "firstname": "Josh",
     "lastname": "Pantana",
-    "username": "username1",
+    "username": "jpantana",
     "street": "515 Old Towne Drive",
     "city": "Brentwood",
     "state": "Tennessee",
     "zipcode": "37027",
-    "uid": "1234"
+    "uid": "egl4B3b3UxMPW9olSg0WrC0vTK23"
   },
   "user2": {
     "firstname": "Stephanie",
     "lastname": "Pantana",
-    "username": "username2",
-    "street": "515 Old Towne Drive",
-    "city": "Brentwood",
+    "username": "span",
+    "street": "2415 12th Ave. South",
+    "city": "Nashville",
     "state": "Tennessee",
-    "zipcode": "37027",
-    "uid": "23456"
+    "zipcode": "37212",
+    "uid": "PKL4O6uLYshHdhRK3s7VR2iTZn13"
   }
 }
