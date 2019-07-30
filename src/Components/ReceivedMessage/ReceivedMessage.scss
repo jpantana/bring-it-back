@@ -5,6 +5,8 @@
   margin: auto;
   flex-direction: column;
   width: 20em;
+  padding: 5px 0px 5px 0px;
+
 }
 
 .receivedtMsg {
@@ -13,6 +15,9 @@
   width: 14em;
   .textLeft {
     text-align: left;
+    font-family: $font1;
+    font-size: 14px;
+    padding: 0 1px 0 4px;
   }
 }
 
@@ -23,6 +28,16 @@
   margin-left: auto;
   .textRight {
     text-align: right;
+    font-family: $font1;
+    font-size: 14px;
+    padding: 0 4px 0 1px;
   }
 }
 
+.from {
+  font-size: 9px;
+  font-style: italic;
+  font-family: $font1;
+  color: $whiteFont;
+  padding: 2px;
+}

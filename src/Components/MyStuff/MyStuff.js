@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'reactstrap';
 // JSs
-import Map from '../Leaflet/Leaflet';
+import MyMap from '../Leaflet/Leaflet';
 import SingleItem from '../SingleItem/SingleItem';
 import itemsData from '../../helpers/data/itemsData';
 import Items from '../Items/Items';
@@ -208,7 +208,7 @@ class MyStuff extends React.Component {
             editItemEvent={this.editItemEvent}
           /> : '') }
         </div>
-        <Map key={'unique4'} userid={userid}/>
+        <MyMap key={'unique4'} id='mystuffMap' userid={userid} />
       </div>
     );
   }

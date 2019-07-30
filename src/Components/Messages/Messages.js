@@ -10,14 +10,11 @@ import './Messages.scss';
 class Messages extends React.Component {
   state = {
     newMessage: '',
-    canMessage: false,
     paramOwnerId: '',
     messagePostId: '',
-    sentBy: '',
-    // receivedMessages: [],
-    // sentMessages: [],
-    userid: '',
     user: {},
+    userid: '',
+    username: '',
     owner: {},
     messages: [],
   }
@@ -28,15 +25,15 @@ class Messages extends React.Component {
       const { ownersId } = this.props.location.state;
       this.setState({ paramOwnerId: ownersId });
     }
-    this.setState({ userid: uid, sentBy: uid });
-    this.getItemsRented(uid);
+    this.setState({ userid: uid });
+    this.getUsersInfo(uid);
     this.showAllMessages(uid);
   }
 
-  getItemsRented = (uid) => {
+  getUsersInfo = (uid) => {
     usersData.getUsers(uid)
       .then((res) => {
-        this.setState({ user: res[0] });
+        this.setState({ user: res[0], username: res[0].username });
         usersData.getUsers(this.state.paramOwnerId)
           .then((resp) => {
             this.setState({ owner: resp[0] });
@@ -69,10 +66,10 @@ class Messages extends React.Component {
       newMessage: this.state.newMessage,
       timestamp: moment().format('x'),
     };
-
     messagesData.newMessage(messagesBetweenObj)
       .then((res) => {
         this.setState({ messagePostId: res.data.name });
+        this.showAllMessages();
       })
       .catch(err => console.error('no new message', err));
   };
@@ -83,6 +80,8 @@ class Messages extends React.Component {
       newMessage,
       paramOwnerId,
       messages,
+      owner,
+      user,
     } = this.state;
 
     const showMessageConversation = messages.map(message => (
@@ -91,6 +90,8 @@ class Messages extends React.Component {
         message={message}
         userid={userid}
         paramOwnerId={paramOwnerId}
+        owner={owner}
+        user={user}
       />
     ));
 
@@ -103,17 +104,27 @@ class Messages extends React.Component {
         </div>
 
           <div className="sendMessageForm">
-            <label htmlFor="messageInput">Send Message{paramOwnerId !== '' ? paramOwnerId : ''}</label>
+            <label htmlFor="messageInput">Send</label>
+            {/* {paramOwnerId !== '' ? paramOwnerId : ''} */}
             <input
             type="text"
             id="messageInput"
             defaultValue={newMessage.message}
             onChange={this.myMessage}
           />
-            <button
+          {paramOwnerId !== ''
+            ? <button
+                className="btn btn-primary sendMessageBtn"
+                onClick={this.sendMessage}
+              >Send</button> : <button
               className="btn btn-primary sendMessageBtn"
               onClick={this.sendMessage}
-            >Send</button>
+            >Reply</button>
+          }
+            {/* <button
+              className="btn btn-primary sendMessageBtn"
+              onClick={this.sendMessage}
+            >Send</button> */}
           </div>
 
 

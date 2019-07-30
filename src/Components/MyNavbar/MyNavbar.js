@@ -59,6 +59,10 @@ class MyNavbar extends React.Component {
           <NavItem>
             <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/messages/${useruid}`)}>Messages</NavLink>
           </NavItem>
+          {/* this.props.history.push({
+      pathname: `/messages/${this.state.useruid}`,
+      state: { ownersId: ownerId },
+    }); */}
           <NavItem>
             <NavLink className="navLink hvr-shadow  hvr-underline-reveal bounceIn" onClick={this.logMeOut} href="https://github.com/reactstrap/reactstrap">Logout</NavLink>
           </NavItem>
