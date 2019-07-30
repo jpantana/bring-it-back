@@ -23,20 +23,11 @@ const getRentals = () => new Promise((resolve, reject) => {
 
 const deleteRentals = itemId => axios.delete(`${baseUrl}/itemsRented/${itemId}.json`);
 
-// const getRentals = rentalId => new Promise((resolve, reject) => {
-//   // axios.get(`${baseUrl}/itemsRented.json?orderBy="rentalId"&equalTo="${rentalId}"`)
-//   axios.get(`${baseUrl}/itemsRented.json`)
-//     .then((res) => {
-//       const rentals = [];
-//       let singleRental = [];
-//       Object.keys(res.data).forEach((fbKey) => {
-//         res.data[fbKey].id = fbKey;
-//         rentals.push(res.data[fbKey]);
-//         singleRental = rentals.filter(r => r.id === rentalId);
-//       });
-//       resolve(singleRental);
-//     })
-//     .catch(err => reject(err));
-// });
+const editRentals = (rentalEdit, id) => axios.put(`${baseUrl}/itemsRented/${id}.json`, rentalEdit);
 
-export default { newRental, getRentals, deleteRentals };
+export default {
+  newRental,
+  getRentals,
+  deleteRentals,
+  editRentals,
+};

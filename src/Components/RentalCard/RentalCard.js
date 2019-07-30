@@ -5,9 +5,11 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Modal,
 } from 'reactstrap';
 // JSs
 import $ from 'jquery';
+import EditRental from '../EditRental/EditRental';
 import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './RentalCard.scss';
@@ -20,11 +22,13 @@ class RentalCard extends React.Component {
     rental: itemsRentedShape.itemsRentedShape,
     cancelMyRental: PropTypes.func.isRequired,
     getMyRentals: PropTypes.func.isRequired,
+    editMyRental: PropTypes.func.isRequired,
   }
 
   state = {
     sendMessage: false,
     dropdownOpen: false,
+    isOpen: false,
   }
 
   messageItemOwner = (e) => {
@@ -39,7 +43,12 @@ class RentalCard extends React.Component {
     $('.RentalCard').addClass('fadeOut');
     setTimeout(() => {
       this.setState({ ...this.props.getMyRentals() });
-    }, 3000);
+    }, 600);
+  };
+
+  editRental = (e) => {
+    e.preventDefault();
+    this.setState({ isOpen: !this.state.isOpen });
   };
 
   toggle = this.toggle.bind(this);
@@ -52,10 +61,19 @@ class RentalCard extends React.Component {
 
   render() {
     const { rental } = this.props;
-    const { sendMessage } = this.state;
+    const { sendMessage, isOpen } = this.state;
 
     return (
       <div>
+        <Modal isOpen={isOpen}>
+          {<EditRental
+            key={rental.id}
+            rental={rental}
+            editRental={ this.editRental}
+            editMyRental={this.props.editMyRental}
+          />}
+        </Modal>
+
         <div className="RentalCard card">
           <div className="card-body">
             <div className="rentalImgContainer">
@@ -93,6 +111,7 @@ class RentalCard extends React.Component {
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem onClick={this.cancelRental}>Cancel Rental</DropdownItem>
+              <DropdownItem onClick={this.editRental}>Edit Rental Times</DropdownItem>
             </DropdownMenu>
           </Dropdown>
           </div>

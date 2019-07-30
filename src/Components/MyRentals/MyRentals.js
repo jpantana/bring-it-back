@@ -37,6 +37,12 @@ class MyRentals extends React.Component {
       .catch();
   };
 
+  editMyRental = (editObj, id) => {
+    itemsRentedData.editRentals(editObj, id)
+      .then(() => this.getMyRentals())
+      .catch(err => console.error('rental not edited', err));
+  };
+
   render() {
     const { myRentals, userid } = this.state;
     const makeRentalCards = myRentals.map(rental => (
@@ -47,6 +53,7 @@ class MyRentals extends React.Component {
         userid={userid}
         cancelMyRental={this.cancelMyRental}
         getMyRentals={this.getMyRentals}
+        editMyRental={this.editMyRental}
       />
     ));
 

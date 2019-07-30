@@ -1,0 +1,43 @@
+@import '../../styles/variables.scss';
+
+.EditRental {
+  display: block;
+}
+
+.cartIcon {
+  height: 1.5em;
+  padding: 5px;
+}
+
+.editRentBtn {
+  width: 100px;
+  margin: auto !important;
+  margin-bottom: 15px !important;
+  color: $whiteFont !important;
+  background-color: $mainBlue !important;
+  font-family: $font1 !important;
+  border: 1px solid $mainBlue !important;
+  &:hover {
+    background-color: $whiteFont !important;
+    color: $mainBlue !important;
+    transition: .4s;
+  }
+}
+
+.cancelRental {
+  font-size: 24px;
+  padding: 10px;
+  color: $orange;
+  border: 1px solid $orange;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.editReturnTime {
+  font-family: $font1;
+  font-weight: 700;
+  font-size: 14px;
+  color: $orange;
+  margin-top: 15px;
+
+}
