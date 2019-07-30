@@ -1,6 +1,7 @@
 import React from 'react';
 // JSs
 import itemsRentedData from '../../helpers/data/itemsRentedData';
+import itemsData from '../../helpers/data/itemsData';
 import RentalCard from '../RentalCard/RentalCard';
 
 class MyRentals extends React.Component {
@@ -25,6 +26,17 @@ class MyRentals extends React.Component {
       .catch(err => console.error('no rentals', err));
   };
 
+  cancelMyRental = (rentalId, itemId) => {
+    itemsRentedData.deleteRentals(rentalId)
+      .then(() => {
+        // this.getMyRentals();
+        itemsData.changeItemAvailability(itemId, true)
+          .then()
+          .catch(err => console.error('did not change item availability', err));
+      })
+      .catch();
+  };
+
   render() {
     const { myRentals, userid } = this.state;
     const makeRentalCards = myRentals.map(rental => (
@@ -33,6 +45,8 @@ class MyRentals extends React.Component {
         rental={rental}
         myRentals={myRentals}
         userid={userid}
+        cancelMyRental={this.cancelMyRental}
+        getMyRentals={this.getMyRentals}
       />
     ));
 

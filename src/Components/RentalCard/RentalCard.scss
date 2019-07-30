@@ -114,14 +114,6 @@
   }
 }
 
-// .availableAgainDate {
-//   font-size: 10px;
-//   font-style: italic;
-//   font-family: $font1;
-//   color: $mainBlue;
-//   text-shadow: 2px 2px 5px $shadow;
-// }
-
 .allCardIconsHome {
   position: absolute;
   top: 0em;
@@ -142,3 +134,7 @@
   font-family: $font1 !important;
 }
 
+.fadeOut {
+  transition-property: -moz-filter, -ms-filter, -o-filter, -webkit-filter, filter;
+  transition-duration: 3s;
+}

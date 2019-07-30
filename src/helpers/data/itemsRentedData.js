@@ -10,10 +10,12 @@ const getRentals = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/itemsRented.json`)
     .then((res) => {
       const rentals = [];
-      Object.keys(res.data).forEach((fbKey) => {
-        res.data[fbKey].id = fbKey;
-        rentals.push(res.data[fbKey]);
-      });
+      if (res.data !== null) {
+        Object.keys(res.data).forEach((fbKey) => {
+          res.data[fbKey].id = fbKey;
+          rentals.push(res.data[fbKey]);
+        });
+      }
       resolve(rentals);
     })
     .catch(err => reject(err));

@@ -3,33 +3,41 @@
 .MyStuff {
   width: 100%;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
   justify-content: center;
   margin-top: 20px;
 }
 
-.addNewSpan {
-  margin: 5px;
-  margin-bottom: 15px !important;
-  text-align: left !important;
-  text-shadow: 1px 1px 4px orange;
-  color: $whiteFont;
-  font-size: 18px;
-  font-family: $font1;
-  font-weight: 700;
-  background-color: $orange;
-  padding: 12px 6px 12px 6px;
-  width: 18em !important;
-  border-radius: 5px 5px 0 0;
-  box-shadow: -5px 1px 12px $shadow;
+.myStuffWrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin-top: 20px;
+  .addNewSpan {
+    margin: 5px;
+    margin-bottom: 15px !important;
+    text-align: left !important;
+    text-shadow: 1px 1px 4px orange;
+    color: $whiteFont;
+    font-size: 18px;
+    font-family: $font1;
+    font-weight: 700;
+    background-color: $orange;
+    padding: 12px 6px 12px 6px;
+    width: 18em !important;
+    border-radius: 5px 5px 0 0;
+    box-shadow: -5px 1px 12px $shadow;
+  }
+  
+  .addIcon {
+    height: 30px;
+    margin-left: 5px;
+    filter: invert(100%);
+  }
 }
 
-.addIcon {
-  height: 30px;
-  margin-left: 5px;
-  filter: invert(100%);
-}
 
-// .mystuffMap {
-//   height: 180px;
-// }
+.mystuffMap {
+  // height: 180px;
+}

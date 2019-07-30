@@ -20,7 +20,7 @@ import 'leaflet/dist/leaflet.css';
 import './Leaflet.scss';
 import 'animate.css';
 // SVGs
-import marker from '../../SVGs/map-marker.svg';
+// import marker from '../../SVGs/map-marker.svg';
 
 const defaultUserState = {
   firstname: '',
@@ -41,6 +41,18 @@ L.Icon.Default.mergeOptions({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
+
+// const iconSVG = new L.Icon({
+//   iconUrl: require('../../SVGs/map-marker.svg'),
+//   iconRetinaUrl: require('../../SVGs/map-marker.svg'),
+//   iconAnchor: null,
+//   popupAnchor: null,
+//   shadowUrl: null,
+//   shadowSize: null,
+//   shadowAnchor: null,
+//   iconSize: new L.Point(60, 75),
+//   className: 'leaflet-div-icon'
+// });
 
 export default class MyMap extends React.Component {
   static propTypes = {
@@ -85,7 +97,7 @@ export default class MyMap extends React.Component {
         <Map zoom={10} center={this.state.latLong} >
           <TileLayer attribution='<a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <Marker key={'mapMarker1'} position={this.state.latLong} >
+              <Marker key={'mapMarker1'} position={this.state.latLong}>
                 <Popup>
                   A pretty CSS3 popup. <br /> Easily customizable.
                 </Popup>
