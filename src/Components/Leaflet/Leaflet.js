@@ -13,7 +13,7 @@ import {
 import firebase from 'firebase/app';
 import 'firebase/auth';
 // JSs
-import mapKey from '../../helpers/mapquestApiKey.json';
+import mapKey from '../../helpers/geocodieApiKey.json';
 import usersData from '../../helpers/data/usersData';
 // STYLEs
 import 'leaflet/dist/leaflet.css';
