@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 src/helpers/apiKeys.json
-src/helpers/geocodieApiKey.json
+src/helpers/mapApiKey.json
 src/helpers/firebasemsgApiKey.json
 
 # dependencies
