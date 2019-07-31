@@ -148,11 +148,6 @@ class Home extends React.Component {
     }
     $('#arrowBack').removeClass('hide');
     $('#arrowLeft').removeClass('hide');
-    // if (counter >= howManyClicks) {
-    //   $('#arrowRight').addClass('hide');
-    // } else if (counter < howManyClicks) {
-    //   $('#arrowRight').removeClass('hide');
-    // }
   };
 
   moveLeft = (e) => {
@@ -177,7 +172,7 @@ class Home extends React.Component {
   widthMath = () => {
     const divLength = this.state.itemsLength;
     const makeNum = divLength * 1;
-    const theMath = makeNum * 150;
+    const theMath = makeNum * 143;
     return theMath;
   };
 

@@ -57,8 +57,8 @@ class SingleItem extends React.Component {
         <div className="mainCard">
 
           <div className="imgDiv">
-            {/* <img className="card-img-top SingleItemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} /> */}
-            <img src="https://via.placeholder.com/200x250" className="card-img-top SingleItemImg" alt="placeholder img" />
+            <img className="card-img-top SingleItemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} />
+            {/* <img src="https://via.placeholder.com/200x250" className="card-img-top SingleItemImg" alt="placeholder img" /> */}
           </div>
 
           <div className="card singleItemDetails">
@@ -68,7 +68,7 @@ class SingleItem extends React.Component {
             </span>
             <p className="aboutSpan">description</p>
             <p className="card-text itemDescription">{singleItem.description}</p>
-            <table classname="singleItemTable">
+            <table className="singleItemTable">
               <tbody>
                 <tr>
                   <td className="thConditionSI">Condition</td>
