@@ -8,7 +8,7 @@ import usersData from '../../helpers/data/usersData';
 // STYLEs
 import './Messages.scss';
 
-class ReceivedMessage extends React.Component {
+class Messages extends React.Component {
   static propTypes = {
     message: messageShape.messageShape,
     userid: PropTypes.string.isRequired,
@@ -21,11 +21,12 @@ class ReceivedMessage extends React.Component {
     sentMessages: {},
     receivedMessages: {},
     otherPersonInfo: {},
+    otherPersonId: '',
   }
 
   componentDidMount() {
     this.sortMessages();
-    this.findCorrespondent();
+    this.pickupOldConversations();
   }
 
   sortMessages = () => {
@@ -38,30 +39,27 @@ class ReceivedMessage extends React.Component {
     }
   };
 
-  findCorrespondent = () => {
+  // figures who you've messaged with and sets state w their id
+  pickupOldConversations = () => {
     const { message, userid } = this.props;
-    const conversationsIds = [];
-    if (message.userid1 === userid && message.userid2 !== userid) {
-      conversationsIds.push(message.userid2);
+    if (message.userid1 === userid || message.userid2 === userid) {
+      if (userid !== message.userid2) {
+        this.setState({ otherPersonId: message.userid2 });
+      } else if (userid !== message.userid1) {
+        this.setState({ otherPersonId: message.userid1 });
+      }
     }
-    if (message.userid2 === userid && message.userid1 !== userid) {
-      conversationsIds.push(message.userid1);
-    }
-    this.getThatUser(conversationsIds);
+    setTimeout(() => {
+      this.getThatUser();
+    }, 300);
   };
 
-  getThatUser = (id) => {
-    usersData.getUsers(id)
+  // takes above functions id and fetches that user
+  getThatUser = () => {
+    const { otherPersonId } = this.state;
+    usersData.getUsers(otherPersonId)
       .then((resp) => {
         this.setState({ otherPersonInfo: resp[0] });
-        const replyObj = {
-          // // newMessage: '',
-          // // timestamp: '',
-          // userid1: '',
-          userid2: '',
-          username1: '',
-          username2: '',
-        };
       })
       .catch(err => console.error('did not get reply user', err));
   };
@@ -90,4 +88,4 @@ class ReceivedMessage extends React.Component {
   }
 }
 
-export default ReceivedMessage;
+export default Messages;

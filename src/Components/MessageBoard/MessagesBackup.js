@@ -21,12 +21,13 @@ class MessageBoard extends React.Component {
 
   componentDidMount() {
     const uid = this.props.match.params.id;
+    console.error(uid, 'uid component message board');
     if (this.props.location.state) {
       const { ownersId } = this.props.location.state;
-      this.setState({ paramOwnerId: ownersId, userid: uid });
-    } else {
-      this.setState({ userid: uid });
+      console.error(ownersId, 'owner id MB');
+      this.setState({ paramOwnerId: ownersId });
     }
+    this.setState({ userid: uid });
     this.getUsersInfo(uid);
     this.showAllMessages(uid);
   }
@@ -35,12 +36,11 @@ class MessageBoard extends React.Component {
     usersData.getUsers(uid)
       .then((res) => {
         this.setState({ user: res[0], username: res[0].username });
-        if (this.state.paramOwnerId !== '') {
-          usersData.getUsers(this.state.paramOwnerId)
-            .then((resp) => {
-              this.setState({ owner: resp[0] });
-            });
-        }
+        usersData.getUsers(this.state.paramOwnerId)
+          .then((resp) => {
+            console.error(resp[0]);
+            this.setState({ owner: resp[0] });
+          });
       })
       .catch(err => console.error('no items rented', err));
   };

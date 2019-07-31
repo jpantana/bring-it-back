@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+@import '~@fortawesome/fontawesome-free/css/all.css';
 
 .MyNavbar {
   display: flex;
@@ -30,10 +31,32 @@
   margin: 5px;
 }
 
-// .navBarBrand {
+.dropdownIcon {
+  margin-right: 10px;
+  filter: invert(20%);
+}
 
-// }
-
+#settingsDropDown {
+  margin-right: 12px;
+  text-shadow: none !important;
+  &:active {
+    box-shadow: white !important;
+  }
+  .btn-secondary {
+    background-color: transparent !important;
+    color: $mainBlue !important;
+    &:active {
+      box-shadow: white !important;
+    }
+  }
+  .btn {
+    // font-size: 18px;
+    box-shadow: none !important;
+    &:active {
+      box-shadow: none !important;
+    }
+  }
+}
 .brandSVG {
   width: 200px;
   position: absolute;

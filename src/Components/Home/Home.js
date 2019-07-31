@@ -40,7 +40,7 @@ class Home extends React.Component {
 
   messageUserRedirect = (ownerId) => {
     this.props.history.push({
-      pathname: `/messages/${this.state.useruid}`,
+      pathname: `/messageboard/${this.state.useruid}`,
       state: { ownersId: ownerId },
     });
   };
