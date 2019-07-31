@@ -175,20 +175,20 @@ class MyStuff extends React.Component {
                   />}
                 </Modal>
                 <Modal isOpen={this.state.editIsOpen} >
-                <EditItem
-                  key={`editItem.${itemId}`}
-                  id={itemId}
-                  categories={this.state.categories}
-                  editItem={this.state.editItem}
-                  categoryIdStateChg={this.categoryIdStateChg}
-                  categoryId={this.state.categoryId}
-                  showCategories={this.showCategories}
-                  userid={this.state.userid}
-                  getUserItems={this.getUserItems}
-                  editItemForm={this.editItemForm}
-                  closeEditModal={this.closeEditModal}
-                  updateImageUrl={this.updateImageUrl}
-                />
+                  <EditItem
+                    key={`editItem.${itemId}`}
+                    id={itemId}
+                    categories={this.state.categories}
+                    editItem={this.state.editItem}
+                    categoryIdStateChg={this.categoryIdStateChg}
+                    categoryId={this.state.categoryId}
+                    showCategories={this.showCategories}
+                    userid={this.state.userid}
+                    getUserItems={this.getUserItems}
+                    editItemForm={this.editItemForm}
+                    closeEditModal={this.closeEditModal}
+                    updateImageUrl={this.updateImageUrl}
+                  />
                 </Modal>
         <div className="">
           <span className="addNewSpan" onClick={this.addNewItem}>

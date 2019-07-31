@@ -148,11 +148,6 @@ class Home extends React.Component {
     }
     $('#arrowBack').removeClass('hide');
     $('#arrowLeft').removeClass('hide');
-    // if (counter >= howManyClicks) {
-    //   $('#arrowRight').addClass('hide');
-    // } else if (counter < howManyClicks) {
-    //   $('#arrowRight').removeClass('hide');
-    // }
   };
 
   moveLeft = (e) => {
