@@ -32,11 +32,6 @@ const defaultStateRental = {
   ownerId: '',
   priceperday: '',
   priceperhour: '',
-  // hoursRented: '0',
-  // pickupDate: '',
-  // isOverDue: false,
-  // ownerAddress: '',
-  // returnTime: '',
 };
 class EditRental extends React.Component {
   static propTypes = {
@@ -102,6 +97,7 @@ class EditRental extends React.Component {
     const bringItBack = moment(firstDate, 'MM/DD/YYYY - h:mm a').add(hours, 'hours').calendar();
     const tempItem = { ...this.state.rentedItemToEdit };
     tempItem.returnTime = bringItBack;
+    tempItem.hoursRented = e;
     this.setState({ rentedItemToEdit: tempItem });
   };
 
@@ -110,7 +106,7 @@ class EditRental extends React.Component {
   };
 
   rentThisLong = (e) => {
-    this.rentedItemToEditDataUpdate('hoursRented', e);
+    // this.rentedItemToEditDataUpdate('hoursRented', e);
     this.determineDueDate(e.target.value);
   };
 
@@ -131,19 +127,19 @@ class EditRental extends React.Component {
                   id="editRentalDate"
                   aria-describedby="rental date"
                   placeholder=''
-                  defaultValue={rentedItemToEdit.pickupDate}
+                  value={rentedItemToEdit.pickupDate}
                   onChange={this.pickupDate}
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="editHowLong">How long do you need it?</label>
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
                   id="editHowLong"
                   aria-describedby="how long"
                   placeholder="e.g. 26 hrs"
-                  defaultValue={rentedItemToEdit.hoursRented}
+                  value={rentedItemToEdit.hoursRented}
                   onChange={this.rentThisLong}
                 />
                 <p className="editReturnTime">{this.state.rentedItemToEdit.returnTime}</p>
