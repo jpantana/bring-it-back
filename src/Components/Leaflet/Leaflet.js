@@ -69,7 +69,6 @@ export default class MyMap extends React.Component {
 
   componentDidMount() {
     this.pullUser();
-    // this.buildMap();
   }
 
   geoCodie = (addy) => {
@@ -104,7 +103,6 @@ export default class MyMap extends React.Component {
               </Marker>
         </Map>
       </div>
-      // <Wrapper width="440px" height="180px" id="map"/>
     );
   }
 }
