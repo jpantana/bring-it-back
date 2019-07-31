@@ -8,6 +8,7 @@
     "bootstrap": "^4.3.1",
     "firebase": "^6.3.0",
     "jquery": "^3.4.1",
+    "leaflet": "^1.5.1",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -23,7 +24,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -172,7 +172,7 @@ class Home extends React.Component {
   widthMath = () => {
     const divLength = this.state.itemsLength;
     const makeNum = divLength * 1;
-    const theMath = makeNum * 150;
+    const theMath = makeNum * 143;
     return theMath;
   };
 
