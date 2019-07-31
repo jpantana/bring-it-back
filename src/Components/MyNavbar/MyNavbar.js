@@ -57,7 +57,7 @@ class MyNavbar extends React.Component {
             <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/myrentals/${useruid}`)}>My Rentals</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/messages/${useruid}`)}>Messages</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/messageboard/${useruid}`)}>Forum</NavLink>
           </NavItem>
           {/* this.props.history.push({
       pathname: `/messages/${this.state.useruid}`,

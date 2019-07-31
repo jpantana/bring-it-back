@@ -1,136 +1,93 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 // JSs
-import moment from 'moment';
-import ReceivedMessage from '../ReceivedMessage/ReceivedMessage';
-import messagesData from '../../helpers/data/messagesData';
+import messageShape from '../../helpers/propz/messageShape';
+import userShape from '../../helpers/propz/userShape';
 import usersData from '../../helpers/data/usersData';
 // STYLEs
 import './Messages.scss';
 
-class Messages extends React.Component {
+class ReceivedMessage extends React.Component {
+  static propTypes = {
+    message: messageShape.messageShape,
+    userid: PropTypes.string.isRequired,
+    paramOwnerId: PropTypes.string,
+    owner: userShape.userShape,
+    user: userShape.userShape,
+  }
+
   state = {
-    newMessage: '',
-    paramOwnerId: '',
-    messagePostId: '',
-    user: {},
-    userid: '',
-    username: '',
-    owner: {},
-    messages: [],
+    sentMessages: {},
+    receivedMessages: {},
+    otherPersonInfo: {},
   }
 
   componentDidMount() {
-    const uid = this.props.match.params.id;
-    if (this.props.location.state) {
-      const { ownersId } = this.props.location.state;
-      this.setState({ paramOwnerId: ownersId });
-    }
-    this.setState({ userid: uid });
-    this.getUsersInfo(uid);
-    this.showAllMessages(uid);
+    this.sortMessages();
+    this.findCorrespondent();
   }
 
-  getUsersInfo = (uid) => {
-    usersData.getUsers(uid)
-      .then((res) => {
-        this.setState({ user: res[0], username: res[0].username });
-        usersData.getUsers(this.state.paramOwnerId)
-          .then((resp) => {
-            this.setState({ owner: resp[0] });
-          });
-      })
-      .catch(err => console.error('no items rented', err));
+  sortMessages = () => {
+    const { message, userid } = this.props;
+    if (message.userid1 === userid) {
+      this.setState({ sentMessages: message });
+    }
+    if (message.userid2 === userid) {
+      this.setState({ receivedMessages: message });
+    }
   };
 
-  showAllMessages = (uid) => {
-    messagesData.getMessages()
+  findCorrespondent = () => {
+    const { message, userid } = this.props;
+    const conversationsIds = [];
+    if (message.userid1 === userid && message.userid2 !== userid) {
+      conversationsIds.push(message.userid2);
+    }
+    if (message.userid2 === userid && message.userid1 !== userid) {
+      conversationsIds.push(message.userid1);
+    }
+    this.getThatUser(conversationsIds);
+  };
+
+  getThatUser = (id) => {
+    usersData.getUsers(id)
       .then((resp) => {
-        this.setState({ messages: resp });
+        this.setState({ otherPersonInfo: resp[0] });
+        const replyObj = {
+          // // newMessage: '',
+          // // timestamp: '',
+          // userid1: '',
+          userid2: '',
+          username1: '',
+          username2: '',
+        };
       })
-      .catch(err => console.error('no messages for user', err));
+      .catch(err => console.error('did not get reply user', err));
   };
 
-  myMessage = (e) => {
-    e.preventDefault();
-    const message = e.target.value;
-    this.setState({ newMessage: message });
-  };
-
-  sendMessage = (e) => {
-    e.preventDefault();
-    const messagesBetweenObj = {
-      userid1: this.state.user.uid,
-      username1: this.state.user.username,
-      userid2: this.state.owner.uid,
-      username2: this.state.owner.username,
-      newMessage: this.state.newMessage,
-      timestamp: moment().format('x'),
-    };
-    messagesData.newMessage(messagesBetweenObj)
-      .then((res) => {
-        this.setState({ messagePostId: res.data.name });
-        this.showAllMessages();
-      })
-      .catch(err => console.error('no new message', err));
-  };
 
   render() {
-    const {
-      userid,
-      newMessage,
-      paramOwnerId,
-      messages,
-      owner,
-      user,
-    } = this.state;
-
-    const showMessageConversation = messages.map(message => (
-      <ReceivedMessage
-        key={message.id}
-        message={message}
-        userid={userid}
-        paramOwnerId={paramOwnerId}
-        owner={owner}
-        user={user}
-      />
-    ));
+    const { receivedMessages, sentMessages } = this.state;
 
     return (
-      <div className="Messages">
-        <h2 className="msgsHeader">Messages</h2>
-
-        <div className="displayMessagesDiv">
-          {showMessageConversation}
-        </div>
-
-          <div className="sendMessageForm">
-            <label htmlFor="messageInput">Send</label>
-            {/* {paramOwnerId !== '' ? paramOwnerId : ''} */}
-            <input
-            type="text"
-            id="messageInput"
-            defaultValue={newMessage.message}
-            onChange={this.myMessage}
-          />
-          {paramOwnerId !== ''
-            ? <button
-                className="btn btn-primary sendMessageBtn"
-                onClick={this.sendMessage}
-              >Send</button> : <button
-              className="btn btn-primary sendMessageBtn"
-              onClick={this.sendMessage}
-            >Reply</button>
-          }
-            {/* <button
-              className="btn btn-primary sendMessageBtn"
-              onClick={this.sendMessage}
-            >Send</button> */}
+      <div className="ReceivedMessage">
+        {Object.keys(receivedMessages).length === 0 && receivedMessages.constructor === Object ? ''
+          : <div className="receivedtMsg">
+            <p className="textLeft"><span className="from">From  {receivedMessages.username1}</span></p>
+            <p className="textLeft">{receivedMessages.newMessage}</p>
           </div>
+        }
 
+        {Object.keys(sentMessages).length === 0 && sentMessages.constructor === Object ? ''
+          : <div className="sentMsg">
+              <p className="textRight"><span className="from">From  {sentMessages.username1}</span></p>
+              <p className="textRight">{sentMessages.newMessage}</p>
+             </div>}
 
       </div>
     );
   }
 }
 
-export default Messages;
+export default ReceivedMessage;

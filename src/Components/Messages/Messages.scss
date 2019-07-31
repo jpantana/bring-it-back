@@ -1,33 +1,43 @@
 @import '../../styles/variables.scss';
 
-.Messages {
+.ReceivedMessage {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: 5px 1px 9px $shadow;
-  width: 25em;
-  max-height: 40em; 
   margin: auto;
-  margin-top: 2em;
+  flex-direction: column;
+  width: 20em;
+  padding: 5px 0px 5px 0px;
+
+}
+
+.receivedtMsg {
   border-radius: 8px;
-  overflow: scroll;
+  background-color: $msgBackground2;
+  width: 14em;
+  .textLeft {
+    text-align: left;
+    font-family: $font1;
+    font-size: 14px;
+    padding: 0 1px 0 4px;
+  }
 }
 
-.sendMessageForm {
-  height: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.sentMsg {
+  border-radius: 8px;
+  background-color: $msgBackground1;
+  width: 14em;
+  margin-left: auto;
+  .textRight {
+    text-align: right;
+    font-family: $font1;
+    font-size: 14px;
+    padding: 0 4px 0 1px;
+  }
 }
 
-.msgsHeader {
+.from {
+  font-size: 9px;
+  font-style: italic;
   font-family: $font1;
-  font-size: 18px;
-  font-weight: 700;
   color: $whiteFont;
-  // text-shadow: 2px 1px 4px $shadow;
-  width: 100%;
-  padding: 10px;
-  background-color: $mainBlue;
-  border-radius: 8px 8px 0 0;
-  border-bottom: 10px solid $orange;
+  padding: 2px;
 }
