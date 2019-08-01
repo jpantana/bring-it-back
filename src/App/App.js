@@ -52,6 +52,7 @@ class App extends React.Component {
     authed: false,
     useruid: '',
     username: '',
+    profilePic: '',
   }
 
   componentDidMount() {
@@ -72,7 +73,7 @@ class App extends React.Component {
   getUserName = () => {
     usersData.getUsers(this.state.useruid)
       .then((user) => {
-        this.setState({ username: user[0].username });
+        this.setState({ username: user[0].username, profilePic: user[0].profile });
       })
       .catch(err => console.error('no user logged in', err));
   };
@@ -86,6 +87,7 @@ class App extends React.Component {
       authed,
       useruid,
       username,
+      profilePic,
     } = this.state;
 
     return (
@@ -96,6 +98,7 @@ class App extends React.Component {
               authed={authed}
               useruid={useruid}
               username={username}
+              profilePic={profilePic}
               removeUsername={this.removeUsername}
             />
             <div className="wrapper d-flex">

@@ -45,6 +45,7 @@ class MyNavbar extends React.Component {
     username: PropTypes.string.isRequired,
     useruid: PropTypes.string.isRequired,
     removeUsername: PropTypes.func.isRequired,
+    profilePic: PropTypes.string.isRequired,
   }
 
   state = {
@@ -53,10 +54,13 @@ class MyNavbar extends React.Component {
     modal: false,
     userObj: defaultUserState,
     hasUser: false,
+    profilePic: '',
   }
 
-  componentDidMount() {
-    // this.getUser();
+  componentWillReceiveProps() {
+    if (this.props.authed === true && this.props.useruid !== '') {
+      this.getUser();
+    }
   }
 
   toggle() {
@@ -74,23 +78,32 @@ class MyNavbar extends React.Component {
   openModal = (e) => {
     e.preventDefault();
     this.setState({ modal: !this.state.modal });
-    this.getUser();
+    // this.getUser();
   };
 
   openArrowDropDown = (e) => {
     e.preventDefault();
   };
 
+  addProfileLink = () => {
+    this.setState({ profilePic: this.state.user.profile });
+  };
+
   getUser = () => {
     usersData.getUsers(this.props.useruid)
       .then((res) => {
-        this.setState({ user: res[0], hasUser: true });
+        this.setState({
+          user: res[0],
+          hasUser: true,
+        });
+        this.addProfileLink();
       })
-      .catch(err => console.error('no user to nav', err));
+      .catch(err => console.error('no user to navbar', err));
   };
 
   logMeOut = (e) => {
     e.preventDefault();
+    this.setState({ profilePic: '' });
     this.props.removeUsername();
     firebase.auth().signOut();
   };
@@ -137,7 +150,13 @@ class MyNavbar extends React.Component {
         <NavbarBrand className="navBarBrand" href="/"><img className="bounceIn brandSVG" src={brand} alt="brand svg" /></NavbarBrand>
           <div>
             <div className="userDisplayDiv">
-              <img className="userIcon" src={userIcon} alt="icon for a user"/>
+              {(this.state.profilePic !== ''
+                ? <div className="profilePic">
+                    <img className="profilePicImg" src={this.state.profilePic} alt="user profile" />
+                  </div>
+                : <img className="userIcon" src={userIcon} alt="icon for a user"/>
+              )}
+
               <p className="userName">{ username }</p>
               <UncontrolledButtonDropdown
                 id='settingsDropDown'

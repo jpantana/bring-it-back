@@ -90,14 +90,18 @@ class UpdateUser extends React.Component {
     e.preventDefault();
     const uid = this.props.user.id;
     const editUserObj = { ...this.state.editUser };
-    editUserObj.profile = this.state.imageUrl;
     delete editUserObj.id;
+    if (this.state.imageUrl === '') {
+      editUserObj.profile = this.props.user.profile;
+    } else {
+      editUserObj.profile = this.state.imageUrl;
+    }
     usersData.editExistingUser(editUserObj, uid)
-      .then((resp) => {
-        console.error(resp);
+      .then(() => {
         this.setState({ editUser: defaultUserState });
-        this.props.openModal();
-      }).catch(err => console.error('no existing user edited', err));
+        this.props.openModal(e);
+      });
+    // .catch(err => console.error('no existing user edited here', err));
   };
 
   savePicOnly = (e) => {

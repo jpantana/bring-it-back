@@ -26,9 +26,22 @@
   margin: auto;
   margin-right: 10px;
 }
-
+.profilePic {
+  margin: 5px;
+  max-height: 40px;
+  max-width: 40px;
+  border-radius: 50px;
+  overflow: hidden;
+  .profilePicImg {
+    position: relative;
+    top: -5px;
+    width: 40px;
+    object-fit: contain;
+  }
+}
 .userIcon {
   margin: 5px;
+  height: 40px;
 }
 
 .dropdownIcon {
@@ -62,7 +75,7 @@
   position: absolute;
   z-index: 100;
   // top: 42px;
-  top: 55px;
+  top: 70px;
   left: 20px;
   &:hover {
     // filter: invert(50%);
