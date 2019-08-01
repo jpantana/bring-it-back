@@ -52,6 +52,7 @@ class MyNavbar extends React.Component {
     dropdownOpen: false,
     modal: false,
     userObj: defaultUserState,
+    hasUser: false,
   }
 
   componentDidMount() {
@@ -72,8 +73,8 @@ class MyNavbar extends React.Component {
 
   openModal = (e) => {
     e.preventDefault();
-    this.getUser();
     this.setState({ modal: !this.state.modal });
+    this.getUser();
   };
 
   openArrowDropDown = (e) => {
@@ -82,7 +83,9 @@ class MyNavbar extends React.Component {
 
   getUser = () => {
     usersData.getUsers(this.props.useruid)
-      .then(res => this.setState({ user: res[0] }))
+      .then((res) => {
+        this.setState({ user: res[0], hasUser: true });
+      })
       .catch(err => console.error('no user to nav', err));
   };
 
@@ -123,12 +126,13 @@ class MyNavbar extends React.Component {
 
     return (
       <div className="MyNavbar">
-        <UpdateUser
-          key='updateUserModal'
-          user={user}
-          modal={modal}
-          openModal={this.openModal}
-        />
+       {this.state.hasUser === true
+         ? <UpdateUser
+            key='updateUserModal'
+            user={user}
+            modal={modal}
+            openModal={this.openModal}
+          /> : '' }
         <div className="upperNav">
         <NavbarBrand className="navBarBrand" href="/"><img className="bounceIn brandSVG" src={brand} alt="brand svg" /></NavbarBrand>
           <div>

@@ -77,6 +77,7 @@ class SearchAndSort extends React.Component {
             >
               All
             </DropdownItem>
+            <DropdownItem divider />
             { catLoop }
           </DropdownMenu>
         </Dropdown>
