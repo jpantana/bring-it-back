@@ -36,6 +36,7 @@ const defaultUserState = {
   zipcode: '',
   uid: '',
   username: '',
+  proifle: '',
 };
 
 
@@ -52,7 +53,7 @@ class MyNavbar extends React.Component {
     isOpen: false,
     dropdownOpen: false,
     modal: false,
-    userObj: defaultUserState,
+    user: defaultUserState,
     hasUser: false,
     profilePic: '',
   }
@@ -78,11 +79,6 @@ class MyNavbar extends React.Component {
   openModal = (e) => {
     e.preventDefault();
     this.setState({ modal: !this.state.modal });
-    // this.getUser();
-  };
-
-  openArrowDropDown = (e) => {
-    e.preventDefault();
   };
 
   addProfileLink = () => {
@@ -127,10 +123,6 @@ class MyNavbar extends React.Component {
           <NavItem>
             <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/messageboard/${useruid}`)}>Notes</NavLink>
           </NavItem>
-          {/* this.props.history.push({
-      pathname: `/messages/${this.state.useruid}`,
-      state: { ownersId: ownerId },
-    }); */}
         </Nav>
         );
       }
@@ -145,12 +137,13 @@ class MyNavbar extends React.Component {
             user={user}
             modal={modal}
             openModal={this.openModal}
+            getUser={this.getUser}
           /> : '' }
         <div className="upperNav">
         <NavbarBrand className="navBarBrand" href="/"><img className="bounceIn brandSVG" src={brand} alt="brand svg" /></NavbarBrand>
           <div>
             <div className="userDisplayDiv">
-              {(this.state.profilePic !== ''
+              {(this.state.profilePic !== '' && this.props.authed === true
                 ? <div className="profilePic">
                     <img className="profilePicImg" src={this.state.profilePic} alt="user profile" />
                   </div>
@@ -158,20 +151,21 @@ class MyNavbar extends React.Component {
               )}
 
               <p className="userName">{ username }</p>
-              <UncontrolledButtonDropdown
-                id='settingsDropDown'
-                isOpen={this.state.dropdownOpen}
-                toggle={this.toggle2}
-              >
-                <DropdownToggle>{<i className="fas fa-chevron-circle-down"></i>}</DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem onClick={this.openModal} ><i className="fas fa-user"></i> User Profile</DropdownItem>
-                    <DropdownItem><i className="fas fa-cog"></i> Settings</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem onClick={this.logMeOut}><i className="fa fa-sign-out fa-fw"></i> Logout</DropdownItem>
-                  </DropdownMenu>
-              </UncontrolledButtonDropdown>
-              {/* <img className="dropdownIcon" src={downArrow} alt="icon dropdown arrow" onClick={this.openArrowDropDown} /> */}
+              {this.props.authed === true
+                ? <UncontrolledButtonDropdown
+                    id='settingsDropDown'
+                    isOpen={this.state.dropdownOpen}
+                    toggle={this.toggle2}
+                  >
+                    <DropdownToggle>{<i className="fas fa-chevron-circle-down"></i>}</DropdownToggle>
+                      <DropdownMenu right>
+                        <DropdownItem onClick={this.openModal} ><i className="fas fa-user"></i> User Profile</DropdownItem>
+                        <DropdownItem><i className="fas fa-cog"></i> Settings</DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem onClick={this.logMeOut}><i className="fa fa-sign-out fa-fw"></i> Logout</DropdownItem>
+                      </DropdownMenu>
+                  </UncontrolledButtonDropdown>
+                : ''}
             </div>
           </div>
         </div>

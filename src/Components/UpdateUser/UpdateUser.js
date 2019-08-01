@@ -29,11 +29,11 @@ const defaultUserState = {
   username: '',
 };
 
-
 class UpdateUser extends React.Component {
   static propTypes = {
     user: userShape.userShape,
     openModal: PropTypes.func.isRequired,
+    getUser: PropTypes.func.isRequired,
     modal: PropTypes.bool.isRequired,
   }
 
@@ -100,6 +100,7 @@ class UpdateUser extends React.Component {
       .then(() => {
         this.setState({ editUser: defaultUserState });
         this.props.openModal(e);
+        this.props.getUser();
       });
     // .catch(err => console.error('no existing user edited here', err));
   };
@@ -108,9 +109,14 @@ class UpdateUser extends React.Component {
     e.preventDefault();
     const uid = this.props.user.id;
     const { imageUrl } = this.state;
-    usersData.addProfilePic(imageUrl, uid)
-      .then(() => this.props.openModal())
-      .catch(err => console.error('no profile pic added', err));
+    const editUserObj = { ...this.props.user };
+    editUserObj.profile = imageUrl;
+    usersData.editExistingUser(editUserObj, uid)
+      .then(() => {
+        this.props.openModal(e);
+        this.props.getUser();
+      });
+    // .catch(err => console.error('no profile pic added', err));
   };
 
   // Image Upload Section
