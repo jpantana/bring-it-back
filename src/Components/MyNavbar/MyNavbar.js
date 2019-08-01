@@ -17,17 +17,32 @@ import {
   DropdownMenu,
 } from 'reactstrap';
 // JSs
+import UpdateUser from '../UpdateUser/UpdateUser';
 // STYLES
 import './MyNavbar.scss';
 import 'animate.css';
 // SVGs
 import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 import brand from '../../SVGs/BringItBackTransparentWHITE.svg';
+import usersData from '../../helpers/data/usersData';
 // import downArrow from '../../SVGs/iconmonstr-arrow-69.svg';
+
+const defaultUserState = {
+  firstname: '',
+  lastname: '',
+  street: '',
+  city: '',
+  state: '',
+  zipcode: '',
+  uid: '',
+  username: '',
+};
+
 
 class MyNavbar extends React.Component {
   static propTypes = {
     authed: PropTypes.bool,
+    username: PropTypes.string.isRequired,
     useruid: PropTypes.string.isRequired,
     removeUsername: PropTypes.func.isRequired,
   }
@@ -35,9 +50,13 @@ class MyNavbar extends React.Component {
   state = {
     isOpen: false,
     dropdownOpen: false,
+    modal: false,
+    userObj: defaultUserState,
   }
 
-  toggle2 = this.toggle.bind(this);
+  componentDidMount() {
+    // this.getUser();
+  }
 
   toggle() {
     this.setState(prevState => ({
@@ -45,12 +64,26 @@ class MyNavbar extends React.Component {
     }));
   }
 
+  toggle2 = this.toggle.bind(this);
+
   toggle2() {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
+  openModal = (e) => {
+    e.preventDefault();
+    this.getUser();
+    this.setState({ modal: !this.state.modal });
+  };
+
   openArrowDropDown = (e) => {
     e.preventDefault();
+  };
+
+  getUser = () => {
+    usersData.getUsers(this.props.useruid)
+      .then(res => this.setState({ user: res[0] }))
+      .catch(err => console.error('no user to nav', err));
   };
 
   logMeOut = (e) => {
@@ -61,6 +94,7 @@ class MyNavbar extends React.Component {
 
   render() {
     const { authed, username, useruid } = this.props;
+    const { modal, user } = this.state;
     const buildNavbar = () => {
       if (authed) {
         return (
@@ -81,9 +115,6 @@ class MyNavbar extends React.Component {
       pathname: `/messages/${this.state.useruid}`,
       state: { ownersId: ownerId },
     }); */}
-          <NavItem>
-            <NavLink className="navLink hvr-shadow  hvr-underline-reveal bounceIn" onClick={this.logMeOut} href="https://github.com/reactstrap/reactstrap">Logout</NavLink>
-          </NavItem>
         </Nav>
         );
       }
@@ -92,6 +123,12 @@ class MyNavbar extends React.Component {
 
     return (
       <div className="MyNavbar">
+        <UpdateUser
+          key='updateUserModal'
+          user={user}
+          modal={modal}
+          openModal={this.openModal}
+        />
         <div className="upperNav">
         <NavbarBrand className="navBarBrand" href="/"><img className="bounceIn brandSVG" src={brand} alt="brand svg" /></NavbarBrand>
           <div>
@@ -105,10 +142,10 @@ class MyNavbar extends React.Component {
               >
                 <DropdownToggle>{<i className="fas fa-chevron-circle-down"></i>}</DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem><i className="fa fa-envelope fa-fw"></i> User Profile</DropdownItem>
-                    <DropdownItem><i className="fa fa-gear fa-fw"></i> Settings</DropdownItem>
+                    <DropdownItem onClick={this.openModal} ><i className="fas fa-user"></i> User Profile</DropdownItem>
+                    <DropdownItem><i className="fas fa-cog"></i> Settings</DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem><i className="fa fa-sign-out fa-fw"></i> Logout</DropdownItem>
+                    <DropdownItem onClick={this.logMeOut}><i className="fa fa-sign-out fa-fw"></i> Logout</DropdownItem>
                   </DropdownMenu>
               </UncontrolledButtonDropdown>
               {/* <img className="dropdownIcon" src={downArrow} alt="icon dropdown arrow" onClick={this.openArrowDropDown} /> */}
