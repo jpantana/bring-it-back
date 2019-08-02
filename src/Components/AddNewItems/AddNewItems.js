@@ -64,6 +64,13 @@ class AddNewItems extends React.Component {
       }).catch(err => console.error('item was not added', err));
   };
 
+
+  addNewItemForm = (name, e) => {
+    const tempItem = { ...this.state.newItem };
+    tempItem[name] = e.target.value;
+    this.setState({ newItem: tempItem });
+  };
+
   nameAdd = e => this.props.addNewItemForm('name', e);
 
   conditionAdd = e => this.props.addNewItemForm('condition', e);

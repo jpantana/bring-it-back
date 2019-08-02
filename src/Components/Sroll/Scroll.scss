@@ -1,0 +1,40 @@
+@import '../../styles/variables.scss';
+
+.scrollCardsRight {
+  height: 90px;
+  width: 60px;
+  border-radius: 80px 0 0 80px;
+  position: absolute;
+  left: 95%;
+  top: 250px;
+  color: $whiteFont;
+  background-color: rgba(161, 159, 159, 0.8);
+  z-index: 10;
+  #arrow {
+    position: relative;
+    top: 23%;
+    right: -10%;
+    height: 50px;
+    filter: invert(100%);
+  }
+}
+
+.scrollCardsLeft {
+  height: 90px;
+  width: 60px;
+  border-radius: 0 80px 80px 0;
+  position: absolute;
+  right: 95%;
+  top: 250px;
+  color: $whiteFont;
+  background-color: rgba(161, 159, 159, 0.5);
+  z-index: 10;
+  #arrowLeft {
+    position: relative;
+    transform: rotate(180deg);
+    top: 23%;
+    right: 10%;
+    height: 50px;
+    filter: invert(100%);
+  }
+}

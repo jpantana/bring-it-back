@@ -21,12 +21,11 @@ const defaultItemState = {
   categoryId: '',
   ownerId: '',
   description: '',
-  imageUrl: 'https://via.placeholder.com/200x200',
+  imageUrl: 'https://via.placeholder.com/400x400',
   isAvailable: true,
   priceperday: '',
   priceperhour: '',
 };
-
 class MyStuff extends React.Component {
   state = {
     items: [],
@@ -39,18 +38,15 @@ class MyStuff extends React.Component {
     userid: '',
     categories: [],
     categoryId: '',
+    editIsOpen: false,
+    itemDeleted: false,
   }
 
-  // CRUD ON ITEMS DATA
-  // callback function from Item that allows you to see a single item (sibling component to Item)
-  seeSingleItem = (item) => {
-    this.setState({ isClicked: true, singleItem: item }); // change to FALSE
-  };
-
-  // callback function that allows you to click single item card to hide it
-  unseeSingleItem = () => {
-    this.setState({ isClicked: false });
-  };
+  componentDidMount() {
+    const uid = this.props.match.params.id;
+    this.setState({ userid: uid });
+    this.getUserItems(uid);
+  }
 
   getUserItems = (uid) => {
     itemsData.getItems(uid)
@@ -60,11 +56,19 @@ class MyStuff extends React.Component {
       .catch(err => console.error('no items to display', err));
   };
 
-  addNewItemForm = (name, e) => {
-    const tempItem = { ...this.state.newItem };
-    tempItem[name] = e.target.value;
-    this.setState({ newItem: tempItem });
+  seeSingleItem = (item) => {
+    this.setState({ isClicked: true, singleItem: item });
   };
+
+  unseeSingleItem = () => {
+    this.setState({ isClicked: false });
+  };
+
+  // addNewItemForm = (name, e) => {
+  //   const tempItem = { ...this.state.newItem };
+  //   tempItem[name] = e.target.value;
+  //   this.setState({ newItem: tempItem });
+  // };
 
   editItemForm = (name, e) => {
     const tempItem = { ...this.state.editItem };
@@ -72,7 +76,6 @@ class MyStuff extends React.Component {
     this.setState({ editItem: tempItem });
   };
 
-  // callback function. opens and closes and clears modal
   addNewItem = (e) => {
     e.preventDefault();
     this.setState({
@@ -96,7 +99,12 @@ class MyStuff extends React.Component {
     const itemId = itm.split('.', 1)[0];
     itemsData.getSingleItem(itemId)
       .then((resp) => {
-        this.setState({ itemId, editItem: resp.data, editIsOpen: !this.state.editIsOpen });
+        this.setState({
+          itemId,
+          editItem: resp.data,
+          editIsOpen: !this.state.editIsOpen,
+          isClicked: false,
+        });
       })
       .catch();
   };
@@ -133,13 +141,6 @@ class MyStuff extends React.Component {
         this.getUserItems(this.state.userid);
       }).catch(err => console.error('item not deleted', err));
   };
-
-  componentDidMount() {
-    const uid = this.props.match.params.id;
-    this.setState({ userid: uid });
-    this.getUserItems(uid); // only shows your user's items
-  }
-
 
   render() {
     const {
@@ -212,64 +213,8 @@ class MyStuff extends React.Component {
           </div>
         </div>
 
-        {/* <div className="mystuffMap">
+        <div className="mystuffMap">
           <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
-        </div> */}
-        <div className="MyStuff">
-          <Modal isOpen={this.state.isOpen} >
-            {<AddNewItems
-              addNewItemForm={this.addNewItemForm}
-              newItem={this.state.newItem}
-              defaultItemState = {this.defaultItemState}
-              addNewItem={this.addNewItem}
-              userid={this.state.userid}
-              getUserItems={this.getUserItems}
-              showCategories={this.showCategories}
-              categories={this.state.categories}
-              categoryIdStateChg={this.categoryIdStateChg}
-              categoryId={this.state.categoryId}
-              newImageUrl={this.newImageUrl}
-            />}
-          </Modal>
-          <Modal isOpen={this.state.editIsOpen} >
-          <EditItem
-            key={`editItem.${itemId}`}
-            id={itemId}
-            categories={this.state.categories}
-            editItem={this.state.editItem}
-            categoryIdStateChg={this.categoryIdStateChg}
-            categoryId={this.state.categoryId}
-            showCategories={this.showCategories}
-            userid={this.state.userid}
-            getUserItems={this.getUserItems}
-            editItemForm={this.editItemForm}
-            closeEditModal={this.closeEditModal}
-            updateImageUrl={this.updateImageUrl}
-          />
-          </Modal>
-        <div className="myStuffWrapper">
-          <div className="">
-            <span className="addNewSpan" onClick={this.addNewItem}>
-              Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
-            </span>
-            { makeItemCards }
-          </div>
-
-          <div className="col col-6">
-            { (isClicked === true ? <SingleItem
-              key={`single.${singleItem.id}`}
-              singleItem={singleItem}
-              isClicked={isClicked}
-              unseeSingleItem={this.unseeSingleItem}
-              deleteItemEvent={this.deleteItemEvent}
-              editItemEvent={this.editItemEvent}
-            /> : '') }
-          </div>
-        </div>
-
-          <div className="mystuffMap">
-            <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
-          </div>
         </div>
       </div>
     );
