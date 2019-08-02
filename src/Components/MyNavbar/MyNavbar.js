@@ -145,7 +145,8 @@ class MyNavbar extends React.Component {
             <div className="userDisplayDiv">
               {(this.state.profilePic !== '' && this.props.authed === true
                 ? <div className="profilePic">
-                    <img className="profilePicImg" src={this.state.profilePic} alt="user profile" />
+                    <img className="userIcon" src={userIcon} alt="icon for a user"/>
+                    {/* <img className="profilePicImg" src={this.state.profilePic} alt="user profile" /> */}
                   </div>
                 : <img className="userIcon" src={userIcon} alt="icon for a user"/>
               )}

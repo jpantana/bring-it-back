@@ -7,7 +7,8 @@ import {
 } from 'react-router-dom';
 import firebase from 'firebase/app';
 // JS files
-import MessageBoard from '../Components/MessageBoard/MessageBoard';
+// import MessageBoard from '../Components/MessageBoard/MessageBoard';
+import MyMessages from '../Components/MyMessages/MyMessages';
 import MyRentals from '../Components/MyRentals/MyRentals';
 import MyStuff from '../Components/MyStuff/MyStuff';
 import SignUp from '../Components/SignUp/SignUp';
@@ -110,7 +111,7 @@ class App extends React.Component {
                   <PrivateRoute path="/home" component={Home} authed={authed} />
                   <PrivateRoute path="/mystuff/:id" className="" component={MyStuff} authed={authed} />
                   <PrivateRoute path="/myrentals/:id" className="" component={MyRentals} authed={authed} />
-                  <PrivateRoute path="/messageboard/:id" className="" component={MessageBoard} authed={authed} />
+                  <PrivateRoute path="/messageboard/:id" className="" component={MyMessages} authed={authed} />
                   <Redirect from="*" to="/auth" />
                 </Switch>
               </div>
