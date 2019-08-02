@@ -2,6 +2,7 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import $ from 'jquery';
+import { Modal, ModalHeader } from 'reactstrap';
 // JSs
 import usersData from '../../helpers/data/usersData';
 import itemsData from '../../helpers/data/itemsData';
@@ -25,6 +26,7 @@ class Home extends React.Component {
     counter: 0,
     useruid: '',
     itemsRented: [],
+    isOpen: false,
   }
 
   componentDidMount() {
@@ -35,6 +37,13 @@ class Home extends React.Component {
     this.showCategories();
     this.getRentedItemsData();
   }
+
+  messageUserRedirect = (ownerId, itemId) => {
+    this.props.history.push({
+      pathname: `/notifications/${this.state.useruid}`,
+      state: { ownersId: ownerId, itemId },
+    });
+  };
 
   getItems = () => {
     itemsData.getAllItems().then((res) => {
@@ -48,7 +57,6 @@ class Home extends React.Component {
     }).catch(err => console.error('no items to display', err));
   };
 
-  // Callback function displays users name in top nav
   getUser = (uid) => {
     usersData.getUsers(uid)
       .then((resp) => {
@@ -103,18 +111,27 @@ class Home extends React.Component {
   };
 
   rentThisItem = (rentedObj) => {
-    itemsRentedData.newRental(rentedObj)
-      .then((resp) => {
-        const rentalId = resp.data.name;
-        itemsRentedData.getRentals()
-          .then((rents) => {
-            this.setState({ itemsRented: rents });
-            const singleRental = rents.filter(r => r.id === rentalId);
-            this.itemIsOrIsntRentedBadge(singleRental[0].itemId);
-          })
-          .catch(err => console.error('no rented item response', err));
-      })
-      .catch(err => console.error('no item rented', err));
+    if (rentedObj.ownerId === rentedObj.renterId) {
+      this.setState({ isOpen: !this.state.isOpen });
+    } else if (rentedObj.ownerId !== rentedObj.renterId) {
+      itemsRentedData.newRental(rentedObj)
+        .then((resp) => {
+          const rentalId = resp.data.name;
+          itemsRentedData.getRentals()
+            .then((rents) => {
+              this.setState({ itemsRented: rents });
+              const singleRental = rents.filter(r => r.id === rentalId);
+              this.itemIsOrIsntRentedBadge(singleRental[0].itemId);
+            })
+            .catch(err => console.error('no rented item response', err));
+        })
+        .catch(err => console.error('no item rented', err));
+    }
+  };
+
+  closeModal = (e) => {
+    e.preventDefault();
+    this.setState({ isOpen: false });
   };
 
   showSearchedItems = () => {
@@ -189,6 +206,8 @@ class Home extends React.Component {
       categoryName,
       searchInput,
       itemsRented,
+      isOpen,
+      useruid,
     } = this.state;
     const makeItemCards = items.map(item => (
         <ItemCard
@@ -196,11 +215,17 @@ class Home extends React.Component {
           item={ item }
           rentThisItem={this.rentThisItem}
           itemsRented={itemsRented}
+          useruid={useruid}
+          messageUserRedirect={this.messageUserRedirect}
         />
     ));
 
     return (
       <div className="Home justify-content-center">
+        <Modal isOpen={isOpen} onClick={this.closeModal}>
+          <ModalHeader className="cantRentMHeader">Oops! You can't rent your own stuff.</ModalHeader>
+          <button className="btn closeNoRentModalBtn">X</button>
+        </Modal>
         <div className="form-group">
           <div className="searchAndSort">
             <SearchAndSort

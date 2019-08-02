@@ -19,6 +19,8 @@ import itemShape from '../../helpers/propz/itemShape';
 import categoriesShape from '../../helpers/propz/categoriesShape';
 // STYLES
 import './AddNewItems.scss';
+// SVGs
+import cameraIcon from '../../SVGs/iconmonstr-photo-camera-thin.svg';
 
 class AddNewItems extends React.Component {
   static propTypes = {
@@ -167,14 +169,16 @@ class AddNewItems extends React.Component {
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="itemImage">Upload An Image</label>
+                <label><img src={cameraIcon} alt="camera icon" />Upload An Image
                 <FileUploader
-                  accept='image/*'
-                  name='image'
-                  storageRef={firebase.storage().ref('images/')}
-                  onUploadStart={this.handleUploadStart}
-                  onUploadSuccess={this.handleUploadSuccess}
-                />
+                    hidden
+                    accept='image/*'
+                    name='image'
+                    storageRef={firebase.storage().ref('images/')}
+                    onUploadStart={this.handleUploadStart}
+                    onUploadSuccess={this.handleUploadSuccess}
+                  />
+              </label>
                  {(image !== '' && progress === 100 ? <div>
                   <img
                     className="img-thumbnail"

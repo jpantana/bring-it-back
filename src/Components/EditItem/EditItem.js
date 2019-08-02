@@ -19,6 +19,9 @@ import itemShape from '../../helpers/propz/itemShape';
 import categoriesShape from '../../helpers/propz/categoriesShape';
 // STYLEs
 import './EditItem.scss';
+// SVGs
+import cameraIcon from '../../SVGs/iconmonstr-photo-camera-thin.svg';
+
 
 class EditItem extends React.Component {
   static propTypes = {
@@ -201,14 +204,16 @@ class EditItem extends React.Component {
                 />
               </div>
               <div className="form-group">
-              <label htmlFor="itemImage">Upload A New Image</label>
-              <FileUploader
-                accept='image/*'
-                name='image'
-                storageRef={firebase.storage().ref('images/')}
-                onUploadStart={this.handleUploadStart}
-                onUploadSuccess={this.handleUploadSuccess}
-              />
+              <label><img src={cameraIcon} alt="camera icon" />Upload A New Image
+                <FileUploader
+                    hidden
+                    accept='image/*'
+                    name='image'
+                    storageRef={firebase.storage().ref('images/')}
+                    onUploadStart={this.handleUploadStart}
+                    onUploadSuccess={this.handleUploadSuccess}
+                  />
+              </label>
                 {(image === '' && progress === 0 ? <img className="img-thumbnail" src={editItem.imageUrl} alt={editItem.name} /> : '')}
 
                 {(image !== '' && progress === 100 ? <div>

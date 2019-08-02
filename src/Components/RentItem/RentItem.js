@@ -108,7 +108,6 @@ class RentItem extends React.Component {
     this.setState({ itemToRent: tempItem });
   };
 
-
   pickupDate = (e) => {
     this.itemToRentDataUpdate('pickupDate', e);
   };

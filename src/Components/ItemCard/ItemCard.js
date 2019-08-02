@@ -14,6 +14,8 @@ class ItemCard extends React.Component {
     item: itemShape.itemShape,
     rentThisItem: PropTypes.func.isRequired,
     itemsRented: PropTypes.arrayOf(itemsRentedShape.itemsRentedShape).isRequired,
+    useruid: PropTypes.string.isRequired,
+    messageUserRedirect: PropTypes.func.isRequired,
   }
 
   rentedInfo = () => {
@@ -24,6 +26,11 @@ class ItemCard extends React.Component {
       }
     });
     return returnTime;
+  };
+
+  messageThisUser = (e) => {
+    e.preventDefault();
+    this.props.messageUserRedirect(e.target.value, this.props.item.id);
   };
 
   render() {
@@ -66,6 +73,15 @@ class ItemCard extends React.Component {
           /> : ''}
           </span>
         </div>
+        {
+          this.props.useruid !== this.props.item.ownerId
+            ? <span className="msgUserSpan">
+            <button
+              className="btn msgUserBtn"
+              value={item.ownerId}
+              onClick={this.messageThisUser}
+            >Message Owner</button>
+            </span> : ''}
       </div>
     );
   }

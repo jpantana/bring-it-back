@@ -23,9 +23,16 @@
   color: $mainBlue;
   // border: 3px solid $orange !important;
   border: none !important;
-  .dropdownMenu {
-    margin-right: 30px;
-    margin-top: 40px;
-    background-color: blue !important;
-  }
+  // .dropdownMenu {
+  //   margin-right: 30px;
+  //   margin-top: 40px;
+  //   background-color: blue !important;
+  // }
+  // .dropdown-menu, .show {
+  //   position: relative !important;
+  //   will-change: transform;
+  //   top: 160px !important;
+  //   left: 0px;
+  //   transform: translate3d(100px, -122px, 0px);
+  // }
 }

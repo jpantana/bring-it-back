@@ -21,7 +21,13 @@ const getUsers = uid => new Promise((resolve, reject) => {
 
 const addNewUser = saveNewUser => axios.post(`${baseUrl}/users.json`, saveNewUser);
 
+const editExistingUser = (editedUser, uid) => axios.put(`${baseUrl}/users/${uid}.json`, editedUser);
+
+const addProfilePic = (profilePic, uid) => axios.patch(`${baseUrl}/users/${uid}/profile.json`, profilePic);
+
 export default {
   getUsers,
   addNewUser,
+  editExistingUser,
+  addProfilePic,
 };

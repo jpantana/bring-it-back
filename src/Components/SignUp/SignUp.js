@@ -20,12 +20,12 @@ const defaultState = {
   state: '',
   zipcode: '',
   username: '',
+  profile: '',
 };
 
 class SignUp extends React.Component {
   static propTypes = {
     username: PropTypes.string,
-    // getUserName: PropTypes.func.isRequired,
   }
 
   state = {
@@ -64,10 +64,10 @@ class SignUp extends React.Component {
     e.preventDefault();
     const saveNewUser = { ...this.state.newItem };
     saveNewUser.uid = firebase.auth().currentUser.uid;
+    saveNewUser.profile = '';
     usersData.addNewUser(saveNewUser)
       .then(() => {
         this.props.history.push('/home');
-        // this.props.getUserName();
       }).catch(err => console.error('no new user saved', err));
   };
 
