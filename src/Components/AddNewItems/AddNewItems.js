@@ -15,25 +15,33 @@ import 'firebase/storage';
 // JSs
 import itemsData from '../../helpers/data/itemsData';
 // PROPs
-import itemShape from '../../helpers/propz/itemShape';
+// import itemShape from '../../helpers/propz/itemShape';
 import categoriesShape from '../../helpers/propz/categoriesShape';
 // STYLES
 import './AddNewItems.scss';
 // SVGs
 import cameraIcon from '../../SVGs/iconmonstr-photo-camera-thin.svg';
 
+const defaultItemState = {
+  name: '',
+  category: 'Category',
+  condition: '',
+  categoryId: '',
+  ownerId: '',
+  description: '',
+  imageUrl: 'https://via.placeholder.com/400x400',
+  isAvailable: true,
+  priceperday: '',
+  priceperhour: '',
+};
+
 class AddNewItems extends React.Component {
   static propTypes = {
     addNewItem: PropTypes.func.isRequired,
     getUserItems: PropTypes.func.isRequired,
     userid: PropTypes.string.isRequired,
-    newItem: itemShape.itemShape,
-    addNewItemForm: PropTypes.func.isRequired,
     categories: PropTypes.arrayOf(categoriesShape.categoriesShape).isRequired,
     showCategories: PropTypes.func.isRequired,
-    categoryIdStateChg: PropTypes.func.isRequired,
-    categoryId: PropTypes.string.isRequired,
-    newImageUrl: PropTypes.func.isRequired,
   }
 
   toggle = this.toggle.bind(this);
@@ -43,6 +51,8 @@ class AddNewItems extends React.Component {
     image: '',
     imageUrl: '',
     progress: 0,
+    newItem: defaultItemState,
+    categoryId: '',
   }
 
   toggle() {
@@ -53,17 +63,17 @@ class AddNewItems extends React.Component {
 
   postNewItem = (e) => {
     e.preventDefault();
-    const { getUserItems, addNewItem, categoryId } = this.props;
-    const saveNewItem = { ...this.props.newItem };
+    const { getUserItems, userid, addNewItem } = this.props;
+    const { categoryId } = this.state;
+    const saveNewItem = { ...this.state.newItem };
     saveNewItem.ownerId = firebase.auth().currentUser.uid;
     saveNewItem.categoryId = categoryId;
     itemsData.addNewItem(saveNewItem)
       .then(() => {
         addNewItem(e);
-        getUserItems(this.props.userid);
+        getUserItems(userid);
       }).catch(err => console.error('item was not added', err));
   };
-
 
   addNewItemForm = (name, e) => {
     const tempItem = { ...this.state.newItem };
@@ -71,24 +81,34 @@ class AddNewItems extends React.Component {
     this.setState({ newItem: tempItem });
   };
 
-  nameAdd = e => this.props.addNewItemForm('name', e);
+  newImageUrl = (url) => {
+    const oldState = { ...this.state };
+    oldState.newItem.imageUrl = url;
+    this.setState(oldState);
+  };
 
-  conditionAdd = e => this.props.addNewItemForm('condition', e);
+  categoryIdStateChg = (e) => {
+    this.setState({ categoryId: e.target.id });
+  };
 
-  ownerIdAdd = e => this.props.addNewItemForm('ownerId', e);
+  nameAdd = e => this.addNewItemForm('name', e);
 
-  descriptionAdd = e => this.props.addNewItemForm('description', e);
+  conditionAdd = e => this.addNewItemForm('condition', e);
 
-  isAvailableAdd = e => this.props.addNewItemForm('isAvailable', e);
+  ownerIdAdd = e => this.addNewItemForm('ownerId', e);
 
-  priceperdayAdd = e => this.props.addNewItemForm('priceperday', e);
+  descriptionAdd = e => this.addNewItemForm('description', e);
 
-  priceperhourAdd = e => this.props.addNewItemForm('priceperhour', e);
+  isAvailableAdd = e => this.addNewItemForm('isAvailable', e);
+
+  priceperdayAdd = e => this.addNewItemForm('priceperday', e);
+
+  priceperhourAdd = e => this.addNewItemForm('priceperhour', e);
 
   addCategory = (e) => {
     e.preventDefault();
-    this.props.addNewItemForm('category', e);
-    this.props.categoryIdStateChg(e);
+    this.addNewItemForm('category', e);
+    this.categoryIdStateChg(e);
   };
 
   // Image Upload Section
@@ -102,14 +122,19 @@ class AddNewItems extends React.Component {
     firebase.storage().ref('images').child(filename).getDownloadURL()
       .then((url) => {
         this.setState({ imageUrl: url });
-        this.props.newImageUrl(url);
+        this.newImageUrl(url);
       })
       .catch(err => console.error('no image url', err));
   };
 
   render() {
-    const { image, progress, imageUrl } = this.state;
-    const { newItem, categories } = this.props;
+    const {
+      image,
+      progress,
+      imageUrl,
+      newItem,
+    } = this.state;
+    const { categories } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
         key={`dropd.${category.id}`}

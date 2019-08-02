@@ -32,12 +32,10 @@ class MyStuff extends React.Component {
     itemId: '',
     isClicked: false,
     singleItem: defaultItemState,
-    newItem: defaultItemState,
     editItem: defaultItemState,
     isOpen: false,
     userid: '',
     categories: [],
-    categoryId: '',
     editIsOpen: false,
     itemDeleted: false,
   }
@@ -64,18 +62,6 @@ class MyStuff extends React.Component {
     this.setState({ isClicked: false });
   };
 
-  // addNewItemForm = (name, e) => {
-  //   const tempItem = { ...this.state.newItem };
-  //   tempItem[name] = e.target.value;
-  //   this.setState({ newItem: tempItem });
-  // };
-
-  editItemForm = (name, e) => {
-    const tempItem = { ...this.state.editItem };
-    tempItem[name] = e.target.value;
-    this.setState({ editItem: tempItem });
-  };
-
   addNewItem = (e) => {
     e.preventDefault();
     this.setState({
@@ -100,30 +86,13 @@ class MyStuff extends React.Component {
     itemsData.getSingleItem(itemId)
       .then((resp) => {
         this.setState({
+          isClicked: false,
           itemId,
           editItem: resp.data,
           editIsOpen: !this.state.editIsOpen,
-          isClicked: false,
         });
       })
       .catch();
-  };
-
-  updateImageUrl = (url) => {
-    const oldState = { ...this.state };
-    oldState.editItem.imageUrl = url;
-    this.setState(oldState);
-  };
-
-  newImageUrl = (url) => {
-    const oldState = { ...this.state };
-    oldState.newItem.imageUrl = url;
-    this.setState(oldState);
-  };
-
-  // CATEGORIES DATA SET
-  categoryIdStateChg = (e) => {
-    this.setState({ categoryId: e.target.id });
   };
 
   showCategories = () => {
@@ -149,6 +118,7 @@ class MyStuff extends React.Component {
       singleItem,
       itemId,
       userid,
+      categories,
     } = this.state;
     const makeItemCards = items.map(item => (
         <Items
@@ -163,35 +133,26 @@ class MyStuff extends React.Component {
     return (
       <div className="MyStuff">
                 <Modal isOpen={this.state.isOpen} >
-                  {<AddNewItems
-                    addNewItemForm={this.addNewItemForm}
-                    newItem={this.state.newItem}
-                    defaultItemState = {this.defaultItemState}
+                  <AddNewItems
+                    key={`addNewItem.${itemId}`}
                     addNewItem={this.addNewItem}
-                    userid={this.state.userid}
+                    userid={userid}
                     getUserItems={this.getUserItems}
                     showCategories={this.showCategories}
-                    categories={this.state.categories}
-                    categoryIdStateChg={this.categoryIdStateChg}
-                    categoryId={this.state.categoryId}
-                    newImageUrl={this.newImageUrl}
-                  />}
+                    categories={categories}
+                  />
                 </Modal>
                 <Modal isOpen={this.state.editIsOpen} >
-                <EditItem
-                  key={`editItem.${itemId}`}
-                  id={itemId}
-                  categories={this.state.categories}
-                  editItem={this.state.editItem}
-                  categoryIdStateChg={this.categoryIdStateChg}
-                  categoryId={this.state.categoryId}
-                  showCategories={this.showCategories}
-                  userid={this.state.userid}
-                  getUserItems={this.getUserItems}
-                  editItemForm={this.editItemForm}
-                  closeEditModal={this.closeEditModal}
-                  updateImageUrl={this.updateImageUrl}
-                />
+                  <EditItem
+                    key={`editItem.${itemId}`}
+                    id={itemId}
+                    categories={this.state.categories}
+                    showCategories={this.showCategories}
+                    userid={this.state.userid}
+                    getUserItems={this.getUserItems}
+                    closeEditModal={this.closeEditModal}
+                    editItem={this.state.editItem}
+                  />
                 </Modal>
         <div className="myStuffWrapper">
           <div className="">
@@ -203,12 +164,12 @@ class MyStuff extends React.Component {
 
           <div className="col col-6">
             { (isClicked === true ? <SingleItem
-              key={`single.${singleItem.id}`}
-              singleItem={singleItem}
-              isClicked={isClicked}
-              unseeSingleItem={this.unseeSingleItem}
-              deleteItemEvent={this.deleteItemEvent}
-              editItemEvent={this.editItemEvent}
+                key={`single.${singleItem.id}`}
+                singleItem={singleItem}
+                isClicked={isClicked}
+                unseeSingleItem={this.unseeSingleItem}
+                deleteItemEvent={this.deleteItemEvent}
+                editItemEvent={this.editItemEvent}
             /> : '') }
           </div>
         </div>

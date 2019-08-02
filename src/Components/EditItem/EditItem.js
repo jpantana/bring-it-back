@@ -30,30 +30,16 @@ class EditItem extends React.Component {
     userid: PropTypes.string.isRequired,
     categories: PropTypes.arrayOf(categoriesShape.categoriesShape).isRequired,
     editItem: itemShape.itemShape,
-    categoryIdStateChg: PropTypes.func.isRequired,
-    categoryId: PropTypes.string.isRequired,
     showCategories: PropTypes.func.isRequired,
-    editItemForm: PropTypes.func.isRequired,
     closeEditModal: PropTypes.func.isRequired,
-    updateImageUrl: PropTypes.func.isRequired,
   }
 
   toggle = this.toggle.bind(this);
 
   state = {
     dropdownOpen: false,
-    editedItem: {
-      name: this.props.editItem.name,
-      category: this.props.editItem.category,
-      condition: this.props.editItem.condition,
-      categoryId: this.props.editItem.categoryId,
-      ownerId: this.props.editItem.ownerId,
-      description: this.props.editItem.description,
-      imageUrl: this.props.editItem.imageUrl,
-      isAvailable: this.props.editItem.isAvailable,
-      priceperday: this.props.editItem.priceperday,
-      priceperhour: this.props.editItem.priceperhour,
-    },
+    editedItem: this.props.editItem,
+    categoryId: '',
     image: '',
     imageUrl: '',
     progress: 0,
@@ -70,14 +56,13 @@ class EditItem extends React.Component {
     const {
       getUserItems,
       closeEditModal,
-      categoryId,
       userid,
       id,
     } = this.props;
-    const editThisItem = { ...this.props.editItem };
+    const editThisItem = { ...this.state.editedItem };
     editThisItem.ownerId = firebase.auth().currentUser.uid;
-    if (categoryId !== '') {
-      editThisItem.categoryId = categoryId;
+    if (this.state.categoryId !== '') {
+      editThisItem.categoryId = this.state.categoryId;
     }
     itemsData.editItem(editThisItem, id)
       .then(() => {
@@ -86,26 +71,46 @@ class EditItem extends React.Component {
       }).catch(err => console.error('item was not added', err));
   };
 
-  nameAdd = e => this.props.editItemForm('name', e);
+  // ==================================================================
 
-  conditionAdd = e => this.props.editItemForm('condition', e);
+  editItemForm = (name, e) => {
+    const tempItem = { ...this.state.editedItem };
+    tempItem[name] = e.target.value;
+    this.setState({ editedItem: tempItem });
+  };
 
-  ownerIdAdd = e => this.props.editItemForm('ownerId', e);
+  updateImageUrl = (url) => {
+    const oldState = { ...this.state };
+    oldState.editedItem.imageUrl = url;
+    this.setState(oldState);
+  };
 
-  descriptionAdd = e => this.props.editItemForm('description', e);
+  categoryIdStateChg = (e) => {
+    this.setState({ categoryId: e.target.id });
+  };
 
-  imageUrlAdd = () => this.props.updateImageUrl(this.state.imageUrl);
+  // ==================================================================
 
-  isAvailableAdd = e => this.props.editItemForm('isAvailable', e);
+  nameAdd = e => this.editItemForm('name', e);
 
-  priceperdayAdd = e => this.props.editItemForm('priceperday', e);
+  conditionAdd = e => this.editItemForm('condition', e);
 
-  priceperhourAdd = e => this.props.editItemForm('priceperhour', e);
+  ownerIdAdd = e => this.editItemForm('ownerId', e);
+
+  descriptionAdd = e => this.editItemForm('description', e);
+
+  imageUrlAdd = () => this.updateImageUrl(this.state.imageUrl);
+
+  isAvailableAdd = e => this.editItemForm('isAvailable', e);
+
+  priceperdayAdd = e => this.editItemForm('priceperday', e);
+
+  priceperhourAdd = e => this.editItemForm('priceperhour', e);
 
   addCategory = (e) => {
     e.preventDefault();
-    this.props.editItemForm('category', e);
-    this.props.categoryIdStateChg(e);
+    this.editItemForm('category', e);
+    this.categoryIdStateChg(e);
   };
 
   // Image Upload Section
@@ -125,8 +130,13 @@ class EditItem extends React.Component {
   };
 
   render() {
-    const { image, imageUrl, progress } = this.state;
-    const { editItem, categories, closeEditModal } = this.props;
+    const {
+      image,
+      imageUrl,
+      progress,
+      editedItem,
+    } = this.state;
+    const { categories, closeEditModal } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
         id={category.id}
@@ -149,7 +159,7 @@ class EditItem extends React.Component {
                   id="edit.itemName"
                   aria-describedby="firstname"
                   placeholder="Item Name"
-                  defaultValue={editItem.name}
+                  defaultValue={editedItem.name}
                   onChange={this.nameAdd}
                 />
               </div>
@@ -158,9 +168,9 @@ class EditItem extends React.Component {
                   <DropdownToggle
                     caret
                     onClick={this.props.showCategories}
-                    defaultValue={editItem.category}
+                    defaultValue={editedItem.category}
                   >
-                    {editItem.category}
+                    {editedItem.category}
                   </DropdownToggle >
                   <DropdownMenu>
                     { catLoop }
@@ -174,7 +184,7 @@ class EditItem extends React.Component {
                   className="form-control"
                   id="edit.itemDescription"
                   placeholder="This thing is the greatest..."
-                  defaultValue={editItem.description}
+                  defaultValue={editedItem.description}
                   onChange={this.descriptionAdd}
                 />
               </div>
@@ -183,13 +193,13 @@ class EditItem extends React.Component {
               <div className="radioDiv">
                   <h3>Condition</h3>
                   <label htmlFor="Mint">Mint</label>
-                  <input name="radioBtn" type="radio" id="Mint" defaultValue="Mint" checked={editItem.condition === 'Mint' ? 'checked' : false} onChange={this.conditionAdd}/>
+                  <input name="radioBtn" type="radio" id="Mint" defaultValue="Mint" checked={editedItem.condition === 'Mint' ? 'checked' : false} onChange={this.conditionAdd}/>
                   <label htmlFor="Good">Good</label>
-                  <input name="radioBtn" type="radio" id="Good" defaultValue="Good" checked={editItem.condition === 'Good' ? 'checked' : false } onChange={this.conditionAdd}/>
+                  <input name="radioBtn" type="radio" id="Good" defaultValue="Good" checked={editedItem.condition === 'Good' ? 'checked' : false } onChange={this.conditionAdd}/>
                   <label htmlFor="Fair">Fair</label>
-                  <input name="radioBtn" type="radio" id="Fair" defaultValue="Fair" checked={editItem.condition === 'Fair' ? 'checked' : false } onChange={this.conditionAdd}/>
+                  <input name="radioBtn" type="radio" id="Fair" defaultValue="Fair" checked={editedItem.condition === 'Fair' ? 'checked' : false } onChange={this.conditionAdd}/>
                   <label htmlFor="Relic">Relic</label>
-                  <input name="radioBtn" type="radio" id="Relic" defaultValue="Relic" checked={editItem.condition === 'Relic' ? 'checked' : false} onChange={this.conditionAdd}/>
+                  <input name="radioBtn" type="radio" id="Relic" defaultValue="Relic" checked={editedItem.condition === 'Relic' ? 'checked' : false} onChange={this.conditionAdd}/>
                 </div>
 
                 <label htmlFor="edit.condition">Condition</label>
@@ -199,7 +209,7 @@ class EditItem extends React.Component {
                   id="edit.condition
                   ess" aria-describedby="streetAddress"
                   placeholder="Good, Bad,Fair, etc."
-                  defaultValue={editItem.condition}
+                  defaultValue={editedItem.condition}
                   onChange={this.conditionAdd}
                 />
               </div>
@@ -214,7 +224,7 @@ class EditItem extends React.Component {
                     onUploadSuccess={this.handleUploadSuccess}
                   />
               </label>
-                {(image === '' && progress === 0 ? <img className="img-thumbnail" src={editItem.imageUrl} alt={editItem.name} /> : '')}
+                {(image === '' && progress === 0 ? <img className="img-thumbnail" src={editedItem.imageUrl} alt={editedItem.name} /> : '')}
 
                 {(image !== '' && progress === 100 ? <div>
                 <img
@@ -230,7 +240,7 @@ class EditItem extends React.Component {
                   className="form-control"
                   id="edit.priceperhour"
                   placeholder="$"
-                  defaultValue={editItem.priceperhour}
+                  defaultValue={editedItem.priceperhour}
                   onChange={this.priceperhourAdd}
                 />
               </div>
@@ -241,7 +251,7 @@ class EditItem extends React.Component {
                   className="form-control"
                   id=""
                   placeholder="$"
-                  defaultValue={editItem.priceperday}
+                  defaultValue={editedItem.priceperday}
                   onChange={this.priceperdayAdd}
                 />
               </div>
