@@ -212,9 +212,9 @@ class MyStuff extends React.Component {
           </div>
         </div>
 
-        <div className="mystuffMap">
+        {/* <div className="mystuffMap">
           <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
-        </div>
+        </div> */}
         <div className="MyStuff">
           <Modal isOpen={this.state.isOpen} >
             {<AddNewItems
@@ -248,27 +248,28 @@ class MyStuff extends React.Component {
           />
           </Modal>
         <div className="myStuffWrapper">
-        <div className="">
-          <span className="addNewSpan" onClick={this.addNewItem}>
-            Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
-          </span>
-          { makeItemCards }
+          <div className="">
+            <span className="addNewSpan" onClick={this.addNewItem}>
+              Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
+            </span>
+            { makeItemCards }
+          </div>
+
+          <div className="col col-6">
+            { (isClicked === true ? <SingleItem
+              key={`single.${singleItem.id}`}
+              singleItem={singleItem}
+              isClicked={isClicked}
+              unseeSingleItem={this.unseeSingleItem}
+              deleteItemEvent={this.deleteItemEvent}
+              editItemEvent={this.editItemEvent}
+            /> : '') }
+          </div>
         </div>
 
-        <div className="col col-6">
-          { (isClicked === true ? <SingleItem
-            key={`single.${singleItem.id}`}
-            singleItem={singleItem}
-            isClicked={isClicked}
-            unseeSingleItem={this.unseeSingleItem}
-            deleteItemEvent={this.deleteItemEvent}
-            editItemEvent={this.editItemEvent}
-          /> : '') }
-        </div>
-        </div>
-
-        <div className="mystuffMap">
-          <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
+          <div className="mystuffMap">
+            <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
+          </div>
         </div>
       </div>
     );
