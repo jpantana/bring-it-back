@@ -38,10 +38,10 @@ class Home extends React.Component {
     this.getRentedItemsData();
   }
 
-  messageUserRedirect = (ownerId) => {
+  messageUserRedirect = (ownerId, itemId) => {
     this.props.history.push({
-      pathname: `/messageboard/${this.state.useruid}`,
-      state: { ownersId: ownerId },
+      pathname: `/notifications/${this.state.useruid}`,
+      state: { ownersId: ownerId, itemId },
     });
   };
 

@@ -30,7 +30,7 @@ class ItemCard extends React.Component {
 
   messageThisUser = (e) => {
     e.preventDefault();
-    this.props.messageUserRedirect(e.target.value);
+    this.props.messageUserRedirect(e.target.value, this.props.item.id);
   };
 
   render() {

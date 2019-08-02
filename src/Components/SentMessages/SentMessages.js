@@ -20,6 +20,7 @@ class SentMessages extends React.Component {
   static propTypes = {
     message: messageShape.messageShape,
     uid: PropTypes.string.isRequired,
+    seeConversationRecips: PropTypes.func.isRequired,
   }
 
   state = {
@@ -34,16 +35,24 @@ class SentMessages extends React.Component {
 
   sortConversations = () => {
     const { message, uid } = this.props;
+    const user = [];
     if (message.userid1 === uid) {
       this.setState({ user1: message, whoSent: 'user1' });
-    } else if (message.userid1 === uid) {
-      this.setState({ user2: message, whoSent: 'user2' });
+      const convoInit = this.props.message.username2;
+      user.push(convoInit);
     }
+    if (message.userid2 === uid) {
+      this.setState({ user2: message, whoSent: 'user2' });
+      const convoReturn = this.props.message.username1;
+      user.push(convoReturn);
+    }
+    this.props.seeConversationRecips(user, message);
   };
 
   render() {
     return (
       <div className="card" onClick={this.continueConversation}>
+        <span className="fa fa-circle"></span>
         <h4>Sent</h4>
         <p>From {this.props.message.username2}</p>
         <p>{this.props.message.newMessage}</p>

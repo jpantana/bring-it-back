@@ -111,7 +111,7 @@ class App extends React.Component {
                   <PrivateRoute path="/home" component={Home} authed={authed} />
                   <PrivateRoute path="/mystuff/:id" className="" component={MyStuff} authed={authed} />
                   <PrivateRoute path="/myrentals/:id" className="" component={MyRentals} authed={authed} />
-                  <PrivateRoute path="/messageboard/:id" className="" component={MyMessages} authed={authed} />
+                  <PrivateRoute path="/notifications/:id" className="" component={MyMessages} authed={authed} />
                   <Redirect from="*" to="/auth" />
                 </Switch>
               </div>
