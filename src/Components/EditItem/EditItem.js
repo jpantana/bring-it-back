@@ -34,7 +34,6 @@ class EditItem extends React.Component {
     categoryId: PropTypes.string.isRequired,
     showCategories: PropTypes.func.isRequired,
     editItemForm: PropTypes.func.isRequired,
-    // addNewItemForm: PropTypes.func.isRequired,
     closeEditModal: PropTypes.func.isRequired,
     updateImageUrl: PropTypes.func.isRequired,
   }
@@ -184,13 +183,13 @@ class EditItem extends React.Component {
               <div className="radioDiv">
                   <h3>Condition</h3>
                   <label htmlFor="Mint">Mint</label>
-                  <input name="radioBtn" type="radio" id="Mint" defaultValue="Mint" checked={editItem.condition === 'Mint' ? 'checked' : false} onClick={this.conditionAdd}/>
+                  <input name="radioBtn" type="radio" id="Mint" defaultValue="Mint" checked={editItem.condition === 'Mint' ? 'checked' : false} onChange={this.conditionAdd}/>
                   <label htmlFor="Good">Good</label>
-                  <input name="radioBtn" type="radio" id="Good" defaultValue="Good" checked={editItem.condition === 'Good' ? 'checked' : false } onClick={this.conditionAdd}/>
+                  <input name="radioBtn" type="radio" id="Good" defaultValue="Good" checked={editItem.condition === 'Good' ? 'checked' : false } onChange={this.conditionAdd}/>
                   <label htmlFor="Fair">Fair</label>
-                  <input name="radioBtn" type="radio" id="Fair" defaultValue="Fair" checked={editItem.condition === 'Fair' ? 'checked' : false } onClick={this.conditionAdd}/>
+                  <input name="radioBtn" type="radio" id="Fair" defaultValue="Fair" checked={editItem.condition === 'Fair' ? 'checked' : false } onChange={this.conditionAdd}/>
                   <label htmlFor="Relic">Relic</label>
-                  <input name="radioBtn" type="radio" id="Relic" defaultValue="Relic" checked={editItem.condition === 'Relic' ? 'checked' : false} onClick={this.conditionAdd}/>
+                  <input name="radioBtn" type="radio" id="Relic" defaultValue="Relic" checked={editItem.condition === 'Relic' ? 'checked' : false} onChange={this.conditionAdd}/>
                 </div>
 
                 <label htmlFor="edit.condition">Condition</label>

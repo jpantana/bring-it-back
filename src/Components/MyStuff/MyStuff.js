@@ -215,6 +215,61 @@ class MyStuff extends React.Component {
         <div className="mystuffMap">
           <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
         </div>
+        <div className="MyStuff">
+          <Modal isOpen={this.state.isOpen} >
+            {<AddNewItems
+              addNewItemForm={this.addNewItemForm}
+              newItem={this.state.newItem}
+              defaultItemState = {this.defaultItemState}
+              addNewItem={this.addNewItem}
+              userid={this.state.userid}
+              getUserItems={this.getUserItems}
+              showCategories={this.showCategories}
+              categories={this.state.categories}
+              categoryIdStateChg={this.categoryIdStateChg}
+              categoryId={this.state.categoryId}
+              newImageUrl={this.newImageUrl}
+            />}
+          </Modal>
+          <Modal isOpen={this.state.editIsOpen} >
+          <EditItem
+            key={`editItem.${itemId}`}
+            id={itemId}
+            categories={this.state.categories}
+            editItem={this.state.editItem}
+            categoryIdStateChg={this.categoryIdStateChg}
+            categoryId={this.state.categoryId}
+            showCategories={this.showCategories}
+            userid={this.state.userid}
+            getUserItems={this.getUserItems}
+            editItemForm={this.editItemForm}
+            closeEditModal={this.closeEditModal}
+            updateImageUrl={this.updateImageUrl}
+          />
+          </Modal>
+        <div className="myStuffWrapper">
+        <div className="">
+          <span className="addNewSpan" onClick={this.addNewItem}>
+            Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
+          </span>
+          { makeItemCards }
+        </div>
+
+        <div className="col col-6">
+          { (isClicked === true ? <SingleItem
+            key={`single.${singleItem.id}`}
+            singleItem={singleItem}
+            isClicked={isClicked}
+            unseeSingleItem={this.unseeSingleItem}
+            deleteItemEvent={this.deleteItemEvent}
+            editItemEvent={this.editItemEvent}
+          /> : '') }
+        </div>
+        </div>
+
+        <div className="mystuffMap">
+          <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
+        </div>
       </div>
     );
   }

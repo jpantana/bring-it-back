@@ -72,7 +72,6 @@ class RentItem extends React.Component {
         zipcode,
       },
       returnTime: this.state.itemToRent.returnTime,
-      // item obj info below
       category: this.props.item.category,
       categoryId: this.props.item.categoryId,
       condition: this.props.item.condition,
