@@ -63,14 +63,13 @@ class AddNewItems extends React.Component {
 
   postNewItem = (e) => {
     e.preventDefault();
-    const { getUserItems, userid, addNewItem } = this.props;
+    const { getUserItems, userid } = this.props;
     const { categoryId } = this.state;
     const saveNewItem = { ...this.state.newItem };
     saveNewItem.ownerId = firebase.auth().currentUser.uid;
     saveNewItem.categoryId = categoryId;
     itemsData.addNewItem(saveNewItem)
       .then(() => {
-        addNewItem(e);
         getUserItems(userid);
       }).catch(err => console.error('item was not added', err));
   };

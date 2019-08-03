@@ -49,7 +49,7 @@ class MyStuff extends React.Component {
   getUserItems = (uid) => {
     itemsData.getItems(uid)
       .then((items) => {
-        this.setState({ items });
+        this.setState({ items, isOpen: false, editIsOpen: false });
       })
       .catch(err => console.error('no items to display', err));
   };
@@ -62,6 +62,7 @@ class MyStuff extends React.Component {
     this.setState({ isClicked: false });
   };
 
+  // open close add new modal
   addNewItem = (e) => {
     e.preventDefault();
     this.setState({
@@ -70,6 +71,7 @@ class MyStuff extends React.Component {
     });
   };
 
+  // open close edit item modal
   closeEditModal = (e) => {
     e.preventDefault();
     this.setState({
@@ -80,7 +82,6 @@ class MyStuff extends React.Component {
   };
 
   editItemEvent = (e) => {
-    e.preventDefault();
     const itm = e.target.id;
     const itemId = itm.split('.', 1)[0];
     itemsData.getSingleItem(itemId)

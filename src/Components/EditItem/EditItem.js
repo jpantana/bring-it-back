@@ -54,8 +54,6 @@ class EditItem extends React.Component {
   editSingleItem = (e) => {
     e.preventDefault();
     const {
-      getUserItems,
-      closeEditModal,
       userid,
       id,
     } = this.props;
@@ -66,8 +64,7 @@ class EditItem extends React.Component {
     }
     itemsData.editItem(editThisItem, id)
       .then(() => {
-        closeEditModal(e);
-        getUserItems(userid);
+        this.props.getUserItems(userid);
       }).catch(err => console.error('item was not added', err));
   };
 
