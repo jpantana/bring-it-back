@@ -1,0 +1,12 @@
+@import '../../styles/variables.scss';
+
+.MessageRow {
+  display: flex;
+  flex-direction: column;
+}
+
+.messageP {
+  background-color: lightblue;
+  margin: 5px;
+  padding: 10px;
+}

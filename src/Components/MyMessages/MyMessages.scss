@@ -1,1 +1,14 @@
 @import '../../styles/variables.scss';
+
+.MyMessages {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+.msgHeaderCompDiv {
+  margin: auto;
+}
+
+.msgTableDiv {
+  margin: auto;
+}

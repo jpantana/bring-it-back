@@ -2,6 +2,8 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 // JSs
 import msgShape from '../../helpers/propz/msgShape';
+// STYLEs
+import './MessageRow.scss';
 
 class MessageRow extends React.Component {
   static propTypes = {
@@ -12,11 +14,9 @@ class MessageRow extends React.Component {
     const { convo } = this.props;
 
     return (
-      <tr>
-        <td>
-          {convo.message}
-        </td>
-      </tr>
+      <div className="MessageRow">
+        <p className="messageP">{convo.message}</p>
+      </div>
     );
   }
 }
