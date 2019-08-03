@@ -1,7 +1,7 @@
 import React from 'react';
 // JSs
 import moment from 'moment';
-import Messages from '../Messages/Messages';
+import Messages from '../MessagesOLD/Messages';
 import messagesData from '../../helpers/data/messagesData';
 import usersData from '../../helpers/data/usersData';
 // STYLEs

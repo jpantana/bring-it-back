@@ -4,9 +4,8 @@ import firebaseConfig from '../apiKeys.json';
 
 const baseUrl = firebaseConfig.firebaseKeys.databaseURL;
 
-const getMessages = () => new Promise((resolve, reject) => {
-  // axios.get(`${baseUrl}/messages.json?orderBy="messagePostId"&equalTo="${messagePostId}"`)
-  axios.get(`${baseUrl}/messages.json`)
+const getGroupedMessages = uid => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/messages.json?orderBy="uid"&equalTo="${uid}"`)
     .then((res) => {
       const messages = [];
       if (res.data !== null) {
@@ -19,7 +18,6 @@ const getMessages = () => new Promise((resolve, reject) => {
     })
     .catch(err => reject(err));
 });
-
 const newMessage = message => axios.post(`${baseUrl}/messages.json`, message);
 
-export default { getMessages, newMessage };
+export default { newMessage, getGroupedMessages };

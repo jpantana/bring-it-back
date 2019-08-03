@@ -18,7 +18,7 @@ const defaultMessageShape = {
 
 class SentMessages extends React.Component {
   static propTypes = {
-    message: messageShape.messageShape,
+    // message: messageShape.messageShape,
     uid: PropTypes.string.isRequired,
     // seeConversationRecips: PropTypes.func.isRequired,
     receiveMessageDetails: PropTypes.func.isRequired,
