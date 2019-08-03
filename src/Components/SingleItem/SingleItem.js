@@ -81,10 +81,6 @@ class SingleItem extends React.Component {
               </tbody>
             </table>
 
-
-            {/* <p className="card-text"><span className="aboutSpan">About</span>{singleItem.description}</p>
-            <p className="card-text"><span className="conditionSpan">Condition</span>{singleItem.condition}</p>
-            <p className="card-text"><span className="categorySpan">Category</span>{singleItem.category}</p> */}
           </div>
         </div>
 

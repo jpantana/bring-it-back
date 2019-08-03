@@ -20,11 +20,11 @@ class SentMessages extends React.Component {
   static propTypes = {
     message: messageShape.messageShape,
     uid: PropTypes.string.isRequired,
-    seeConversationRecips: PropTypes.func.isRequired,
+    // seeConversationRecips: PropTypes.func.isRequired,
+    receiveMessageDetails: PropTypes.func.isRequired,
   }
 
   state = {
-    uid: '',
     user1: defaultMessageShape,
     user2: defaultMessageShape,
   }
@@ -46,7 +46,17 @@ class SentMessages extends React.Component {
       const convoReturn = this.props.message.username1;
       user.push(convoReturn);
     }
-    this.props.seeConversationRecips(user, message);
+    // this.props.seeConversationRecips(user, message);
+  };
+
+  continueConversation = (e) => {
+    e.preventDefault();
+    const { user1, user2 } = this.state;
+    if (user1.timestamp === '') {
+      this.props.receiveMessageDetails(user2);
+    } else if (user2.timestamp === '') {
+      this.props.receiveMessageDetails(user1);
+    }
   };
 
   render() {
@@ -55,7 +65,7 @@ class SentMessages extends React.Component {
         <span className="fa fa-circle"></span>
         <h4>Sent</h4>
         <p>From {this.props.message.username2}</p>
-        <p>{this.props.message.newMessage}</p>
+        {/* <p>{this.props.message.newMessage}</p> */}
       </div>
     );
   }

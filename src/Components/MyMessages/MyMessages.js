@@ -4,6 +4,7 @@ import React from 'react';
 // JSs
 import SentMessages from '../SentMessages/SentMessages';
 import messagesData from '../../helpers/data/messagesData';
+import usersData from '../../helpers/data/usersData';
 // import ReceivedMessages from '../ReceivedMessages/ReceivedMessages';
 
 class MyMessages extends React.Component {
@@ -11,8 +12,15 @@ class MyMessages extends React.Component {
     messages: [],
     uid: '',
     ownersId: '',
+    convoRecip: '',
     itemId: '',
-    conversationsWith: [],
+    // conversationsWith: [],
+    myText: '',
+    user1id: '',
+    user2id: '',
+    username1: '',
+    username2: '',
+    singleConvo: '',
   }
 
   componentDidMount() {
@@ -20,6 +28,7 @@ class MyMessages extends React.Component {
     if (this.props.location.state) {
       const { ownersId, itemId } = this.props.location.state;
       this.setState({ ownersId, itemId });
+      this.findOtherUser(this.props.location.state);
     }
     messagesData.getMessages()
       .then((res) => {
@@ -28,37 +37,81 @@ class MyMessages extends React.Component {
       .catch(err => console.error('nothing has been rented', err));
   }
 
-  seeConversationRecips = (user, msg) => {
-    this.setState(prevstate => ({ conversationsWith: `${prevstate.conversationsWith}, ${user}` }));
-    this.filterUsersArr();
+  findOtherUser = (otherUser) => {
+    usersData.getUsers(otherUser.ownersId)
+      .then(res => this.setState({ convoRecip: res[0].username }))
+      .catch(err => console.error('could not find user to have conversation', err));
   };
 
-  filterUsersArr = () => {
-    const wat = this.state.conversationsWith;
-    for (let i = 0; i <= wat.length; i += 1) {
-      console.error(wat[i]);
-    }
+  // seeConversationRecips = (user, msg) => {
+  //   this.setState(prevstate => ({ conversationsWith: `${prevstate.conversationsWith}, ${user}` }));
+  //   this.filterUsersArr();
+  // };
+
+  // filterUsersArr = () => {
+  //   const wat = this.state.conversationsWith;
+  //   for (let i = 0; i <= wat.length; i += 1) {
+  //     console.error(wat[i]);
+  //   }
+  // };
+
+  myMessage = (e) => {
+    e.preventDefault();
+    const myTextMsg = e.target.value;
+    this.setState({ myText: myTextMsg });
+  };
+
+  receiveMessageDetails = (user) => {
+    this.setState({
+      user1id: user.userid1,
+      user2id: user.userid2,
+      username1: user.username1,
+      username2: user.username2,
+      singleConvo: user.newMessage,
+    });
   };
 
   render() {
-    const { messages, uid } = this.state;
+    const {
+      messages,
+      uid,
+      ownersId,
+      myText,
+    } = this.state;
     const sentMessages = messages.map(message => (
       <SentMessages
         uid={uid}
         key={message.id}
         message={message}
-        seeConversationRecips={this.seeConversationRecips}
+        // seeConversationRecips={this.seeConversationRecips}
+        receiveMessageDetails={this.receiveMessageDetails}
       />
     ));
-
-    // const conversations = messages.filter(message => message.userid1 !== uid);
-    // const conversations2 = messages.filter(message => message.userid2 !== uid);
-    // console.error(conversations, conversations2);
 
     return (
       <div className="row justify-content-center">
         <p></p>
         <div className="col-4">{ sentMessages }</div>
+
+        <div className="Messages">
+          <h2 className="msgsHeader">Messages</h2>
+
+            <div className="sendMessageForm">
+              <label htmlFor="messageInput">Send</label>
+              <input
+              type="text"
+              id="messageInput"
+              defaultValue={myText.message}
+              onChange={this.myMessage}
+            />
+            {ownersId !== ''
+              ? <button
+                  className="btn btn-primary sendMessageBtn"
+                  onClick={this.sendMessage}
+                >Send</button>
+              : ''}
+          </div>
+        </div>
       </div>
     );
   }
