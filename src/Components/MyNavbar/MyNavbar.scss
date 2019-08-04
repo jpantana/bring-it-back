@@ -22,16 +22,19 @@
 
 .userName {
   color: $blackFont;
+  font-weight: 600;
   font-family: $font1;
   margin: auto;
   margin-right: 10px;
 }
 .profilePic {
   margin: 5px;
+  margin-right: 15px;
   max-height: 40px;
   max-width: 40px;
   border-radius: 50px;
   overflow: hidden;
+  box-shadow: -2px 1px 9px $shadow;
   .profilePicImg {
     position: relative;
     top: -5px;
@@ -44,9 +47,11 @@
   height: 40px;
 }
 
-.dropdownIcon {
-  margin-right: 10px;
-  filter: invert(20%);
+.navDropDown {
+  // margin-right: 10px;
+  color: $orange;
+  font-size: 20px;
+  // filter: invert(20%);
 }
 
 #settingsDropDown {
@@ -71,11 +76,10 @@
   }
 }
 .brandSVG {
-  width: 200px;
+  width: 220px;
   position: absolute;
   z-index: 100;
-  // top: 42px;
-  top: 70px;
+  top: 80px;
   left: 20px;
   &:hover {
     // filter: invert(50%);
@@ -86,7 +90,7 @@
 
 .navBar {
   width: 100%;
-  height: 65px;
+  // height: 65px;
   background-color: $mainBlue;
   background-position-y: 1000px;
 }
@@ -100,6 +104,9 @@
   padding-right: 10px !important;
   &:hover {
     color: $fontHoverColor;
+    .navIcon {
+      color: $orange;
+    }
   }
     &:after {
         display:block;
@@ -114,5 +121,27 @@
     &.fromLeft:after{  
         transform-origin:  0% 50%; 
     }
+    .navItemTitle {
+      font-size: 15px;
+    }
   }
 
+  .footer{
+    font-family: $font1;
+    color: $blackFont;
+    background-color: $fontHoverColor;
+    height: 50px;
+    width: 100%;
+    margin: auto;
+    .footerLink {
+      text-decoration: none;
+      margin-top: 40% !important;
+      font-family: $font1;
+      color: $blackFont;
+      &:hover {
+        color: black;
+        text-decoration: none;
+      }
+    }
+  }
+ 

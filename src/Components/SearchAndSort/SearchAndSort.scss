@@ -5,13 +5,12 @@
   margin-bottom: .5em;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
-// .searchDiv {
-//   // width: 25em !important;
-// }
-
+.catDropDown {
+  border-radius: 20px !important;
+}
 
 .searchInput {
   width: 18em !important;
@@ -21,18 +20,27 @@
 .btn-secondary {
   background-color: $mainBlue !important;
   color: $mainBlue;
-  // border: 3px solid $orange !important;
-  border: none !important;
-  // .dropdownMenu {
-  //   margin-right: 30px;
-  //   margin-top: 40px;
-  //   background-color: blue !important;
-  // }
-  // .dropdown-menu, .show {
-  //   position: relative !important;
-  //   will-change: transform;
-  //   top: 160px !important;
-  //   left: 0px;
-  //   transform: translate3d(100px, -122px, 0px);
-  // }
+  border: none !important;  
 }
+
+// .dropdown-menu, .dropdownMenu {
+//   top: 200px !important;
+// }
+
+.searchBarDiv {
+  display: flex;
+  flex-direction: row;
+  .searchInput {
+    border-radius: 20px !important;
+    height: 30px !important;
+  }
+  
+  .magnifyingGlass {
+    position: relative;
+    top: 7px;
+    left: -28px;
+    color: $secondBlue;
+  }
+}
+
+

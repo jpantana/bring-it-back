@@ -112,16 +112,32 @@ class MyNavbar extends React.Component {
         return (
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to="/home">Home</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to="/home">
+                <span><i className="fas fa-home navIcon"></i></span>
+                <br/>
+                <span className="navItemTitle">Home</span>
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/mystuff/${useruid}`)}>My Stuff</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/mystuff/${useruid}`)}>
+              <span><i className="fas fa-archive navIcon"></i></span>
+              <br/>
+              <span className="navItemTitle">My Stuff</span>
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/myrentals/${useruid}`)}>Renting</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/myrentals/${useruid}`)}>
+              <span><i className="fas fa-shopping-cart navIcon"></i></span>
+              <br/>
+              <span className="navItemTitle">Renting</span>
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/notifications/${useruid}`)}>Notifications</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/notifications/${useruid}`)}>
+              <span><i className="fas fa-envelope navIcon"></i></span>
+              <br/>
+              <span className="navItemTitle">Notifications</span>
+            </NavLink>
           </NavItem>
         </Nav>
         );
@@ -145,8 +161,8 @@ class MyNavbar extends React.Component {
             <div className="userDisplayDiv">
               {(this.state.profilePic !== '' && this.props.authed === true
                 ? <div className="profilePic">
-                    <img className="userIcon" src={userIcon} alt="icon for a user"/>
-                    {/* <img className="profilePicImg" src={this.state.profilePic} alt="user profile" /> */}
+                    {/* <img className="userIcon" src={userIcon} alt="icon for a user"/> */}
+                    <img className="profilePicImg" src={this.state.profilePic} alt="user profile" />
                   </div>
                 : <img className="userIcon" src={userIcon} alt="icon for a user"/>
               )}
@@ -158,7 +174,7 @@ class MyNavbar extends React.Component {
                     isOpen={this.state.dropdownOpen}
                     toggle={this.toggle2}
                   >
-                    <DropdownToggle>{<i className="fas fa-chevron-circle-down"></i>}</DropdownToggle>
+                    <DropdownToggle>{<i className="fas fa-chevron-circle-down navDropDown"></i>}</DropdownToggle>
                       <DropdownMenu right>
                         <DropdownItem onClick={this.openModal} ><i className="fas fa-user"></i> User Profile</DropdownItem>
                         <DropdownItem><i className="fas fa-cog"></i> Settings</DropdownItem>
@@ -176,6 +192,9 @@ class MyNavbar extends React.Component {
             {buildNavbar()}
           </Collapse>
         </Navbar>
+        {/* <div className="footer-copyright footer">© 2018 Bring It Back | by
+          <a href="https://josh-pantana.firebaseapp.com/" className="footerLink"> <em>Josh Pantana</em></a>
+        </div> */}
       </div>
     );
   }

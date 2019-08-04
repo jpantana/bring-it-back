@@ -60,7 +60,7 @@ class Scroll extends React.Component {
   widthMath = () => {
     const divLength = this.props.itemsLength;
     const makeNum = divLength * 1;
-    const theMath = makeNum * 143;
+    const theMath = makeNum * 170;
     return theMath;
   };
 

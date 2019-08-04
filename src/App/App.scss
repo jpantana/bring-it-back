@@ -1,3 +1,5 @@
+@import '../styles/variables.scss';
+
 .App {
   text-align: center;
 }
@@ -35,3 +37,23 @@
 .wrapper {
   margin: auto;
 }
+
+body {
+  font-family: $font1;
+}
+
+// removes focus on inputs
+textarea:focus, input:focus {
+  outline: none !important;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+.form-control:focus {
+  border-color: inherit !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+//

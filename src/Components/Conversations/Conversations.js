@@ -1,26 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+// JSs
+// import MessagesAbout from '../MessagesAbout/MessagesAbout';
 // PROPs
-import msgShape from '../../helpers/propz/msgShape';
+// import msgShape from '../../helpers/propz/msgShape';
 
 class Conversations extends React.Component {
   static propTypes = {
-    convo: msgShape.msgShape,
-    talkingTo: PropTypes.string.isRequired,
-  }
-
-  componentDidMount() {
-    // const { otheruserid } = this.props;
-    // usersData.getUsers(otheruserid).then((res) => {
-    // }).catch(err => console.error('no user in convo', err));
+    // item: msgShape.msgShape,
+    // talkingTo: PropTypes.arrayOf().isRequired,
+    // talkingAbout: PropTypes.string.isRequired,
   }
 
   render() {
-    const { convo } = this.props;
+    const { talkingTo } = this.props;
+    // const talkAbout = talkingAbout.map((m, i) => (
+    //   <MessagesAbout
+    //     key={`${i}.messageabout`}
+    //     m={m}
+    //   />
+    // ));
 
     return (
       <div className="MessageRow">
-        <p className="messageP">{convo.user}</p>
+        <p className="messageP">{talkingTo}hisfsdf</p>
+        {/* <p className="messageP">{talkAbout}</p> */}
       </div>
     );
   }

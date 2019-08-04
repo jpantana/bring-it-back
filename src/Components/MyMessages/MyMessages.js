@@ -82,11 +82,6 @@ class MyMessages extends React.Component {
 
     return (
       <div className="MyMessages justify-content-center">
-        <MessagesNavRoute
-          key={'msgNavRoute'}
-          // ownersId={ownersId}
-          // uid={uid}
-        />
         <div className="msgHeaderCompDiv">
           <MessageHeader
             key={'messageHeader'}
@@ -116,7 +111,12 @@ class MyMessages extends React.Component {
                       onClick={this.sendMessage}
                     >Send</button>
                 </div>
-              : ''}
+              : <MessagesNavRoute
+                  key={'msgNavRoute'}
+              // ownersId={ownersId}
+              // uid={uid}
+            />
+            }
           </div>
         </div>
       </div>

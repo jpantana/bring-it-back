@@ -17,13 +17,15 @@ class MessagesNavRoute extends React.Component {
   state = {
     uid: '',
     messages: [],
-    conversation: [],
+    itemIds: [],
     talkingTo: [],
     talkingAbout: [],
+    stuff: [],
   }
 
   componentDidMount() {
     this.getMyMessages();
+    this.getMyConversationInfo();
   }
 
   getMyMessages = () => {
@@ -31,61 +33,79 @@ class MessagesNavRoute extends React.Component {
     messagesData.getGroupedMessages(uid)
       .then((res) => {
         this.setState({ messages: res, uid });
-        this.getMyConversations();
       })
       .catch(err => console.error('no group messages', err));
   };
 
-  getMyConversations = () => {
+  getMyConversationInfo = () => {
     const convos = [];
     this.state.messages.forEach((m) => {
       convos.push(m.itemId);
     });
+    // get unique ids only
     const filterConvos = convos.filter((item, index) => convos.indexOf(item) >= index);
-    this.setState({ conversation: filterConvos });
-    this.state.messages.forEach((m) => {
-      this.state.conversation.forEach((c) => {
-        if (m.itemId === c) {
-          usersData.getUsers(m.otheruserid)
-            .then((res) => {
-              this.setState(prevstate => ({ talkingTo: `${prevstate.talkingTo}, ${res[0].username}` }));
-              this.setState({ talkingTo: res[0].username });
-            }).catch();
-        }
-      });
-    });
     this.setState({ itemIds: filterConvos });
+    // then pass those itemIds
     this.state.itemIds.forEach((item) => {
       itemsData.getAllItems()
         .then((res) => {
           const whichItems = res.filter(i => i.id === item);
-          this.setState(prevstate => ({ talkingAbout: `${prevstate.talkingAbout}, ${whichItems[0].name}` }));
+
+          this.state.messages.forEach((m) => {
+            this.state.itemIds.forEach((c) => {
+              if (m.itemId === c) {
+                usersData.getUsers(m.otheruserid)
+                  .then((resp) => {
+                    const tempItem = {};
+                    tempItem.talkingTo = resp[0].username;
+                    tempItem.talkingAbout = whichItems[0].name;
+                    this.someFunction(tempItem);
+                    // this.setState(prevstate => ({ stuff: `${prevstate.stuff}, tempItem` }));
+                    // this.setState(prevstate => ({ talkingTo: `${prevstate.talkingTo}, ${resp[0].username}` }));
+                    // this.setState({ talkingTo: resp[0].username });
+                  }).catch();
+              }
+            });
+          });
+          // this.setState(prevstate => ({ talkingAbout: ` ${prevstate.talkingAbout}${whichItems[0].name}, ` }));
         }).catch(err => console.error('no item returned', err));
     });
   };
 
+  someFunction = obj => (<Conversations
+    key={'whatever'}
+    obj={obj}
+  />);
+
+
   render() {
     const {
-      uid,
       talkingAbout,
-      talkingTo,
+      // talkingTo,
+      // itemIds,
     } = this.state;
 
-    const allMyConversations = talkingAbout.map((convo, i) => (
-     <Conversations
-      key={`${i}.existingconversation`}
-      talkingTo={talkingTo}
-      convo={convo}
-     />
-    ));
+    // const allMyConversations = talkingAbout.map((item, i) => (
+    //  <Conversations
+    //   key={`${i}.existingconversation`}
+    //   talkingTo={talkingTo}
+    //   takingAbout={talkingAbout}
+    //   item={item}
+    //  />
+    // ));
 
     return (
       <div>
-        {uid}
         <div>{talkingAbout.length !== ''
-          ? allMyConversations
+          ? ''
+          // ? <Conversations
+          //   key={`existingconversationwrapper`}
+          //   talkingTo={talkingTo}
+          //   talkingAbout={talkingAbout}
+          //  />
           : ''
           }</div>
+          <p>{talkingAbout}</p>
       </div>
     );
   }

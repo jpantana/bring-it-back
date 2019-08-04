@@ -56,7 +56,20 @@ class SearchAndSort extends React.Component {
 
     return (
       <div className="SearchAndSort">
+        <div className="md-form mt-0 searchBarDiv">
+          <input
+            className="form-control searchInput"
+            type="text"
+            placeholder="Search"
+            aria-label="Search"
+            defaultValue={searchInput}
+            onChange={this.searchInput}
+          />
+          <i className="fas fa-search magnifyingGlass"></i>
+        </div>
+
         <Dropdown
+          // hidden
           isOpen={this.state.dropdownOpen}
           toggle={this.toggle}
           className="catDropDown"
@@ -69,7 +82,7 @@ class SearchAndSort extends React.Component {
           >
             { categoryName }
           </DropdownToggle >
-          <DropdownMenu className="dropdownMenu">
+          <DropdownMenu left className="dropdownMenu">
             <DropdownItem
               onClick={this.props.pickCategory}
               value={'Categories'}
@@ -81,16 +94,6 @@ class SearchAndSort extends React.Component {
             { catLoop }
           </DropdownMenu>
         </Dropdown>
-        <div className="md-form mt-0">
-          <input
-            className="form-control searchInput"
-            type="text"
-            placeholder="Search"
-            aria-label="Search"
-            defaultValue={searchInput}
-            onChange={this.searchInput}
-          />
-        </div>
       </div>
     );
   }
