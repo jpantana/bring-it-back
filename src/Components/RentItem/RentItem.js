@@ -14,7 +14,6 @@ import './RentItem.scss';
 // PROPs
 import itemShape from '../../helpers/propz/itemShape';
 // SVGs
-import cart from '../../SVGs/iconmonstr-shopping-cart-3.svg';
 import usersData from '../../helpers/data/usersData';
 
 const defaultStateRental = {
@@ -168,7 +167,8 @@ class RentItem extends React.Component {
               </form>
             </ModalBody>
         </Modal>
-        <img onClick={this.modalShowHide} className="cartIcon" src={cart} alt="cart icon"/>
+        {/* <img onClick={this.modalShowHide} className="cartIcon" src={cart} alt="cart icon"/> */}
+        <i class="fas fa-cart-plus cartIcon"></i>
       </div>
     );
   }

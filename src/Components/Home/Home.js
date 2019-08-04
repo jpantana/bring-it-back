@@ -11,6 +11,7 @@ import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import SearchAndSort from '../SearchAndSort/SearchAndSort';
 import itemsRentedData from '../../helpers/data/itemsRentedData';
 // STYLEs
+import 'animate.css';
 import './Home.scss';
 // SVGs
 

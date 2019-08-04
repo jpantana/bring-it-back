@@ -6,8 +6,6 @@ import RentItem from '../RentItem/RentItem';
 import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './ItemCard.scss';
-// SVGs
-import checkIcon from '../../SVGs/iconmonstr-check-mark-6.svg';
 
 class ItemCard extends React.Component {
   static propTypes = {
@@ -63,7 +61,8 @@ class ItemCard extends React.Component {
         </div>
         <div className="allCardIconsHome">
           <span>{item.isAvailable === true
-            ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" />
+            // ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" />
+            ? <i class="fas fa-check-circle availableIcon"></i>
             : <p className="availableAgainDate">Available after {this.rentedInfo()}</p> }</span>
           <span className="editDeleteSpan">
           {item.isAvailable === true ? <RentItem
@@ -76,11 +75,11 @@ class ItemCard extends React.Component {
         {
           this.props.useruid !== this.props.item.ownerId
             ? <span className="msgUserSpan">
-            <button
-              className="btn msgUserBtn"
+            <span
+              className="msgUserBtn"
               value={item.ownerId}
               onClick={this.messageThisUser}
-            >Message Owner</button>
+            >{<i className="fas fa-comment msgIcon"></i>}</span>
             </span> : ''}
       </div>
     );

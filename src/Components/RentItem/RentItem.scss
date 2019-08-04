@@ -7,6 +7,13 @@
 .cartIcon {
   height: 1.5em;
   padding: 5px;
+  color: $orange;
+  text-shadow: 1px 1px 3px $shadow;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: .4s;
+  }
 }
 
 .rentBtn {

@@ -30,6 +30,7 @@
   .searchInput {
     border-radius: 20px 0 0 20px;
     height: 30px !important;
+    border: .5px solid $secondBlue;
   }
   
   .magnifyingGlass {
@@ -55,5 +56,11 @@
   font-size: 14px;
   font-weight: 600;
   text-align: center;
+  border: .5px solid $orange !important;
+  &:hover {
+    background-color: #e99e58 !important;
+    color: white !important;
+    // text-shadow: 1px 1px 3px lightgrey;
+  }
 }
 

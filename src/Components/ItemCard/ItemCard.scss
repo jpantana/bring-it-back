@@ -4,7 +4,6 @@
   width: 14em !important;
   height: 23em;
   margin: 30px;
-  // margin-top: -10px;
   padding: 0;
   box-shadow: 5px 1px 9px $shadow;
   display: flex;
@@ -12,7 +11,6 @@
   justify-content: center;
   border-radius: 0 !important;
   overflow: hidden;
-  // border: .5px solid $mainBlue !important;
 }
 
 .imgContainer {
@@ -22,6 +20,7 @@
   position: absolute;
   top: .5px;
   right: .5px;
+  box-shadow: 1px 1px 4px $shadow;
   .itemImg {
     object-fit: contain;
     margin: auto;
@@ -41,7 +40,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  // border-bottom: 1px solid $shadow;
 }
 
 .cardDetails {
@@ -55,21 +53,21 @@
   .thCondition {
     font-family: $font1;
     font-size: 10px;
-    color: $mainBlue;
+    color: $blackFont;
     padding: 10px;
     text-decoration: underline;
   }
   .thPriceHour {
     font-family: $font1;
     font-size: 10px;
-    color: $mainBlue;
+    color: $blackFont;
     padding: 10px;
     text-decoration: underline;
   }
   .thPriceDay {
     font-family: $font1;
     font-size: 10px;
-    color: $mainBlue;
+    color: $blackFont;
     padding: 10px;
     text-decoration: underline;
   }
@@ -77,13 +75,13 @@
     font-family: $font1;
     font-weight: 700;
     font-size: 12px;
-    color: $orange;
+    color: $blackFont;
   }
   .itemPriceHour, .itemPriceDay {
     font-family: $font1;
     font-weight: 700;
     font-size: 12px;
-    color: $orange;
+    color: $blackFont;
   }
 }
 
@@ -91,8 +89,8 @@
   font-size: 10px;
   font-style: italic;
   font-family: $font1;
-  color: $mainBlue;
-  text-shadow: 2px 2px 5px $shadow;
+  color: $orange;
+  // text-shadow: 2px 2px 5px $shadow;
 }
 
 .allCardIconsHome {
@@ -102,29 +100,30 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 4px;
-  .iconSvg {
-    height: 1.5em;
-    padding: 5px;
-  }  
+  padding: 4px; 
+  .availableIcon {
+    color: $orange;
+    text-shadow: 1px 1px 3px $shadow;
+  }
 }
 
 .msgUserSpan {
   
   .msgUserBtn {
-    width: 97px;
-    padding: 2px !important;
-    margin: auto !important;
-    margin-bottom: 15px !important;
+    position: absolute;
+    top: 340px;
+    left: 10px;
     color: $whiteFont !important;
-    background-color: $mainBlue !important;
-    font-family: $font1 !important;
-    font-size: 10px !important;
-    border: 1px solid $mainBlue !important;
-    &:hover {
-      background-color: $whiteFont !important;
-      color: $mainBlue !important;
-      transition: .4s;
+    background-color: transparent !important;
+    .msgIcon {
+      font-size: 20px;
+      color: $mainBlue;
+      text-shadow: 2px 1px 5px lightgrey;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: .4s;
+      }
     }
   }  
 }
