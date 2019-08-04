@@ -6,14 +6,10 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
-// JSs
-
 // PROPs
 import categoriesShape from '../../helpers/propz/categoriesShape';
 // STYLEs
 import './SearchAndSort.scss';
-// SVGs
-// import magnifier from '../../SVGs/iconmonstr-magnifier-4.svg';
 
 class SearchAndSort extends React.Component {
   static propTypes = {
@@ -66,23 +62,22 @@ class SearchAndSort extends React.Component {
             onChange={this.searchInput}
           />
           <i className="fas fa-search magnifyingGlass"></i>
-        </div>
 
         <Dropdown
-          // hidden
           isOpen={this.state.dropdownOpen}
           toggle={this.toggle}
           className="catDropDown"
         >
           <DropdownToggle
             caret
+            id="SearchAndSortDropdown"
             onClick={this.showCategories}
             defaultValue={ categoryName }
             className="dropdownToggle"
           >
             { categoryName }
           </DropdownToggle >
-          <DropdownMenu left className="dropdownMenu">
+          <DropdownMenu id="searchSortDropdown">
             <DropdownItem
               onClick={this.props.pickCategory}
               value={'Categories'}
@@ -94,6 +89,8 @@ class SearchAndSort extends React.Component {
             { catLoop }
           </DropdownMenu>
         </Dropdown>
+        </div>
+
       </div>
     );
   }

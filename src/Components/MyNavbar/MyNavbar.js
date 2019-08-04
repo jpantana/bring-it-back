@@ -176,10 +176,10 @@ class MyNavbar extends React.Component {
                   >
                     <DropdownToggle>{<i className="fas fa-chevron-circle-down navDropDown"></i>}</DropdownToggle>
                       <DropdownMenu right>
-                        <DropdownItem onClick={this.openModal} ><i className="fas fa-user"></i> User Profile</DropdownItem>
-                        <DropdownItem><i className="fas fa-cog"></i> Settings</DropdownItem>
+                        <DropdownItem className="userdropdownText" onClick={this.openModal} ><i className="fas fa-user updateUserIcon"></i> User Profile</DropdownItem>
+                        <DropdownItem className="userdropdownText"><i className="fas fa-cog updateCogWheelIcon"></i> Settings</DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem onClick={this.logMeOut}><i className="fa fa-sign-out fa-fw"></i> Logout</DropdownItem>
+                        <DropdownItem onClick={this.logMeOut}><i class="fas fa-sign-out-alt signoutIcon"></i> Logout</DropdownItem>
                       </DropdownMenu>
                   </UncontrolledButtonDropdown>
                 : ''}

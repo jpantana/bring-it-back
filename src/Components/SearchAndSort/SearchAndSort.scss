@@ -23,24 +23,37 @@
   border: none !important;  
 }
 
-// .dropdown-menu, .dropdownMenu {
-//   top: 200px !important;
-// }
-
 .searchBarDiv {
   display: flex;
   flex-direction: row;
+
   .searchInput {
-    border-radius: 20px !important;
+    border-radius: 20px 0 0 20px;
     height: 30px !important;
   }
   
   .magnifyingGlass {
     position: relative;
     top: 7px;
-    left: -28px;
+    left: -25px;
     color: $secondBlue;
   }
 }
 
+#searchSortDropdown {
+  top: 200px !important;
+}
+
+#SearchAndSortDropdown {
+  position: relative;
+  right: 16px;
+  background-color: $orange !important;
+  border-radius: 0px 15px 15px 0px;
+  width: 110px;
+  height: 30px;
+  font-family: $font1;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
 
