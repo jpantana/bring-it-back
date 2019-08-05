@@ -9,6 +9,7 @@ import {
 } from 'reactstrap';
 import moment from 'moment';
 // JSs
+import Rolodex from '../Rolodex/Rolodex';
 // STYLEs
 import './RentItem.scss';
 // PROPs
@@ -116,6 +117,11 @@ class RentItem extends React.Component {
     this.determineDueDate(e.target.value);
   };
 
+  roloValu = (e) => {
+    this.itemToRentDataUpdate('hoursRented', e);
+    this.determineDueDate(e.target.value);
+  };
+
   render() {
     const {
       street,
@@ -124,6 +130,7 @@ class RentItem extends React.Component {
       state,
       isOpen,
     } = this.state;
+    const { item } = this.props;
     return (
       <div className="RentItem">
         <Modal isOpen={isOpen}>
@@ -143,7 +150,12 @@ class RentItem extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="howLong">How long do you need it?</label>
+                <p>How long do you need it?</p>
+                <Rolodex
+                  key={`${item.id}.rolodex`}
+                  roloValu={this.roloValu}
+                />
+                {/* <label htmlFor="howLong">How long do you need it?</label>
                 <input
                   type="number"
                   className="form-control"
@@ -152,7 +164,7 @@ class RentItem extends React.Component {
                   placeholder="e.g. 26 hrs"
                   defaultValue={0}
                   onChange={this.rentThisLong}
-                />
+                /> */}
                 <p className="returnTime">{this.state.itemToRent.returnTime}</p>
               </div>
               <div>
@@ -168,7 +180,7 @@ class RentItem extends React.Component {
             </ModalBody>
         </Modal>
         {/* <img onClick={this.modalShowHide} className="cartIcon" src={cart} alt="cart icon"/> */}
-        <i className="fas fa-cart-plus cartIcon"></i>
+        <i onClick={this.modalShowHide} className="fas fa-cart-plus cartIcon"></i>
       </div>
     );
   }

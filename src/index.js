@@ -5,6 +5,7 @@ import App from './App/App';
 import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/js/dist/dropdown';
+import 'bootstrap/js/dist/carousel';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

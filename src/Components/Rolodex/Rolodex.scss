@@ -1,0 +1,56 @@
+@import '../../styles/variables.scss';
+
+
+  
+
+// .rotate {
+//   -webkit-transform: rotate(90deg);
+//   -webkit-transform-origin: left top;
+//   -moz-transform: rotate(90deg);
+//   -moz-transform-origin: left top;
+//   -ms-transform: rotate(90deg);
+//   -ms-transform-origin: left top;
+//   -o-transform: rotate(90deg);
+//   -o-transform-origin: left top;
+//   transform: rotate(90deg);
+//   transform-origin: left top;
+
+//   position: relative;
+//   top: 100px;
+//   left: 50%;
+//   white-space: nowrap;    
+//   font-size: 48px;
+// }
+
+.Rolodex {
+  // background-color: $orange;
+  height: 120px;
+  position: relative;
+  top: 0px;
+  margin: auto;
+}
+
+#carouselExampleControls {
+  width: 80px;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+#rotate {
+  color: $blackFont;
+  font-size: 48px;
+  margin-bottom: 60px;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  background-color: $mainBlue !important;
+  transform: scale(1.3) !important;
+}

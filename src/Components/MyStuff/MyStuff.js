@@ -160,7 +160,13 @@ class MyStuff extends React.Component {
             <span className="addNewSpan" onClick={this.addNewItem}>
               Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
             </span>
-            { makeItemCards }
+
+            <div className="ItemsContainer">
+              <div className="ItemsWrapper">
+                { makeItemCards }
+              </div>
+            </div>
+
           </div>
 
           <div className="col col-6">

@@ -12,7 +12,8 @@
   width: 100%;
   height: auto;
   background-color: white;
-  border-bottom: 10px solid $orange;
+  border-bottom: 10px solid $oranger;
+  background: linear-gradient(to left, $upperNav, $upperNavWhite);
 }
 
 .userDisplayDiv {

@@ -73,7 +73,6 @@ class ItemCard extends React.Component {
             </div>
 
             <div className="cardPrintoutsWrapper">
-              <span className="theCondition">Condition</span>
               { this.condtionFontColor() }
             </div>
 

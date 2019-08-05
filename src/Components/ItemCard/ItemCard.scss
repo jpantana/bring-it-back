@@ -79,43 +79,36 @@
   .cardPrintoutsWrapper {
     display: flex;
     flex-direction: column;
-    padding: 12px;
+    padding: 2px;
     position: absolute;
-    top: 310px;
-    right: 3px;
-    background-color: $secondBlue;
-    padding: 7px 7px 7px 7px;
-    border-radius: 50px;
-    box-shadow: 3px 1px 5px $shadow;
-    .theCondition {
-      padding: 0;
-      text-align: center;
-      font-family: $font1;
-      font-style: italic;
-      font-size: 11px;
-      color: $whiteFont;
-      margin-bottom: 0;
-    }
+    top: 325px;
+    right: 10px;
+    padding-bottom: 0px;
     .itemCondition {
       margin-top: -5px;
       font-family: $font1;
-      font-size: 20px;
+      padding: 0;
+      font-size: 18px;
       text-align: center;
-      font-weight: 400;
+      font-weight: 200;
     }
   }
   
   .mint {
     color: $mint !important;
+    border-bottom: 7px solid $mint;
   }
   .good {
     color: $good !important;
+    border-bottom: 7px solid $good;
   }
   .fair {
     color: $fair !important;
+    border-bottom: 7px solid $fair;
   }
   .relic {
     color: $relic !important;
+    border-bottom: 7px solid $relic;
   }
 }
 
@@ -125,7 +118,6 @@
   font-style: italic;
   font-family: $font1;
   color: $orange;
-  // text-shadow: 2px 2px 5px $shadow;
 }
 
 .allCardIconsHome {
