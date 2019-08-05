@@ -168,7 +168,7 @@ class RentItem extends React.Component {
             </ModalBody>
         </Modal>
         {/* <img onClick={this.modalShowHide} className="cartIcon" src={cart} alt="cart icon"/> */}
-        <i class="fas fa-cart-plus cartIcon"></i>
+        <i className="fas fa-cart-plus cartIcon"></i>
       </div>
     );
   }

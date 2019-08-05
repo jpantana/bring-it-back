@@ -34,8 +34,16 @@ class Scroll extends React.Component {
         marginLeft: '-=300px',
       }, 'fast');
     }
+    // if (counter === (howManyClicks - 1)) {
+    //   $('#arrowRight').addClass('hide');
+    //   $('#arrow').addClass('hide');
+    // } else {
+    //   $('#arrowRight').removeClass('hide');
+    //   $('#arrow').removeClass('hide');
+    // }
     $('#arrowBack').removeClass('hide');
     $('#arrowLeft').removeClass('hide');
+    this.reHideLeftRightDivAtZero(1);
   };
 
   moveLeft = (e) => {
@@ -54,6 +62,16 @@ class Scroll extends React.Component {
       $('#allCardsDiv').animate({
         marginLeft: '+=300px',
       }, 'fast');
+    }
+    this.reHideLeftRightDivAtZero(-1);
+  };
+
+  reHideLeftRightDivAtZero = (num) => {
+    const { counter } = this.state;
+    const actualCount = counter + num;
+    if (actualCount < 1) {
+      $('#arrowLeft').addClass('hide');
+      $('#arrowBack').addClass('hide');
     }
   };
 

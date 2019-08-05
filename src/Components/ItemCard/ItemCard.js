@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // JSs
+import $ from 'jquery';
 import itemShape from '../../helpers/propz/itemShape';
 import RentItem from '../RentItem/RentItem';
 import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
@@ -14,6 +15,10 @@ class ItemCard extends React.Component {
     itemsRented: PropTypes.arrayOf(itemsRentedShape.itemsRentedShape).isRequired,
     useruid: PropTypes.string.isRequired,
     messageUserRedirect: PropTypes.func.isRequired,
+  }
+
+  componentDidMount() {
+    this.condtionFontColor();
   }
 
   rentedInfo = () => {
@@ -31,6 +36,15 @@ class ItemCard extends React.Component {
     this.props.messageUserRedirect(e.target.value, this.props.item.id);
   };
 
+  condtionFontColor = () => {
+    const { item } = this.props;
+    if (item.condition === 'Mint') {
+      $('.itemCondition').addClass(' mint');
+    } else if (item.condition === 'Good') {
+      $('.itemCondition').addClass(' mint');
+    }
+  }
+
   render() {
     const { item, rentThisItem } = this.props;
 
@@ -43,26 +57,28 @@ class ItemCard extends React.Component {
           </div>
           <h5 className="card-title allCardsTitle">{item.name}</h5>
           <div className="cardDetails">
-            <table>
-              <tbody>
-                <tr>
-                  <th className="thCondition">Condition</th>
-                  <th className="thPriceHour">Hourly</th>
-                  <th className="thPriceDay">Daily</th>
-                </tr>
-                <tr>
-                  <td className="itemCondition">{item.condition}</td>
-                  <td className="itemPriceHour">${item.priceperhour}</td>
-                  <td className="itemPriceDay">${item.priceperday}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="cardDetailsWrapper">
+              <div className="cardDetailHeaders">
+                <span className="thCondition detailsHeaders">Condition</span>
+                <span className="thPriceHour detailsHeaders">Hourly</span>
+                <span className="thPriceDay detailsHeaders">Daily</span>
+              </div>
+
+              <div className="cardDetailPrintouts">
+                <span
+                  id={`itemCondition.${item.id}`}
+                  className="detailReportings itemCondition">
+                  {item.condition}
+                </span>
+                <span id="itemPriceHour" className="detailReportings">${item.priceperhour}</span>
+                <span id="itemPriceDay" className="detailReportings">${item.priceperday}</span>
+            </div>
+            </div>
           </div>
         </div>
         <div className="allCardIconsHome">
           <span>{item.isAvailable === true
-            // ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" />
-            ? <i class="fas fa-check-circle availableIcon"></i>
+            ? <i className="fas fa-check-circle availableIcon"></i>
             : <p className="availableAgainDate">Available after {this.rentedInfo()}</p> }</span>
           <span className="editDeleteSpan">
           {item.isAvailable === true ? <RentItem
