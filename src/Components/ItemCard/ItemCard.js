@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // JSs
-import $ from 'jquery';
 import itemShape from '../../helpers/propz/itemShape';
 import RentItem from '../RentItem/RentItem';
 import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
@@ -15,10 +14,6 @@ class ItemCard extends React.Component {
     itemsRented: PropTypes.arrayOf(itemsRentedShape.itemsRentedShape).isRequired,
     useruid: PropTypes.string.isRequired,
     messageUserRedirect: PropTypes.func.isRequired,
-  }
-
-  componentDidMount() {
-    this.condtionFontColor();
   }
 
   rentedInfo = () => {
@@ -39,10 +34,18 @@ class ItemCard extends React.Component {
   condtionFontColor = () => {
     const { item } = this.props;
     if (item.condition === 'Mint') {
-      $('.itemCondition').addClass(' mint');
-    } else if (item.condition === 'Good') {
-      $('.itemCondition').addClass(' mint');
+      return <span className="itemCondition mint">{item.condition}</span>;
     }
+    if (item.condition === 'Good') {
+      return <span className="itemCondition good">{item.condition}</span>;
+    }
+    if (item.condition === 'Fair') {
+      return <span className="itemCondition fair">{item.condition}</span>;
+    }
+    if (item.condition === 'Relic') {
+      return <span className="itemCondition relic">{item.condition}</span>;
+    }
+    return null;
   }
 
   render() {
@@ -57,23 +60,23 @@ class ItemCard extends React.Component {
           </div>
           <h5 className="card-title allCardsTitle">{item.name}</h5>
           <div className="cardDetails">
+
             <div className="cardDetailsWrapper">
               <div className="cardDetailHeaders">
-                <span className="thCondition detailsHeaders">Condition</span>
                 <span className="thPriceHour detailsHeaders">Hourly</span>
                 <span className="thPriceDay detailsHeaders">Daily</span>
               </div>
-
-              <div className="cardDetailPrintouts">
-                <span
-                  id={`itemCondition.${item.id}`}
-                  className="detailReportings itemCondition">
-                  {item.condition}
-                </span>
+              <div className="details">
                 <span id="itemPriceHour" className="detailReportings">${item.priceperhour}</span>
                 <span id="itemPriceDay" className="detailReportings">${item.priceperday}</span>
+              </div>
             </div>
+
+            <div className="cardPrintoutsWrapper">
+              <span className="theCondition">Condition</span>
+              { this.condtionFontColor() }
             </div>
+
           </div>
         </div>
         <div className="allCardIconsHome">

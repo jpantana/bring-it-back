@@ -42,92 +42,83 @@
   text-overflow: ellipsis;
 }
 
-.cardDetailsWrapper {
+.cardDetails {
   display: flex;
-  flex-direction: column;
-  justify-content: center !important;
-  border-top: 1px solid $shadow;
-  padding-top: 10px;
-  .cardDetailHeaders {
-    flex-flow: row !important;
-    .detailsHeaders {
-      font-size: 12px;
-      padding: 12px;
-      font-style: italic;
+  flex-flow: row nowrap;
+  .cardDetailsWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around !important;
+    border-top: 1px solid $shadow;
+    border-bottom: 1px solid $shadow;
+    position: relative;
+    top: -20px;
+    left: 45px;
+    .cardDetailHeaders {
+      text-align: center;
+      .detailsHeaders {
+        font-size: 12px;
+        padding: 7px;
+        font-style: italic;
+      }
     }
-  }
-  .cardDetailPrintouts {
-    flex-flow: row nowrap;
-  }
-  .detailReportings {
+    .details {
+      margin-top: -4px;
+      .detailReportings {
         font-family: $font1;
         font-weight: 700;
         font-size: 20px;
         color: $orange;
-        padding: 10px;
+        padding-left: 7px;
+        padding-right: 7px;
+        text-align: center;
       }
+    }
+  }
+  
+  .cardPrintoutsWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    position: absolute;
+    top: 310px;
+    right: 3px;
+    background-color: $secondBlue;
+    padding: 7px 7px 7px 7px;
+    border-radius: 50px;
+    box-shadow: 3px 1px 5px $shadow;
+    .theCondition {
+      padding: 0;
+      text-align: center;
+      font-family: $font1;
+      font-style: italic;
+      font-size: 11px;
+      color: $whiteFont;
+      margin-bottom: 0;
+    }
+    .itemCondition {
+      margin-top: -5px;
+      font-family: $font1;
+      font-size: 20px;
+      text-align: center;
+      font-weight: 400;
+    }
+  }
+  
+  .mint {
+    color: $mint !important;
+  }
+  .good {
+    color: $good !important;
+  }
+  .fair {
+    color: $fair !important;
+  }
+  .relic {
+    color: $relic !important;
+  }
 }
 
-.mint {
-  color: $mint !important;
-}
-// table version
-// .cardDetails {
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: center;
-//   padding: 5px;
-//   color: $whiteFont;
-//   // border: .5px solid $shadow;
-//   // border-radius: 5px;
-//   margin-top: -20px !important;
-//   .thCondition {
-//     font-family: $font1;
-//     font-size: 10px;
-//     // color: $blackFont;
-//     color: $whiteFont;
-//     padding: 5px;
-//     // text-decoration: underline;
-//     text-transform: uppercase;
-//     background-color: $orange;
-//   }
-//   .thPriceHour {
-//     font-family: $font1;
-//     font-size: 10px;
-//     color: $blackFont;
-//     color: $whiteFont;
-//     padding: 5px;
-//     // text-decoration: underline;
-//     text-transform: uppercase;
-//     background-color: $orange;
-
-//   }
-//   .thPriceDay {
-//     font-family: $font1;
-//     font-size: 10px;
-//     // color: $blackFont;
-//     color: $whiteFont;
-//     padding: 5px;
-//     // text-decoration: underline;
-//     text-transform: uppercase;
-//     background-color: $orange;
-
-//   }
-//   .itemCondition {
-//     font-family: $font1;
-//     font-weight: 700;
-//     font-size: 12px;
-//     color: $blackFont;
-//     background-color: $secondBlue;
-//   }
-//   .itemPriceHour, .itemPriceDay {
-//     font-family: $font1;
-//     font-weight: 700;
-//     font-size: 12px;
-//     color: $blackFont;
-//     background-color: $secondBlue;
-//   }
-// }
 
 .availableAgainDate {
   font-size: 10px;
