@@ -155,21 +155,23 @@ class MyStuff extends React.Component {
                     editItem={this.state.editItem}
                   />
                 </Modal>
-        <div className="myStuffWrapper">
-          <div className="">
-            <span className="addNewSpan" onClick={this.addNewItem}>
-              Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
-            </span>
+        <div className="myStuffContainer">
 
-            <div className="ItemsContainer">
-              <div className="ItemsWrapper">
-                { makeItemCards }
+          <div className="smallCardsDiv">
+            <div className="addNewWrapper">
+              <span className="addNewSpan" onClick={this.addNewItem}>
+                Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
+              </span>
+
+              <div className="ItemsContainer">
+                <div className="ItemsWrapper">
+                  { makeItemCards }
+                </div>
               </div>
             </div>
-
           </div>
 
-          <div className="col col-6">
+          <div className="SingleItemDiv">
             { (isClicked === true ? <SingleItem
                 key={`single.${singleItem.id}`}
                 singleItem={singleItem}

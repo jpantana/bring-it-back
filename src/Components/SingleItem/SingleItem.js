@@ -31,6 +31,23 @@ class SingleItem extends React.Component {
     unseeSingleItem();
   };
 
+  condtionFontColor = () => {
+    const { singleItem } = this.props;
+    if (singleItem.condition === 'Mint') {
+      return <span className="itemCondition mint">{singleItem.condition}</span>;
+    }
+    if (singleItem.condition === 'Good') {
+      return <span className="itemCondition good">{singleItem.condition}</span>;
+    }
+    if (singleItem.condition === 'Fair') {
+      return <span className="itemCondition fair">{singleItem.condition}</span>;
+    }
+    if (singleItem.condition === 'Relic') {
+      return <span className="itemCondition relic">{singleItem.condition}</span>;
+    }
+    return null;
+  }
+
   render() {
     // IDEAS: carousel of imgs; calculator for price booking; messaging users
     const { singleItem, editItemEvent } = this.props;
@@ -41,7 +58,6 @@ class SingleItem extends React.Component {
           <h1 className="full-card-title">{singleItem.name}</h1>
 
           <div className="allCardIcons">
-
             <span className="editDeleteSpan">
               <img onClick={this.deleteEvent} src={deleteIcon} id={singleItem.id} alt="delete icon" className="singleIcon"/>
               <img onClick={editItemEvent} src={editIcon} id={`${singleItem.id}.edit`} alt="edit icon" className="singleIcon"/>
@@ -49,26 +65,35 @@ class SingleItem extends React.Component {
             <span className="conditionalIconSpan">{singleItem.isAvailable === true
               ? <img src={checkIcon} alt="checkbox icon svg" className="singleIcon" />
               : <p className="isRented">Rented</p> }</span>
-
           </div>
-
         </div>
 
         <div className="mainCard">
-
           <div className="imgDiv">
             {/* <img className="card-img-top SingleItemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} /> */}
             <img src="https://via.placeholder.com/200x250" className="card-img-top SingleItemImg" alt="placeholder img" />
           </div>
 
-          <div className="card singleItemDetails">
-            <span className="priceSpan">
-              <p className="card-text price">${singleItem.priceperhour}.00<span className="afterPrice"> hourly</span></p>
-              <p className="card-text price">${singleItem.priceperday}.00<span className="afterPrice"> daily</span></p>
-            </span>
-            <p className="aboutSpan">description</p>
-            <p className="card-text itemDescription">{singleItem.description}</p>
-            <table className="singleItemTable">
+            <div className="singleItemDiv">
+              <div className="singleItemDescrip">
+                {singleItem.description}
+              </div>
+              <div className="detailHeaderSingleItem">
+                <p className="thConditionSI">Condition</p>
+                <p className="singleItemCondition">{singleItem.condition}</p>
+              </div>
+              <div className="detailContentSingleItem">
+                <p className="thCategorySI">Category</p>
+                <p className="singleItemCategory">{singleItem.category}</p>
+              </div>
+            </div>
+
+
+            <div className="cardPrintoutsWrapper">
+              { this.condtionFontColor() }
+            </div>
+
+            {/* <table className="singleItemTable">
               <tbody>
                 <tr>
                   <td className="thConditionSI">Condition</td>
@@ -79,12 +104,10 @@ class SingleItem extends React.Component {
                   <td className="singleItemCategory">{singleItem.category}</td>
                 </tr>
               </tbody>
-            </table>
+            </table> */}
 
           </div>
         </div>
-
-    </div>
     );
   }
 }

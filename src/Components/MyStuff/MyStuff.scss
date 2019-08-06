@@ -5,52 +5,62 @@
   display: flex;
   flex-flow: column;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 2.5em;
 }
 
-.myStuffWrapper {
+.myStuffContainer {
   width: 100%;
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
-  margin-top: 20px;
-  .addNewSpan {
-    margin-right: 170px;
-    text-align: left !important;
-    text-shadow: 1px 1px 4px orange;
-    color: $whiteFont;
-    font-size: 18px;
-    font-family: $font1;
-    font-weight: 700;
-    background-color: $orange;
-    padding: 12px 6px 12px 6px;
-    width: 18em !important;
-    border-radius: 5px 5px 0 0;
-    box-shadow: -5px 1px 12px $shadow;
+  justify-content: space-between;
+  .smallCardsDiv {
+    margin-left: 3em;
+    margin-top: 1em;
+    width: 20em;
+    .addNewWrapper {
+      display: flex;
+      flex-direction: column;
+      .addNewSpan {
+        margin-right: 170px;
+        padding-left: 17px !important;
+        text-align: left !important;
+        color: $whiteFont;
+        font-size: 18px;
+        font-family: $font1;
+        font-weight: 700;
+        background-color: $orange;
+        padding: 12px 6px 12px 6px;
+        width: 16em !important;
+        border-radius: 5px 5px 0 0;
+        box-shadow: -5px 1px 12px $shadow;
+      } 
+      .addIcon {
+        height: 32px;
+        margin-left: 5px;
+        filter: invert(100%);
+        &:hover {
+          transition: .4s;
+          transform: scale(1.2);
+          filter: inver(90%);
+        }
+      }
+    }
+    .ItemsContainer {
+      display: flex;
+      flex-flow: column;
+      overflow: scroll;
+      max-height: 350px;
+      // background-color: green;
+      .ItemsWrapper {
+        // background-color: blue;
+      }
+    }
   }
-  
-  .addIcon {
-    height: 30px;
-    margin-left: 5px;
-    filter: invert(100%);
+  .SingleItemDiv {
+    margin-top: 1em;
+    margin-right: 3em;
   }
 }
 
 
-.mystuffMap {
-  // height: 180px;
-}
 
-.ItemsContainer {
-  display: flex;
-  flex-flow: column;
-  overflow: scroll;
-  max-height: 300px;
-  margin-top: 8px;
-  margin-right: 170px;
-  margin-bottom: 10px;
-}
-
-.singleItemDiv {
-  // margin-left: 100px;
-}
