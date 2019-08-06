@@ -55,24 +55,34 @@
     top: -20px;
     left: 45px;
     .cardDetailHeaders {
+      margin-top: -8px;
       text-align: center;
       .detailsHeaders {
-        font-size: 12px;
+        font-size: 11px;
         padding: 7px;
         font-style: italic;
       }
     }
     .details {
-      margin-top: -4px;
+      margin-top: 0px;
       margin-right: -8px;
       .detailReportings {
+        padding: 0px 7px 0px 7px;
+        text-align: center;
+      }
+      #itemPriceHour {
+        margin-left: -30px;
+        color: $oranger;
         font-family: $font1;
         font-weight: 700;
-        font-size: 20px;
-        color: $orange;
-        padding-left: 7px;
-        padding-right: 7px;
-        text-align: center;
+        font-size: 22px;
+      }
+      #itemPriceDay {
+        margin-right: -17px;
+        font-family: $font1;
+        color: $mainBlue;
+        font-weight: 700;
+        font-size: 22px;
       }
     }
   }

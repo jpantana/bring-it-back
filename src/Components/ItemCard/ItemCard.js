@@ -62,13 +62,13 @@ class ItemCard extends React.Component {
           <div className="cardDetails">
 
             <div className="cardDetailsWrapper">
-              <div className="cardDetailHeaders">
-                <span className="thPriceHour detailsHeaders">Hourly</span>
-                <span className="thPriceDay detailsHeaders">Daily</span>
-              </div>
               <div className="details">
                 <span id="itemPriceHour" className="detailReportings">${item.priceperhour}</span>
                 <span id="itemPriceDay" className="detailReportings">${item.priceperday}</span>
+              </div>
+              <div className="cardDetailHeaders">
+                <span className="thPriceHour detailsHeaders">Per Hour</span>
+                <span className="thPriceDay detailsHeaders">Per Day</span>
               </div>
             </div>
 

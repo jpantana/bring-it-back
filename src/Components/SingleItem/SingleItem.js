@@ -78,21 +78,17 @@ class SingleItem extends React.Component {
               <div className="singleItemDescrip">
                 {singleItem.description}
               </div>
-              <div className="detailHeaderSingleItem">
-                <p className="thConditionSI">Condition</p>
-                <p className="singleItemCondition">{singleItem.condition}</p>
+              <div className="availabilityDiv">
+                {singleItem.isAvailable === true
+                  ? <li className="isAvailable">This item is currently available for rent</li>
+                  : <li className="isNotAvailable">This item is currently available for rent</li>
+                }
               </div>
               <div className="detailContentSingleItem">
                 <p className="thCategorySI">Category</p>
                 <p className="singleItemCategory">{singleItem.category}</p>
               </div>
             </div>
-
-
-            <div className="cardPrintoutsWrapper">
-              { this.condtionFontColor() }
-            </div>
-
             {/* <table className="singleItemTable">
               <tbody>
                 <tr>
@@ -105,7 +101,10 @@ class SingleItem extends React.Component {
                 </tr>
               </tbody>
             </table> */}
+          </div>
 
+          <div className="itemConditionWrapper">
+            { this.condtionFontColor() }
           </div>
         </div>
     );
