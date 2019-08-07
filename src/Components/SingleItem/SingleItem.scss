@@ -46,13 +46,14 @@
     }
     .singleIcon {
       filter: invert(100%);
-      margin: 25px;
+      margin: 20px;
       padding: 5px !important;
-      height: 1.7em;
+      height: 2em;
       &:hover {
-        filter: invert(0%);
-        height: 1.8em;
+        filter: invert(90%);
+        transform: scale(1.1);
         transition: .4s;
+        cursor: pointer;
       }
     }
   }
@@ -104,14 +105,20 @@
       }
     }
     .availabilityDiv {
+      border-bottom: 1px solid $softShadow;
+      width: 75%;
+      margin: auto;
       .isAvailable {
-        background-color: $oranger;
         width: 80%;
         margin-left: 1.5em;
         font-family: $font1;
-        font-size: 13px;
-        color: $blackFont;
+        font-size: 15px;
+        color: $shadow;
         list-style-type: circle;
+      }
+      .checkIcon {
+        color: $oranger;
+        margin-right: 5px;
       }
       .isNotAvailable {
 
@@ -121,19 +128,26 @@
       padding: 0;
       font-family: $font1;
       font-size: 20px;
-      text-align: left;
-      margin-left: 1em;
-      background-color: green;
-      // margin-top: -20px !important;
+      text-align: right;
+      margin-right: 2em;
+      // background-color: green;
       .thCategorySI {
-        padding: 0;
+        background-color: $mainBlue;
+        color: $whiteFont;
+        width: 55%;
+        margin-left: auto;
+        padding: 1px 5px 1px 1px;
+        font-size: 14px;
+        font-style: italic;
       }
       .singleItemCategory {
+        margin-top: -15px;
         padding: 0;
       }
     }
   }
 }
+
 .itemConditionWrapper {
   margin: 0px 7px 15px 7px;
   font-size: 22px;

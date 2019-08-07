@@ -8,6 +8,7 @@ import deleteIcon from '../../SVGs/iconmonstr-x-mark-4.svg';
 import editIcon from '../../SVGs/iconmonstr-edit-10.svg';
 // STYLEs
 import './SingleItem.scss';
+import 'animate.css';
 
 class SingleItem extends React.Component {
   static propTypes = {
@@ -80,8 +81,13 @@ class SingleItem extends React.Component {
               </div>
               <div className="availabilityDiv">
                 {singleItem.isAvailable === true
-                  ? <li className="isAvailable">This item is currently available for rent</li>
-                  : <li className="isNotAvailable">This item is currently available for rent</li>
+                  ? <p className="isAvailable">
+                    <i className="fas fa-check-circle checkIcon"></i>
+                    This item is currently available for rent
+                    </p>
+                  : <p className="isNotAvailable">
+                    This item is currently available for rent
+                    </p>
                 }
               </div>
               <div className="detailContentSingleItem">
