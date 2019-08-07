@@ -8,6 +8,7 @@
   width: 45em;
   height: auto;
   box-shadow: 5px 1px 9px $shadow;
+  border-radius: 5px 5px 0 0; 
   &:hover {
     // transform: scale(1.03);
     box-shadow: -10px -4px 9px $shadow;
@@ -20,6 +21,7 @@
   flex-flow: row nowrap !important;
   width: 100% !important;
   background-color: $secondBlue;
+  border-radius: 5px 5px 0 0; 
   .full-card-title {
     font-family: $font1 !important;
     font-weight: 700;
@@ -29,20 +31,15 @@
     margin-right: auto;
     margin-top: 25px;
     margin-left: 30px;
-    // text-shadow: 3px 1px 7px $upperNav;
   }
   .allCardIcons {
-    width: 15em;
+    width: 18em;
+    display: flex;
+    flex-flow: row nowrap !important;
+    justify-content: center;
     margin-top: 1px;
     .conditionalIconSpan {
       height: 20px;
-    }
-    .isRented {
-      margin-top: 18px;
-      font-family: $font1;
-      font-size: 12px;
-      font-style: italic;
-      color: $blackFont;
     }
     .singleIcon {
       filter: invert(100%);
@@ -64,51 +61,25 @@
   display: flex;
   flex-flow: row nowrap !important;
   justify-content: space-between;
-  .imgDiv {
-    min-width: 23em !important;
-    max-width: 23em !important;
-    height: 27em;
-    overflow: hidden;
-    box-shadow: 5px 1px 9px $shadow;
-    margin-bottom: 25px;
-    .SingleItemImg {
-      object-fit: contain;
-      margin: auto;
-      border-radius: 0 !important;
-    }
-  }
-  .singleItemDiv {
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    .singleItemDescrip{
-      font-family: $font1;
-      font-size: 14px;
-      padding: 5px;
-      margin: 10px;
-      margin-left: 1.5em;
-      height: 17em;
-      overflow: scroll;
-      text-align: justify;
-      border-radius: 2px;
-      border: 1px solid $shadow;
-      box-shadow: 5px 1px 9px $softShadow;
-    }
-    .detailHeaderSingleItem {
-      padding: 0;
-      .thConditionSI {
-        padding: 0;
-      }
-      .singleItemCondition {
-        padding: 0;
+  .imgAndIsAvailWrapper {
+    .imgDiv {
+      min-width: 23em !important;
+      max-width: 23em !important;
+      height: 27em;
+      overflow: hidden;
+      box-shadow: 5px 1px 9px $shadow;
+      margin-bottom: 25px;
+      .SingleItemImg {
+        object-fit: contain;
+        margin: auto;
+        border-radius: 0 !important;
       }
     }
     .availabilityDiv {
       border-bottom: 1px solid $softShadow;
       width: 75%;
       margin: auto;
-      .isAvailable {
+      .isAvailable, .isNotAvailable {
         width: 80%;
         margin-left: 1.5em;
         font-family: $font1;
@@ -120,37 +91,74 @@
         color: $oranger;
         margin-right: 5px;
       }
-      .isNotAvailable {
-
-      }
     }
-    .detailContentSingleItem {
-      padding: 0;
+  }
+  .singleItemDiv {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .singleItemDescrip{
       font-family: $font1;
-      font-size: 20px;
-      text-align: right;
-      margin-right: 2em;
-      // background-color: green;
-      .thCategorySI {
-        background-color: $mainBlue;
-        color: $whiteFont;
-        width: 55%;
-        margin-left: auto;
-        padding: 1px 5px 1px 1px;
-        font-size: 14px;
-        font-style: italic;
-      }
-      .singleItemCategory {
-        margin-top: -15px;
+      font-size: 14px;
+      padding: 5px;
+      margin: 15px;
+      margin-top: -4em;
+      margin-left: 2em;
+      height: 15em;
+      width: 19em;
+      overflow: scroll;
+      text-align: justify;
+      border-radius: 2px;
+      border: 1px solid $softShadow;
+      box-shadow: 5px 2px 9px $softShadow;
+    }
+    .detailHeaderSingleItem {
+      padding: 0;
+      .thConditionSI {
         padding: 0;
       }
+      .singleItemCondition {
+        padding: 0;
+      }
+    }
+    
+  }
+}
+
+.conditionAndCatContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end !important;
+  width: 100%;
+  margin-right: 4em;
+  .detailContentSingleItem {
+    padding: 0;
+    font-family: $font1;
+    font-size: 20px;
+    text-align: right;
+    margin-right: 2em;
+    margin-left: 2.5em;
+    .thCategorySI {
+      background-color: $mainBlue;
+      color: $whiteFont;
+      margin-left: auto;
+      padding: 1px 5px 1px 1px;
+      font-size: 12px;
+      font-style: italic;
+    }
+    .singleItemCategory {
+      margin-top: -15px;
+      padding: 0;
+      font-size: 14px;
+      letter-spacing: .5px;
     }
   }
 }
 
 .itemConditionWrapper {
-  margin: 0px 7px 15px 7px;
-  font-size: 22px;
+  margin: -7px 7px 15px 7px;
+  font-size: 26px;
   .mint {
     color: $mint !important;
     border-bottom: 8px solid $mint;
@@ -167,4 +175,8 @@
     color: $relic !important;
     border-bottom: 7px solid $relic;
   }
+}
+
+.mystuffMap {
+  margin: auto;
 }

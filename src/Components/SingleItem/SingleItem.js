@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// JSs
+import Leaflet from '../Leaflet/Leaflet';
 // PROPs
 import itemShape from '../../helpers/propz/itemShape';
 // SVGs
@@ -17,6 +19,7 @@ class SingleItem extends React.Component {
     unseeSingleItem: PropTypes.func.isRequired,
     deleteItemEvent: PropTypes.func.isRequired,
     editItemEvent: PropTypes.func.isRequired,
+    userid: PropTypes.string.isRequired,
   }
 
   singleItemHide = (e) => {
@@ -51,7 +54,7 @@ class SingleItem extends React.Component {
 
   render() {
     // IDEAS: carousel of imgs; calculator for price booking; messaging users
-    const { singleItem, editItemEvent } = this.props;
+    const { singleItem, editItemEvent, userid } = this.props;
     return (
       <div className="SingleItem" onClick={this.singleItemHide}>
         <div className="cardHeader">
@@ -65,54 +68,50 @@ class SingleItem extends React.Component {
             </span>
             <span className="conditionalIconSpan">{singleItem.isAvailable === true
               ? <img src={checkIcon} alt="checkbox icon svg" className="singleIcon" />
-              : <p className="isRented">Rented</p> }</span>
+              : <img src={deleteIcon} alt="ticket icon svg" className="singleIcon" /> }
+            </span>
           </div>
         </div>
 
         <div className="mainCard">
-          <div className="imgDiv">
-            {/* <img className="card-img-top SingleItemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} /> */}
-            <img src="https://via.placeholder.com/200x250" className="card-img-top SingleItemImg" alt="placeholder img" />
-          </div>
-
-            <div className="singleItemDiv">
-              <div className="singleItemDescrip">
-                {singleItem.description}
-              </div>
-              <div className="availabilityDiv">
-                {singleItem.isAvailable === true
-                  ? <p className="isAvailable">
-                    <i className="fas fa-check-circle checkIcon"></i>
-                    This item is currently available for rent
-                    </p>
-                  : <p className="isNotAvailable">
-                    This item is currently available for rent
-                    </p>
-                }
-              </div>
-              <div className="detailContentSingleItem">
-                <p className="thCategorySI">Category</p>
-                <p className="singleItemCategory">{singleItem.category}</p>
-              </div>
+          <div className="imgAndIsAvailWrapper">
+            <div className="imgDiv">
+              {/* <img className="card-img-top SingleItemImg" src={singleItem.imageUrl} alt={(`${singleItem.name}`)} /> */}
+              <img src="https://via.placeholder.com/200x250" className="card-img-top SingleItemImg" alt="placeholder img" />
             </div>
-            {/* <table className="singleItemTable">
-              <tbody>
-                <tr>
-                  <td className="thConditionSI">Condition</td>
-                  <td className="singleItemCondition">{singleItem.condition}</td>
-                </tr>
-                <tr>
-                  <td className="thCategorySI">Category</td>
-                  <td className="singleItemCategory">{singleItem.category}</td>
-                </tr>
-              </tbody>
-            </table> */}
+            <div className="availabilityDiv">
+              {singleItem.isAvailable === true
+                ? <p className="isAvailable">
+                  <i className="fas fa-check-circle checkIcon"></i>
+                  This item is currently available for rent
+                  </p>
+                : <p className="isNotAvailable">
+                  <i className="fas fa-times-circle checkIcon"></i>
+                  This item is currently not available for rent
+                  </p>
+              }
+            </div>
           </div>
 
+          <div className="singleItemDiv">
+            <div className="mystuffMap">
+              <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
+            </div>
+            <div className="singleItemDescrip">
+              {singleItem.description}
+            </div>
+          </div>
+        </div>
+        <div className="conditionAndCatContainer">
+          <div className="detailContentSingleItem">
+            <p className="thCategorySI">Category</p>
+            <p className="singleItemCategory">{singleItem.category}</p>
+          </div>
           <div className="itemConditionWrapper">
             { this.condtionFontColor() }
           </div>
         </div>
+      </div>
     );
   }
 }

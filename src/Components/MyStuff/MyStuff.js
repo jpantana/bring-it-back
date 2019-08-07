@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'reactstrap';
 // JSs
-import Leaflet from '../Leaflet/Leaflet';
+// import Leaflet from '../Leaflet/Leaflet';
 import SingleItem from '../SingleItem/SingleItem';
 import itemsData from '../../helpers/data/itemsData';
 import Items from '../Items/Items';
@@ -174,6 +174,7 @@ class MyStuff extends React.Component {
           <div className="SingleItemDiv">
             { (isClicked === true ? <SingleItem
                 key={`single.${singleItem.id}`}
+                userid={userid}
                 singleItem={singleItem}
                 isClicked={isClicked}
                 unseeSingleItem={this.unseeSingleItem}
@@ -183,9 +184,9 @@ class MyStuff extends React.Component {
           </div>
         </div>
 
-        <div className="mystuffMap">
+        {/* <div className="mystuffMap">
           <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
-        </div>
+        </div> */}
       </div>
     );
   }

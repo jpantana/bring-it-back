@@ -17,11 +17,14 @@
     margin-left: 3em;
     margin-top: 1em;
     width: 20em;
+    display: flex;
+    flex-flow: row wrap;
     .addNewWrapper {
       display: flex;
       flex-direction: column;
       .addNewSpan {
-        margin-right: 170px;
+        margin-right: 170px; // very important to small cards wrap
+        margin-left: 9px;
         padding-left: 17px !important;
         text-align: left !important;
         color: $whiteFont;
@@ -30,7 +33,7 @@
         font-weight: 700;
         background-color: $orange;
         padding: 12px 6px 12px 6px;
-        width: 16em !important;
+        width: 22em !important;
         border-radius: 5px 5px 0 0;
         box-shadow: -5px 1px 12px $shadow;
       } 
@@ -46,13 +49,12 @@
       }
     }
     .ItemsContainer {
-      display: flex;
-      flex-flow: column;
       overflow: scroll;
-      max-height: 350px;
-      // background-color: green;
+      max-height: 30em;
+      width: 26em;
       .ItemsWrapper {
-        // background-color: blue;
+        display: flex;
+        flex-flow: row wrap;  
       }
     }
   }
@@ -61,6 +63,10 @@
     margin-right: 3em;
   }
 }
+
+// .mystuffMap {
+//   margin: 2em; 
+// }
 
 
 
