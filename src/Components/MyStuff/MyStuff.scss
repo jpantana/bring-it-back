@@ -26,7 +26,7 @@
         margin-right: 170px; // very important to small cards wrap
         margin-left: 9px;
         padding-left: 17px !important;
-        text-align: left !important;
+        text-align: center !important;
         color: $whiteFont;
         font-size: 18px;
         font-family: $font1;
@@ -61,6 +61,46 @@
   .SingleItemDiv {
     margin-top: 1em;
     margin-right: 3em;
+  }
+  .profileDataDiv {
+    box-shadow: 4px 1px 8px $softShadow;
+    background-color: $upperNav;
+    height: 25em;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    border-radius: 5px 5px 0 0;
+    padding-bottom: 1em;
+    .usernameMyStuff {
+      width: 18em;
+      border-radius: 5px 5px 0 0;
+      font-family: $font1;
+      color: $whiteFont;
+      background-color: $mainBlue;
+      line-height: 50px;
+    }
+    .profileImgContainerDiv {
+      margin: auto;
+      width: 15em;
+      height: 15em;
+      border-radius: 15em;
+      object-fit: contain;
+      overflow: hidden;
+      .mystuffProfilePic {
+        width: 15em;
+        margin-top: -3em;
+      }
+    }
+    .stars {
+      display: flex;
+      flex-flow: row nowrap;
+      .fa-star {
+        color: $oranger;
+        font-size: 14px;
+        margin: 4px;
+        margin-bottom: 0;
+      }
+    }
   }
 }
 

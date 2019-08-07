@@ -13,6 +13,7 @@ import './MyStuff.scss';
 // PROPS
 // SVGs
 import addIcon from '../../SVGs/iconmonstr-plus-circle-thin.svg';
+import usersData from '../../helpers/data/usersData';
 
 const defaultItemState = {
   name: '',
@@ -26,6 +27,18 @@ const defaultItemState = {
   priceperday: '',
   priceperhour: '',
 };
+
+const defaultUserState = {
+  firstname: '',
+  lastname: '',
+  street: '',
+  city: '',
+  state: '',
+  zipcode: '',
+  uid: '',
+  username: '',
+  proifle: '',
+};
 class MyStuff extends React.Component {
   state = {
     items: [],
@@ -38,12 +51,14 @@ class MyStuff extends React.Component {
     categories: [],
     editIsOpen: false,
     itemDeleted: false,
+    userObj: defaultUserState,
   }
 
   componentDidMount() {
     const uid = this.props.match.params.id;
     this.setState({ userid: uid });
     this.getUserItems(uid);
+    this.showThisUsername(uid);
   }
 
   getUserItems = (uid) => {
@@ -110,6 +125,14 @@ class MyStuff extends React.Component {
       .then(() => {
         this.getUserItems(this.state.userid);
       }).catch(err => console.error('item not deleted', err));
+  };
+
+  showThisUsername = (uid) => {
+    usersData.getUsers(uid)
+      .then((res) => {
+        this.setState({ userObj: res[0] });
+      })
+      .catch(err => console.error('no userstore on mystuff', err));
   };
 
   render() {
@@ -180,7 +203,21 @@ class MyStuff extends React.Component {
                 unseeSingleItem={this.unseeSingleItem}
                 deleteItemEvent={this.deleteItemEvent}
                 editItemEvent={this.editItemEvent}
-            /> : '') }
+            />
+              : <div className="profileDataDiv">
+                  <h2 className="usernameMyStuff">Hi {this.state.userObj.firstname}!</h2>
+                  <p>You have <span>{this.state.items.length}</span> items in your store up for rent.</p>
+                <div className="profileImgContainerDiv">
+                  <img className="mystuffProfilePic" src={this.state.userObj.profile} alt="user profile visual" />
+                </div>
+                <div className="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>) }
+              {/* : <div>{this.state.userObj.username}</div>) } */}
           </div>
         </div>
 

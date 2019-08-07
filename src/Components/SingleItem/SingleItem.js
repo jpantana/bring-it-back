@@ -87,7 +87,7 @@ class SingleItem extends React.Component {
                   </p>
                 : <p className="isNotAvailable">
                   <i className="fas fa-times-circle checkIcon"></i>
-                  This item is currently not available for rent
+                  This item is currently rented out
                   </p>
               }
             </div>
