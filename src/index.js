@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/js/dist/carousel';
+import 'bootstrap/js/dist/collapse';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

@@ -8,6 +8,7 @@ import itemShape from '../../helpers/propz/itemShape';
 import checkIcon from '../../SVGs/iconmonstr-check-mark-6.svg';
 import deleteIcon from '../../SVGs/iconmonstr-x-mark-4.svg';
 import editIcon from '../../SVGs/iconmonstr-edit-10.svg';
+import notAvail from '../../SVGs/iconmonstr-x-mark-12.svg';
 // STYLEs
 import './SingleItem.scss';
 import 'animate.css';
@@ -68,7 +69,7 @@ class SingleItem extends React.Component {
             </span>
             <span className="conditionalIconSpan">{singleItem.isAvailable === true
               ? <img src={checkIcon} alt="checkbox icon svg" className="singleIcon" />
-              : <img src={deleteIcon} alt="ticket icon svg" className="singleIcon" /> }
+              : <img src={notAvail} alt="ticket icon svg" className="singleIcon" /> }
             </span>
           </div>
         </div>

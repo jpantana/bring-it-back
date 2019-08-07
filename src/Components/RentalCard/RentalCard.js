@@ -13,8 +13,6 @@ import EditRental from '../EditRental/EditRental';
 import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './RentalCard.scss';
-// SVGs
-import gear from '../../SVGs/iconmonstr-gear-thin.svg';
 
 class RentalCard extends React.Component {
   static propTypes = {
@@ -59,9 +57,14 @@ class RentalCard extends React.Component {
     }));
   }
 
+  showCardDetails = (e) => {
+    e.preventDefault();
+    $('#showDetails').removeClass('hide');
+  };
+
   render() {
     const { rental } = this.props;
-    const { sendMessage, isOpen } = this.state;
+    const { isOpen } = this.state;
 
     return (
       <div>
@@ -78,49 +81,72 @@ class RentalCard extends React.Component {
           <div className="card-body">
             <div className="rentalImgContainer">
               {/* <img src={rental.imageUrl} alt={rental.name} className="card-img-top rentalImg" /> */}
-              <img src="https://via.placeholder.com/300x300" alt="placeholder img" />
+              {/* <img src="https://via.placeholder.com/300x300" alt="placeholder img" /> */}
             </div>
             <h5 className="rental-card-title rentalCardsTitle">{rental.name}</h5>
+
             <div className="cardDetails">
-              <table>
-                <tbody>
-                  <tr>
-                    <th className="rentalThCondition">Condition</th>
-                    <th className="rentalThPriceHour">Hourly</th>
-                    <th className="rentalThPriceDay">Daily</th>
-                    <th className="rentalThPickupDate">Pickup Date</th>
-                    <th className="rentalThReturnDate">Return</th>
-                  </tr>
-                  <tr>
-                    <td className="rentalCondition">{rental.condition}</td>
-                    <td className="rentalPriceHour">${rental.priceperhour}</td>
-                    <td className="rentalPriceDay">${rental.priceperday}</td>
-                    <td className="rentalPickupDate">${rental.pickupDate}</td>
-                    <td className="rentalPickupDate">${rental.returnTime}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <button className="btn showDetailsBtn" onClick={this.showCardDetails}>Show Details</button>
+              <div id="showDetails" className="hide">
+                <div className="conditionDivRental">
+                  <p className="rentalThCondition rentalHeaders">Condition</p>
+                  <p className="rentalCondition rentalsInfo">{rental.condition}</p>
+                </div>
+                <div className="hourlyDivRental">
+                  <p className="rentalThPriceHour rentalHeaders">Hourly</p>
+                  <p className="rentalPriceHour rentalsInfo">${rental.priceperhour}</p>
+                </div>
+                <div className="dailyDivRental">
+                  <p className="rentalThPriceDay rentalHeaders">Daily</p>
+                  <p className="rentalPriceDay rentalsInfo">${rental.priceperday}</p>
+                </div>
+                <div className="pickupDivRental">
+                  <p className="rentalThPickupDate rentalHeaders">Pickup Date</p>
+                  <p className="rentalPickupDate rentalsInfo">{rental.pickupDate}</p>
+                </div>
+                <div className="returnDivRental">
+                  <p className="rentalThReturnDate rentalHeaders">Return</p>
+                  <p className="rentalPickupDate rentalsInfo">{rental.returnTime}</p>
+                </div>
+              </div>
+
+                {/* <div>
+                  <div className="rentalCardDetailHeaders">
+                    <p className="rentalThCondition rentalHeaders">Condition</p>
+                    <p className="rentalThPriceHour rentalHeaders">Hourly</p>
+                    <p className="rentalThPriceDay rentalHeaders">Daily</p>
+                    <p className="rentalThPickupDate rentalHeaders">Pickup Date</p>
+                    <p className="rentalThReturnDate rentalHeaders">Return</p>
+                  </div>
+                  <div className="rentalCardDetails">
+                    <p className="rentalCondition rentalsInfo">{rental.condition}</p>
+                    <p className="rentalPriceHour rentalsInfo">${rental.priceperhour}</p>
+                    <p className="rentalPriceDay rentalsInfo">${rental.priceperday}</p>
+                    <p className="rentalPickupDate rentalsInfo">{rental.pickupDate}</p>
+                    <p className="rentalPickupDate rentalsInfo">{rental.returnTime}</p>
+                  </div> */}
+                {/* </div> */}
+              </div>
+
             </div>
-          </div>
+          {/* </div> */}
           <div className="rentalCardsIconsHome">
           </div>
           <div className="iconsRentalCards">
-          <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle caret>
-              <img src={gear} id={rental.id} alt={rental.name} />
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={this.cancelRental}>Cancel Rental</DropdownItem>
-              <DropdownItem onClick={this.editRental}>Edit Rental Times</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          <Dropdown id="rentalCardDropdown" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <DropdownToggle>
+               {<i className="fas fa-cog rentalCardDropDown"></i>}
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={this.cancelRental}><i className="fas fa-trash-alt trashEditIconRentalDropDown"></i>Cancel Rental</DropdownItem>
+                <DropdownItem onClick={this.editRental}><i className="fas fa-edit trashEditIconRentalDropDown"></i>Edit Rental Times</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
-          <button
-            className="btn messageOwnerBtn"
-            onClick={this.messageItemOwner}
-          >
-          { sendMessage === false ? 'Message Owner' : 'Hide Messages'}
-          </button>
+
+          <div className="rentalCardDescripDiv">
+            <p className="rentalCardDescrip">{rental.description}</p>
+          </div>
         </div>
         {/* { sendMessage === true ? <Component key={'unique2'} to={(`/messages/${userid}`)} userid={userid}/> : ''} */}
       </div>

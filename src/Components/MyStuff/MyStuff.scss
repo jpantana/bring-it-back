@@ -64,7 +64,8 @@
   }
   .profileDataDiv {
     box-shadow: 4px 1px 8px $softShadow;
-    background-color: $upperNav;
+    // background-color: $upperNav;
+    background: linear-gradient($upperNavWhite, $upperNav);
     height: 25em;
     display: flex;
     flex-flow: column;
@@ -103,10 +104,6 @@
     }
   }
 }
-
-// .mystuffMap {
-//   margin: 2em; 
-// }
 
 
 

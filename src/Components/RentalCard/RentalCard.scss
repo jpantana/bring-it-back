@@ -2,7 +2,7 @@
 
 .RentalCard {
   width: 20em !important;
-  height: 38em;
+  height: 32em;
   margin: 10px;
   padding: 0;
   box-shadow: 5px 1px 9px $shadow;
@@ -11,42 +11,147 @@
   justify-content: center;
   border-radius: 0 !important;
   overflow: hidden;
-}
-
-.rentalImgContainer {
-  width: 100%;
-  height: 20em;
-  overflow: hidden;
-  position: absolute;
-  top: .5px;
-  left: -0em;
-  .rentalImg {
-    object-fit: contain;
-    margin: auto;
-    border-radius: 0 !important;
+  .rentalImgContainer {
+    width: 100%;
+    height: 20em;
+    overflow: hidden;
+    position: absolute;
+    top: .5px;
+    left: -0em;
+    .rentalImg {
+      object-fit: contain;
+      margin: auto;
+      border-radius: 0 !important;
+    }
   }
-}
+  .cardDetails {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    margin-top: 1em;
+    background-color: pink;
+    height: 12em;
+    overflow: scroll;
+    .showDetailsBtn {
+      background-color: $mainBlue;
+    }
+    #showDetails {
+      display: flex;
+      flex-flow: column;
+      .conditionDivRental {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 2px;
+      }
+      .hourlyDivRental {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 2px;
+      }
+      .dailyDivRental {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 2px;
+      }
+      .pickupDivRental {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 2px;
+      }
+      .returnDivRental {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 2px;
+      }
+    }
+    .rentalCardDetailHeaders {
+      display: flex;
+      flex-flow: row nowrap;
+      margin-top: 5em;
+      .rentalHeaders {
+        font-family: $font1;
+        font-size: 12px;
+        font-style: italic;
+        color: $blackFont;
+        padding: 5px;
+        text-decoration: underline;
+      }
+    }
+    .rentalCardDetails {
+      display: flex;
+      flex-flow: row nowrap;
+      .rentalsInfo {
+        font-family: $font1;
+        font-size: 12px;
+        font-style: italic;
+        color: $blackFont;
+        padding: 5px;
+      }
+    }
+  }
+  #rentalCardDropdown {
+    position: absolute;
+    top: 0em;
+    text-shadow: none !important;
+    &:active {
+      box-shadow: white !important;
+    }
+    .btn-secondary {
+      background-color: transparent !important;
+      color: $mainBlue !important;
+      &:active {
+        box-shadow: white !important;
+      }
+    }
+    .btn {
+      box-shadow: none !important;
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+    .rentalCardDropDown {
+      font-size: 25px !important;
+      color: $oranger;
+    }
+    .trashEditIconRentalDropDown {
+      padding-right: 10px;
+    }
+  }
+  .rentalCardDescripDiv {
+    margin: 10px;
+    margin-top: -2em;
+    .rentalCardDescrip {
+      font-family: $font1;
+      padding: 10px;
+      height: 8em;
+      text-align: justify;
+      overflow: scroll;
+    }
+  }
+}  
 
-.rental-card-title {
-  margin: 0;
-  margin-top: 10px !important;
-  padding: 0;
-  padding-bottom: 0px;
-  font-family: $font1;
-  border-bottom: 2px solid $whiteFont;
-  color: $whiteFont !important;
-  width: 100%;
-  font-size: 19px !important;
-  height: 35px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+
+
+// .rental-card-title {
+//   margin: 0;
+//   margin-top: 10px !important;
+//   padding: 0;
+//   padding-bottom: 0px;
+//   font-family: $font1;
+//   border-bottom: 2px solid $whiteFont;
+//   color: $whiteFont !important;
+//   width: 100%;
+//   font-size: 19px !important;
+//   height: 35px;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+// }
 
 .rentalCardsTitle {
   margin: 0;
-  margin-top: 18.5em !important;
-  margin-bottom: 1em !important;
+  margin-top: 15.5em !important;
+  margin-bottom: .5em !important;
   padding: 0;
   padding-bottom: 0px;
   font-family: $font1;
@@ -59,32 +164,38 @@
   text-overflow: ellipsis;
 }
 
-.allCardIconsHome {
-  position: absolute;
-  top: 0em;
-  z-index: 100;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 4px;
-  .iconSvg {
-    height: 1.5em;
-    padding: 5px;
-  }  
+.rentalCardDetailHeaders {
+  padding: 0;
 }
 
-.messageOwnerBtn {
-  background-color: $mainBlue !important;
-  color: $whiteFont !important;
-  font-family: $font1 !important;
-}
+// .allCardIconsHome {
+//   position: absolute;
+//   top: 0em;
+//   z-index: 100;
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   padding: 4px;
+//   .iconSvg {
+//     height: 1.5em;
+//     padding: 5px;
+//   }  
+// }
 
-.fadeOut {
-  transition-property: -moz-filter, -ms-filter, -o-filter, -webkit-filter, filter;
-  transition-duration: 3s;
-}
+// .messageOwnerBtn {
+//   background-color: $mainBlue !important;
+//   color: $whiteFont !important;
+//   font-family: $font1 !important;
+// }
 
-  // .singleItemDetails {
+// .fadeOut {
+//   transition-property: -moz-filter, -ms-filter, -o-filter, -webkit-filter, filter;
+//   transition-duration: 3s;
+// }
+
+
+
+// .singleItemDetails {
 //   width: 18em;
 //   min-height: 27em;
   //   box-shadow: 5px 1px 9px $shadow;

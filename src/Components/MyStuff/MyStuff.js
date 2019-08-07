@@ -211,10 +211,10 @@ class MyStuff extends React.Component {
                   <img className="mystuffProfilePic" src={this.state.userObj.profile} alt="user profile visual" />
                 </div>
                 <div className="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
                 </div>
               </div>) }
               {/* : <div>{this.state.userObj.username}</div>) } */}
