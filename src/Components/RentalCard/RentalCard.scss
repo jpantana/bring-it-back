@@ -18,6 +18,7 @@
     position: absolute;
     top: .5px;
     left: -0em;
+    z-index: 1;
     .rentalImg {
       object-fit: contain;
       margin: auto;
@@ -28,40 +29,98 @@
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    margin-top: 1em;
-    background-color: pink;
-    height: 12em;
     overflow: scroll;
     .showDetailsBtn {
-      background-color: $mainBlue;
+      margin-top: 1em;
+      color: $secondBlue;
+      font-size: 28px;
+      background-color: $whiteFont;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.1);
+        transition: .5s;
+        color: $mainBlue;
+      }
     }
     #showDetails {
       display: flex;
-      flex-flow: column;
+      flex-flow: row wrap;
+      height: 10em;
+      overflow: scroll;
+      margin: 0 !important;
+      border: 1px solid $softShadow;
       .conditionDivRental {
         display: flex;
-        flex-flow: row nowrap;
-        padding: 2px;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        padding: 10px;
+        font-size: 12px;
+        font-family: $font1;
       }
       .hourlyDivRental {
         display: flex;
-        flex-flow: row nowrap;
-        padding: 2px;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        padding: 10px;
+        font-size: 12px;
+        font-family: $font1;
+
       }
       .dailyDivRental {
         display: flex;
-        flex-flow: row nowrap;
-        padding: 2px;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        padding: 10px;
+        font-size: 12px;
+        font-family: $font1;
+
       }
       .pickupDivRental {
         display: flex;
-        flex-flow: row nowrap;
-        padding: 2px;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        padding: 10px;
+        font-size: 12px;
+        font-family: $font1;
+
       }
       .returnDivRental {
         display: flex;
-        flex-flow: row nowrap;
-        padding: 2px;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        padding: 10px;
+        font-size: 12px;
+        font-family: $font1;
+        text-align: left;
+
+      }
+      .hideDetailsBtn {
+        font-size: 20px;
+        color: $mainBlue;
+        font-weight: 700;
+        margin: auto;
+        background-color: 40px;
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+      }
+      .detailP {
+        margin: 0;
+        margin: auto;
+        text-align: center !important;
+      }
+      .detHeader {
+        font-weight: 700;
+        font-style: italic;
+        text-decoration: underline;
+      }
+      .detInfo {
+        color: $blackFont;
       }
     }
     .rentalCardDetailHeaders {
@@ -73,7 +132,7 @@
         font-size: 12px;
         font-style: italic;
         color: $blackFont;
-        padding: 5px;
+        padding: 10px;
         text-decoration: underline;
       }
     }
@@ -85,12 +144,13 @@
         font-size: 12px;
         font-style: italic;
         color: $blackFont;
-        padding: 5px;
+        padding: 10px;
       }
     }
   }
   #rentalCardDropdown {
     position: absolute;
+    z-index: 2;
     top: 0em;
     text-shadow: none !important;
     &:active {
@@ -117,19 +177,24 @@
       padding-right: 10px;
     }
   }
-  .rentalCardDescripDiv {
-    margin: 10px;
-    margin-top: -2em;
+  #rentalCardDescripDiv {
+    top: 22em;
+    left: 1em;
+    width: 90%;
+    height: 8.5em;
+    background-color: $upperNav;
+    box-shadow: 3px 1px 6px $softShadow;
+    position: absolute;
+    color: $blackFont;
     .rentalCardDescrip {
       font-family: $font1;
       padding: 10px;
       height: 8em;
       text-align: justify;
-      overflow: scroll;
+      // overflow: scroll;
     }
   }
-}  
-
+}
 
 
 // .rental-card-title {
@@ -178,7 +243,7 @@
 //   padding: 4px;
 //   .iconSvg {
 //     height: 1.5em;
-//     padding: 5px;
+//     padding: 10px;
 //   }  
 // }
 
@@ -235,7 +300,7 @@
   //   color: $blackFont;
   //   margin: 3px;
   //   margin-left: 10px;
-  //   padding: 2px;
+  //   padding: 10px;
   // }
   // .singleItemTable {
   //   font-family: $font1;

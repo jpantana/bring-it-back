@@ -13,6 +13,7 @@ import EditRental from '../EditRental/EditRental';
 import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './RentalCard.scss';
+import 'animate.css';
 
 class RentalCard extends React.Component {
   static propTypes = {
@@ -60,12 +61,22 @@ class RentalCard extends React.Component {
   showCardDetails = (e) => {
     e.preventDefault();
     $('#showDetails').removeClass('hide');
+    $('#showDetails').addClass('wow bounceIn slideInDown');
+    $('#rentalCardDescripDiv').addClass(' hide');
+    $('#rentalCardDescripDiv').removeClass(' wow bounceIn slideInDown');
+  };
+
+  hideDetails = (e) => {
+    e.preventDefault();
+    $('#showDetails').addClass(' hide');
+    $('#showDetails').removeClass('wow bounceIn slideInDown');
+    $('#rentalCardDescripDiv').removeClass(' hide');
+    $('#rentalCardDescripDiv').addClass(' wow bounceIn slideInDown');
   };
 
   render() {
     const { rental } = this.props;
     const { isOpen } = this.state;
-
     return (
       <div>
         <Modal isOpen={isOpen}>
@@ -81,61 +92,43 @@ class RentalCard extends React.Component {
           <div className="card-body">
             <div className="rentalImgContainer">
               {/* <img src={rental.imageUrl} alt={rental.name} className="card-img-top rentalImg" /> */}
-              {/* <img src="https://via.placeholder.com/300x300" alt="placeholder img" /> */}
+              <img src="https://via.placeholder.com/300x300" alt="placeholder img" />
             </div>
             <h5 className="rental-card-title rentalCardsTitle">{rental.name}</h5>
 
             <div className="cardDetails">
-              <button className="btn showDetailsBtn" onClick={this.showCardDetails}>Show Details</button>
-              <div id="showDetails" className="hide">
-                <div className="conditionDivRental">
-                  <p className="rentalThCondition rentalHeaders">Condition</p>
-                  <p className="rentalCondition rentalsInfo">{rental.condition}</p>
-                </div>
-                <div className="hourlyDivRental">
-                  <p className="rentalThPriceHour rentalHeaders">Hourly</p>
-                  <p className="rentalPriceHour rentalsInfo">${rental.priceperhour}</p>
-                </div>
-                <div className="dailyDivRental">
-                  <p className="rentalThPriceDay rentalHeaders">Daily</p>
-                  <p className="rentalPriceDay rentalsInfo">${rental.priceperday}</p>
-                </div>
-                <div className="pickupDivRental">
-                  <p className="rentalThPickupDate rentalHeaders">Pickup Date</p>
-                  <p className="rentalPickupDate rentalsInfo">{rental.pickupDate}</p>
-                </div>
-                <div className="returnDivRental">
-                  <p className="rentalThReturnDate rentalHeaders">Return</p>
-                  <p className="rentalPickupDate rentalsInfo">{rental.returnTime}</p>
-                </div>
-              </div>
-
-                {/* <div>
-                  <div className="rentalCardDetailHeaders">
-                    <p className="rentalThCondition rentalHeaders">Condition</p>
-                    <p className="rentalThPriceHour rentalHeaders">Hourly</p>
-                    <p className="rentalThPriceDay rentalHeaders">Daily</p>
-                    <p className="rentalThPickupDate rentalHeaders">Pickup Date</p>
-                    <p className="rentalThReturnDate rentalHeaders">Return</p>
+              <i onClick={this.showCardDetails} className="fas fa-ellipsis-h showDetailsBtn bounceIn"></i>
+                <div id="showDetails" className="hide">
+                  <div className="conditionDivRental">
+                    <p className="detailP detHeader rentalThCondition rentalHeaders">Condition</p>
+                    <p className="detailP detInfo rentalCondition rentalsInfo">{rental.condition}</p>
                   </div>
-                  <div className="rentalCardDetails">
-                    <p className="rentalCondition rentalsInfo">{rental.condition}</p>
-                    <p className="rentalPriceHour rentalsInfo">${rental.priceperhour}</p>
-                    <p className="rentalPriceDay rentalsInfo">${rental.priceperday}</p>
-                    <p className="rentalPickupDate rentalsInfo">{rental.pickupDate}</p>
-                    <p className="rentalPickupDate rentalsInfo">{rental.returnTime}</p>
-                  </div> */}
-                {/* </div> */}
+                  <div className="hourlyDivRental">
+                    <p className="detailP detHeader rentalThPriceHour rentalHeaders">Hourly</p>
+                    <p className="detailP detInfo rentalPriceHour rentalsInfo">${rental.priceperhour}</p>
+                  </div>
+                  <div className="dailyDivRental">
+                    <p className="detailP detHeader rentalThPriceDay rentalHeaders">Daily</p>
+                    <p className="detailP detInfo rentalPriceDay rentalsInfo">${rental.priceperday}</p>
+                  </div>
+                  <div className="pickupDivRental">
+                    <p className="detailP detHeader rentalThPickupDate rentalHeaders">Pickup Date</p>
+                    <p className="detailP detInfo rentalPickupDate rentalsInfo">{rental.pickupDate}</p>
+                  </div>
+                  <div className="returnDivRental">
+                    <p className="detailP detHeader rentalThReturnDate rentalHeaders">Return Date</p>
+                    <p className="detailP detInfo rentalPickupDate rentalsInfo">{rental.returnTime}</p>
+                  </div>
+                  <i onClick={this.hideDetails} className="fas fa-angle-double-up hideDetailsBtn"></i>
+                </div>
               </div>
-
             </div>
-          {/* </div> */}
           <div className="rentalCardsIconsHome">
           </div>
           <div className="iconsRentalCards">
           <Dropdown id="rentalCardDropdown" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <DropdownToggle>
-               {<i className="fas fa-cog rentalCardDropDown"></i>}
+                {<i className="fas fa-cog rentalCardDropDown"></i>}
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem onClick={this.cancelRental}><i className="fas fa-trash-alt trashEditIconRentalDropDown"></i>Cancel Rental</DropdownItem>
@@ -144,7 +137,7 @@ class RentalCard extends React.Component {
             </Dropdown>
           </div>
 
-          <div className="rentalCardDescripDiv">
+          <div id="rentalCardDescripDiv" className="wow bounceIn slideInDown">
             <p className="rentalCardDescrip">{rental.description}</p>
           </div>
         </div>
