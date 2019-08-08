@@ -19,8 +19,15 @@
 
 .btn-secondary {
   background-color: $mainBlue !important;
-  color: $mainBlue;
+  // color: $mainBlue;
   border: none !important;  
+}
+
+#allCategoriesSelected {
+  color: $whiteFont !important;
+  &:hover {
+    color: $upperNav !important;
+  }
 }
 
 .searchBarDiv {

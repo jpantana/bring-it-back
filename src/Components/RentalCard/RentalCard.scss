@@ -29,9 +29,9 @@
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    overflow: scroll;
+    // overflow: scroll;
     .showDetailsBtn {
-      margin-top: 1em;
+      margin-top: 11em;
       color: $secondBlue;
       font-size: 28px;
       background-color: $whiteFont;
@@ -175,6 +175,7 @@
     }
     .trashEditIconRentalDropDown {
       padding-right: 10px;
+      color: $mainBlue;
     }
   }
   #rentalCardDescripDiv {
@@ -186,32 +187,24 @@
     box-shadow: 3px 1px 6px $softShadow;
     position: absolute;
     color: $blackFont;
+    .rentalCardName {
+      font-family: $font1;
+      color: $blackFont;
+      font-size: 18px;
+      text-overflow: ellipsis;
+      &:hover {
+        cursor: pointer;
+      }
+    }
     .rentalCardDescrip {
       font-family: $font1;
       padding: 10px;
       height: 8em;
       text-align: justify;
-      // overflow: scroll;
+      overflow: scroll;
     }
   }
 }
-
-
-// .rental-card-title {
-//   margin: 0;
-//   margin-top: 10px !important;
-//   padding: 0;
-//   padding-bottom: 0px;
-//   font-family: $font1;
-//   border-bottom: 2px solid $whiteFont;
-//   color: $whiteFont !important;
-//   width: 100%;
-//   font-size: 19px !important;
-//   height: 35px;
-//   white-space: nowrap;
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-// }
 
 .rentalCardsTitle {
   margin: 0;
@@ -232,93 +225,3 @@
 .rentalCardDetailHeaders {
   padding: 0;
 }
-
-// .allCardIconsHome {
-//   position: absolute;
-//   top: 0em;
-//   z-index: 100;
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-//   padding: 4px;
-//   .iconSvg {
-//     height: 1.5em;
-//     padding: 10px;
-//   }  
-// }
-
-// .messageOwnerBtn {
-//   background-color: $mainBlue !important;
-//   color: $whiteFont !important;
-//   font-family: $font1 !important;
-// }
-
-// .fadeOut {
-//   transition-property: -moz-filter, -ms-filter, -o-filter, -webkit-filter, filter;
-//   transition-duration: 3s;
-// }
-
-
-
-// .singleItemDetails {
-//   width: 18em;
-//   min-height: 27em;
-  //   box-shadow: 5px 1px 9px $shadow;
-  //   margin-bottom: 25px;
-  // }
-  // .card-text {
-  //   text-align: left;
-  //   padding-left: 20px;
-  //   font-family: $font1;
-  //   color: $blackFont;
-  // }
-  // .priceSpan {
-  //   margin-top: 15px;
-  //   margin-bottom: 15px;
-  //   .price {
-  //     font-size: 1.3em;
-  //     font-weight: bold;
-  //     .afterPrice {
-  //       color: $shadow;
-  //       font-style: italic;
-  //       font-weight: 200;
-  //       font-size: .7em;
-  //     }
-  //   }
-  // }
-  // .aboutSpan {
-  //   text-align: center !important;
-  //   font-style: italic;
-  //   font-size: 13px;
-  //   text-decoration: underline;
-  //   color: $blackFont;
-  // }
-  // .itemDescription {
-  //   text-align: justify;
-  //   border-top: .5px solid $shadow;
-  //   border-bottom: .5px solid $shadow;
-  //   color: $blackFont;
-  //   margin: 3px;
-  //   margin-left: 10px;
-  //   padding: 10px;
-  // }
-  // .singleItemTable {
-  //   font-family: $font1;
-  //   color: $blackFont;
-  // }
-  // .thConditionSI {
-  //   color: $shadow !important;
-  //   font-weight: bolder !important;
-  //   text-decoration: underline !important;
-  // }
-  //   .singleItemCondition {
-  //     font-size: 13px !important;
-  //   }
-  //   .thCategorySI {
-  //     color: $shadow !important;
-  //     font-weight: bolder !important;
-  //     text-decoration: underline;
-  //   }
-  //   .singleItemCategory {
-  //     font-size: 13px !important;
-  //   }  

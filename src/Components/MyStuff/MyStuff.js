@@ -215,6 +215,7 @@ class MyStuff extends React.Component {
                   <i className="fas fa-star"></i>
                   <i className="fas fa-star"></i>
                   <i className="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
                 </div>
               </div>) }
               {/* : <div>{this.state.userObj.username}</div>) } */}

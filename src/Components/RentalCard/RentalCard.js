@@ -7,6 +7,7 @@ import {
   DropdownItem,
   Modal,
 } from 'reactstrap';
+import ReactTooltip from 'react-tooltip';
 // JSs
 import $ from 'jquery';
 import EditRental from '../EditRental/EditRental';
@@ -14,6 +15,7 @@ import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './RentalCard.scss';
 import 'animate.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class RentalCard extends React.Component {
   static propTypes = {
@@ -94,8 +96,6 @@ class RentalCard extends React.Component {
               {/* <img src={rental.imageUrl} alt={rental.name} className="card-img-top rentalImg" /> */}
               <img src="https://via.placeholder.com/300x300" alt="placeholder img" />
             </div>
-            <h5 className="rental-card-title rentalCardsTitle">{rental.name}</h5>
-
             <div className="cardDetails">
               <i onClick={this.showCardDetails} className="fas fa-ellipsis-h showDetailsBtn bounceIn"></i>
                 <div id="showDetails" className="hide">
@@ -138,6 +138,8 @@ class RentalCard extends React.Component {
           </div>
 
           <div id="rentalCardDescripDiv" className="wow bounceIn slideInDown">
+            <span data-tip={rental.name} className="rentalCardName" data-placement="top">{rental.name}</span>
+            <ReactTooltip place="top" type="info" effect="float"/>
             <p className="rentalCardDescrip">{rental.description}</p>
           </div>
         </div>
