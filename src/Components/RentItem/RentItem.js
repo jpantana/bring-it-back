@@ -117,9 +117,16 @@ class RentItem extends React.Component {
     this.determineDueDate(e.target.value);
   };
 
-  roloValu = (e) => {
-    this.itemToRentDataUpdate('hoursRented', e);
-    this.determineDueDate(e.target.value);
+  roloValu = (num) => {
+    console.error(num);
+    const tempItem = { ...this.state.itemToRent };
+    tempItem.hoursRented = num;
+    const { itemToRent } = this.state;
+    const firstDate = itemToRent.pickupDate;
+    const hours = num * 1;
+    const bringItBack = moment(firstDate, 'MM/DD/YYYY - h:mm a').add(hours, 'hours').calendar();
+    tempItem.returnTime = bringItBack;
+    this.setState({ itemToRent: tempItem });
   };
 
   render() {
@@ -150,11 +157,16 @@ class RentItem extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <p>How long do you need it?</p>
-                <Rolodex
-                  key={`${item.id}.rolodex`}
-                  roloValu={this.roloValu}
-                />
+                <div className="hoursRoloDiv">
+                  <p className="howManyHours">How many hours do you need it for?</p>
+                  <div className="rolodexDiv">
+                    <Rolodex
+                      key={`${item.id}.rolodex`}
+                      roloValu={this.roloValu}
+                    />
+                  </div>
+                </div>
+                
                 {/* <label htmlFor="howLong">How long do you need it?</label>
                 <input
                   type="number"

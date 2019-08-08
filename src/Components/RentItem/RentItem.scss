@@ -46,5 +46,23 @@
   font-size: 14px;
   color: $orange;
   margin-top: 15px;
-
 }
+
+.hoursRoloDiv {
+  display: flex;
+  flex-direction: row;
+  .howManyHours {
+    font-family: $font1;
+    width: 200px;
+    text-align: left;
+    margin-top: 1em;
+  }
+  .rolodexDiv {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    border-radius: 10px;
+    background-color: $secondBlue;
+  }
+}
+
