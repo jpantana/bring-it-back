@@ -52,7 +52,7 @@ class ItemCard extends React.Component {
     const { item, rentThisItem } = this.props;
 
     return (
-      <div className="ItemCard card">
+      <div className="ItemCard card wow bounceIn fadeInRight">
         <div className="card-body">
           <div className="imgContainer">
             {/* <img src={item.imageUrl} alt={item.name} className="card-img-top itemImg" /> */}

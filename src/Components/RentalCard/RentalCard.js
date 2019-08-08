@@ -79,7 +79,7 @@ class RentalCard extends React.Component {
     const { rental } = this.props;
     const { isOpen } = this.state;
     return (
-      <div>
+      <div className="wow bounceIn slideInUp">
         <Modal isOpen={isOpen}>
           {<EditRental
             key={rental.id}

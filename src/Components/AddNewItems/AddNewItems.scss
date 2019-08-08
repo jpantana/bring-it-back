@@ -3,3 +3,65 @@
 .AddNewItems {
   display: block;
 }
+
+.editSeeImg {
+  display: flex;
+  flex-flow: column;
+  justify-content: center !important;
+  margin: auto;
+  margin-bottom: 1em;
+  .imgEditLabel {
+    margin: auto;
+    margin-bottom: 15px;
+    background-color: $secondBlue;
+    padding: 15px;
+    color: $whiteFont;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: $font1;
+    .cameraIcon {
+      filter: invert(100%);
+      margin-right: 12px;
+      margin-top: -5px;
+    }
+  }
+  .imgThumbnail {
+    display: flex;
+    margin: auto;
+    width: 40%;
+  }
+}
+
+.updateModalBtnsDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+  .cancelUpdateBtn {
+    width: 100px;
+    margin-bottom: 15px !important;
+    margin-left: 15px;
+    color: $whiteFont !important;
+    background-color: $orange !important;
+    font-family: $font1 !important;
+    border: 1px solid $orange !important;
+    &:hover {
+      background-color: $whiteFont !important;
+      color: $orange !important;
+      transition: .4s;
+      border: 1px solid $orange !important;
+    } 
+  }
+  .updateItemBtn {
+    width: 100px;
+    margin-bottom: 15px !important;
+    color: $whiteFont !important;
+    background-color: $mainBlue !important;
+    font-family: $font1 !important;
+    border: 1px solid $mainBlue !important;
+    &:hover {
+      background-color: $whiteFont !important;
+      color: $mainBlue !important;
+      transition: .4s;
+    }
+  }
+}

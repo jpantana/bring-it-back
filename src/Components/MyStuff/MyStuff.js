@@ -182,7 +182,7 @@ class MyStuff extends React.Component {
 
           <div className="smallCardsDiv">
             <div className="addNewWrapper">
-              <span className="addNewSpan" onClick={this.addNewItem}>
+              <span className="addNewSpan wow bounceIn fadeInLeft" onClick={this.addNewItem}>
                 Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
               </span>
 
@@ -194,7 +194,7 @@ class MyStuff extends React.Component {
             </div>
           </div>
 
-          <div className="SingleItemDiv">
+          <div className="SingleItemDiv card wow bounceIn fadeInRight">
             { (isClicked === true ? <SingleItem
                 key={`single.${singleItem.id}`}
                 userid={userid}
@@ -218,13 +218,8 @@ class MyStuff extends React.Component {
                   <i className="fas fa-star"></i>
                 </div>
               </div>) }
-              {/* : <div>{this.state.userObj.username}</div>) } */}
           </div>
         </div>
-
-        {/* <div className="mystuffMap">
-          <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
-        </div> */}
       </div>
     );
   }

@@ -199,8 +199,9 @@ class AddNewItems extends React.Component {
                   <input name="radioBtn" type="radio" id="Relic" defaultValue="Relic" onClick={this.conditionAdd}/>
                 </div>
               </div>
-              <div className="form-group">
-                <label><img src={cameraIcon} alt="camera icon" />Upload An Image
+              <div className="form-group editSeeImg">
+                <label className="imgEditLabel">
+                  <img className="cameraIcon" src={cameraIcon} alt="camera icon" />Upload An Image
                 <FileUploader
                     hidden
                     accept='image/*'
@@ -210,12 +211,13 @@ class AddNewItems extends React.Component {
                     onUploadSuccess={this.handleUploadSuccess}
                   />
               </label>
-                 {(image !== '' && progress === 100 ? <div>
-                  <img
-                    className="img-thumbnail"
-                    src={imageUrl}
-                    alt="item to be rented" />
-                 </div> : '')}
+                 {(image !== '' && progress === 100
+                   ? <div className="thumbnailDiv">
+                      <img
+                        className="img-thumbnail imgThumbnail"
+                        src={imageUrl}
+                        alt="item to be rented" />
+                    </div> : '')}
               </div>
               <div className="form-group">
                 <label htmlFor="itemPriceperhour">Price Per Hour</label>
@@ -239,8 +241,10 @@ class AddNewItems extends React.Component {
                   onChange={this.priceperdayAdd}
                 />
               </div>
-              <button type="submit" className="btn btn-primary" onClick={this.postNewItem}>Add It</button>
-              <button type="submit" className="btn btn-danger" onClick={this.props.addNewItem}>Cancel</button>
+              <div className="updateModalBtnsDiv">
+                <button type="submit" className="btn updateItemBtn" onClick={this.postNewItem}>Add It</button>
+                <button type="submit" className="btn cancelUpdateBtn" onClick={this.props.addNewItem}>Cancel</button>
+              </div>
             </form>
           </ModalBody>
         </div>

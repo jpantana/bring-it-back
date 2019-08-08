@@ -29,7 +29,7 @@ class Items extends React.Component {
   render() {
     const { item, deleteItemEvent, editItemEvent } = this.props;
     return (
-      <div className="card nameCard">
+      <div className="card nameCard card wow bounceIn fadeInLeft">
         <div className="card-body" onClick={this.singleItem}>
           <h5 className="card-title">{item.name}</h5>
           <h5 className="itemCat">{item.category}</h5>

@@ -57,7 +57,7 @@ class SingleItem extends React.Component {
     // IDEAS: carousel of imgs; calculator for price booking; messaging users
     const { singleItem, editItemEvent, userid } = this.props;
     return (
-      <div className="SingleItem" onClick={this.singleItemHide}>
+      <div className="SingleItem wow bounceIn fadeInRight" onClick={this.singleItemHide}>
         <div className="cardHeader">
 
           <h1 className="full-card-title">{singleItem.name}</h1>

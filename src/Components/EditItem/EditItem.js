@@ -210,26 +210,30 @@ class EditItem extends React.Component {
                   onChange={this.conditionAdd}
                 />
               </div>
-              <div className="form-group">
-              <label><img src={cameraIcon} alt="camera icon" />Upload A New Image
-                <FileUploader
-                    hidden
-                    accept='image/*'
-                    name='image'
-                    storageRef={firebase.storage().ref('images/')}
-                    onUploadStart={this.handleUploadStart}
-                    onUploadSuccess={this.handleUploadSuccess}
-                  />
-              </label>
-                {(image === '' && progress === 0 ? <img className="img-thumbnail" src={editedItem.imageUrl} alt={editedItem.name} /> : '')}
-
-                {(image !== '' && progress === 100 ? <div>
-                <img
-                  className="img-thumbnail"
-                  src={imageUrl}
-                  alt="item to be rented" />
-                </div> : '')}
+              <div className="form-group uploadSeeImg">
+                <label className="imgUploadLabel">
+                  <img className="cameraIcon" src={cameraIcon} alt="camera icon" />Upload A New Image
+                  <FileUploader
+                      hidden
+                      accept='image/*'
+                      name='image'
+                      storageRef={firebase.storage().ref('images/')}
+                      onUploadStart={this.handleUploadStart}
+                      onUploadSuccess={this.handleUploadSuccess}
+                    />
+                </label>
+                {(image === '' && progress === 0
+                  ? <img className="img-thumbnail imgThumbnail" src={editedItem.imageUrl} alt={editedItem.name} />
+                  : '')}
+                {(image !== '' && progress === 100
+                  ? <div>
+                      <img
+                        className="img-thumbnail imgThumbnail"
+                        src={imageUrl}
+                        alt="item to be rented" />
+                    </div> : '')}
               </div>
+
               <div className="form-group">
                 <label htmlFor="edit.priceperhour">Price Per Hour</label>
                 <input
@@ -252,8 +256,10 @@ class EditItem extends React.Component {
                   onChange={this.priceperdayAdd}
                 />
               </div>
-              <button type="submit" className="btn btn-primary" onClick={this.editSingleItem}>Update It</button>
-              <button type="submit" className="btn btn-danger" onClick={closeEditModal}>Cancel</button>
+              <div className="updateModalBtnsDiv">
+                <button type="submit" className="btn updateItemBtn" onClick={this.editSingleItem}>Update It</button>
+                <button type="submit" className="btn cancelUpdateBtn" onClick={closeEditModal}>Cancel</button>
+              </div>
             </form>
           </ModalBody>
         </div>
