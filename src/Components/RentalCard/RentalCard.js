@@ -41,7 +41,6 @@ class RentalCard extends React.Component {
     const itmId = this.props.rental.itemId;
     e.preventDefault();
     this.props.cancelMyRental(e.target.id, itmId);
-    $('.RentalCard').addClass('fadeOut');
     setTimeout(() => {
       this.setState({ ...this.props.getMyRentals() });
     }, 600);
@@ -131,7 +130,7 @@ class RentalCard extends React.Component {
                 {<i className="fas fa-cog rentalCardDropDown"></i>}
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem onClick={this.cancelRental}><i className="fas fa-trash-alt trashEditIconRentalDropDown"></i>Cancel Rental</DropdownItem>
+                <DropdownItem id={rental.id} onClick={this.cancelRental}><i className="fas fa-trash-alt trashEditIconRentalDropDown"></i>Cancel Rental</DropdownItem>
                 <DropdownItem onClick={this.editRental}><i className="fas fa-edit trashEditIconRentalDropDown"></i>Edit Rental Times</DropdownItem>
               </DropdownMenu>
             </Dropdown>

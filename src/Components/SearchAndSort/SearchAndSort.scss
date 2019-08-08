@@ -12,6 +12,10 @@
   border-radius: 20px !important;
 }
 
+.dropdown-item {
+  color: $blackFont !important;
+}
+
 .searchInput {
   width: 18em !important;
   margin-left: 5px;
@@ -24,7 +28,7 @@
 }
 
 #allCategoriesSelected {
-  color: $whiteFont !important;
+  // color: $whiteFont !important;
   &:hover {
     color: $upperNav !important;
   }

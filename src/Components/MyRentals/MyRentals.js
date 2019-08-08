@@ -3,6 +3,8 @@ import React from 'react';
 import itemsRentedData from '../../helpers/data/itemsRentedData';
 import itemsData from '../../helpers/data/itemsData';
 import RentalCard from '../RentalCard/RentalCard';
+// STYLEs
+import './MyRentals.scss';
 
 class MyRentals extends React.Component {
   state = {
@@ -58,7 +60,7 @@ class MyRentals extends React.Component {
     ));
 
     return (
-      <div>{makeRentalCards}</div>
+      <div className="MyRentals">{makeRentalCards}</div>
     );
   }
 }
