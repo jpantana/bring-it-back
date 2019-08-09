@@ -61,16 +61,19 @@
   .SingleItemDiv {
     margin-top: 1em;
     margin-right: 3em;
+    border: none !important;
   }
   .profileDataDiv {
     box-shadow: 4px 1px 8px $softShadow;
-    // background-color: $upperNav;
+    margin-top: 1em;
+    margin-right: 3em;
     background: linear-gradient($upperNavWhite, $upperNav);
     height: 25em;
     display: flex;
     flex-flow: column;
     justify-content: center;
     border-radius: 5px 5px 0 0;
+    border: 1px solid $upperNav;
     padding-bottom: 1em;
     .usernameMyStuff {
       width: 18em;

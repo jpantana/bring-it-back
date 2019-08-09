@@ -202,15 +202,15 @@ class AddNewItems extends React.Component {
               <div className="form-group editSeeImg">
                 <label className="imgEditLabel">
                   <img className="cameraIcon" src={cameraIcon} alt="camera icon" />Upload An Image
-                <FileUploader
-                    hidden
-                    accept='image/*'
-                    name='image'
-                    storageRef={firebase.storage().ref('images/')}
-                    onUploadStart={this.handleUploadStart}
-                    onUploadSuccess={this.handleUploadSuccess}
-                  />
-              </label>
+                    <FileUploader
+                        hidden
+                        accept='image/*'
+                        name='image'
+                        storageRef={firebase.storage().ref('images/')}
+                        onUploadStart={this.handleUploadStart}
+                        onUploadSuccess={this.handleUploadSuccess}
+                      />
+                </label>
                  {(image !== '' && progress === 100
                    ? <div className="thumbnailDiv">
                       <img

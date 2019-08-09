@@ -118,7 +118,6 @@ class RentItem extends React.Component {
   };
 
   roloValu = (num) => {
-    console.error(num);
     const tempItem = { ...this.state.itemToRent };
     tempItem.hoursRented = num;
     const { itemToRent } = this.state;
@@ -166,7 +165,7 @@ class RentItem extends React.Component {
                     />
                   </div>
                 </div>
-                
+
                 {/* <label htmlFor="howLong">How long do you need it?</label>
                 <input
                   type="number"

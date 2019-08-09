@@ -194,8 +194,9 @@ class MyStuff extends React.Component {
             </div>
           </div>
 
-          <div className="SingleItemDiv card wow bounceIn fadeInRight">
-            { (isClicked === true ? <SingleItem
+            { (isClicked === true
+              ? <div className="SingleItemDiv card wow bounceIn fadeInRight">
+                <SingleItem
                 key={`single.${singleItem.id}`}
                 userid={userid}
                 singleItem={singleItem}
@@ -203,8 +204,9 @@ class MyStuff extends React.Component {
                 unseeSingleItem={this.unseeSingleItem}
                 deleteItemEvent={this.deleteItemEvent}
                 editItemEvent={this.editItemEvent}
-            />
-              : <div className="profileDataDiv">
+                />
+                </div>
+              : <div className="profileDataDiv wow bounceIn fadeInRight">
                   <h2 className="usernameMyStuff">Hi {this.state.userObj.firstname}!</h2>
                   <p>You have <span>{this.state.items.length}</span> items in your store up for rent.</p>
                 <div className="profileImgContainerDiv">
@@ -220,7 +222,6 @@ class MyStuff extends React.Component {
               </div>) }
           </div>
         </div>
-      </div>
     );
   }
 }

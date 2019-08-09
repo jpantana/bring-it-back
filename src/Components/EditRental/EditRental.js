@@ -8,6 +8,7 @@ import {
 } from 'reactstrap';
 import moment from 'moment';
 // JSs
+import Rolodex from '../Rolodex/Rolodex';
 import usersData from '../../helpers/data/usersData';
 // STYLEs
 import './EditRental.scss';
@@ -105,9 +106,15 @@ class EditRental extends React.Component {
     this.rentedItemToEditDataUpdate('pickupDate', e);
   };
 
-  rentThisLong = (e) => {
-    // this.rentedItemToEditDataUpdate('hoursRented', e);
-    this.determineDueDate(e.target.value);
+  roloValu = (num) => {
+    const tempItem = { ...this.state.rentedItemToEdit };
+    tempItem.hoursRented = num;
+    const { rentedItemToEdit } = this.state;
+    const firstDate = rentedItemToEdit.pickupDate;
+    const hours = num * 1;
+    const bringItBack = moment(firstDate, 'MM/DD/YYYY - h:mm a').add(hours, 'hours').calendar();
+    tempItem.returnTime = bringItBack;
+    this.setState({ rentedItemToEdit: tempItem });
   };
 
   render() {
@@ -132,27 +139,29 @@ class EditRental extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="editHowLong">How long do you need it?</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="editHowLong"
-                  aria-describedby="how long"
-                  placeholder="e.g. 26 hrs"
-                  value={rentedItemToEdit.hoursRented}
-                  onChange={this.rentThisLong}
-                />
-                <p className="editReturnTime">{this.state.rentedItemToEdit.returnTime}</p>
+                <div className="hoursRoloDivEdit">
+                    <p className="howManyHoursEdit">How many hours do you need it for?</p>
+                    <div className="rolodexDivEdit">
+                      <Rolodex
+                        key={`${rentedItemToEdit.id}.rolodex`}
+                        roloValu={this.roloValu}
+                      />
+                    </div>
+                  </div>
+                  <p className="editReturnTime">{this.state.rentedItemToEdit.returnTime}</p>
               </div>
-              <div>
-                <h3>Your Pickup/Return Location</h3>
-                <p>{rentedItemToEdit.ownerAddress.street}</p>
-                <p>{rentedItemToEdit.ownerAddress.city}</p>
-                <p>{rentedItemToEdit.ownerAddress.state}</p>
-                <p>{rentedItemToEdit.ownerAddress.zipcode}</p>
-              </div>
-              <button onClick={this.submitEdit} className="btn editRentBtn">Rent It!</button>
-              <span className="cancelRental" onClick={this.closeModal}>X</span>
+
+                <div className="editRentalInfoDiv">
+                  <h3 className="pickupandreturnlocH3">Your Pickup/Return Location</h3>
+                  <p className="editRentalInfoP">{rentedItemToEdit.ownerAddress.street}</p>
+                  <p className="editRentalInfoP">{rentedItemToEdit.ownerAddress.city}, {rentedItemToEdit.ownerAddress.state}</p>
+                  <p className="editRentalInfoP">{rentedItemToEdit.ownerAddress.zipcode}</p>
+                </div>
+
+                <div className="editRentalModalBtnsDiv">
+                  <button onClick={this.submitEdit} className="btn editRentalItemBtn">Rent It!</button>
+                  <button className="btn cancelUpdateBtn" onClick={this.closeModal}>X</button>
+                </div>
               </form>
             </ModalBody>
       </div>

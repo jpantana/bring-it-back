@@ -1,9 +1,8 @@
 @import '../../styles/variables.scss';
 
 .Rolodex {
-  position: absolute;
-  top: 80px;
-  // margin: auto;
+  position: relative;
+  top: -20px;
 }
 
 #carouselExampleControls {
@@ -20,6 +19,7 @@
 #rotate {
   position: relative;
   color: $blackFont;
+  color: $whiteFont;
   top: 38px;
   font-size: 48px;
   margin-bottom: 60px;
