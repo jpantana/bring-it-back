@@ -4,7 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 // JSs
 import messagesData from '../../helpers/data/messagesData';
-import Conversations from '../Conversations/Conversations';
+// import Conversations from '../Conversations/Conversations';
 import usersData from '../../helpers/data/usersData';
 import itemsData from '../../helpers/data/itemsData';
 
@@ -72,10 +72,10 @@ class MessagesNavRoute extends React.Component {
     });
   };
 
-  someFunction = obj => (<Conversations
-    key={'whatever'}
-    obj={obj}
-  />);
+  // someFunction = obj => (<Conversations
+  //   key={'whatever'}
+  //   obj={obj}
+  // />);
 
 
   render() {

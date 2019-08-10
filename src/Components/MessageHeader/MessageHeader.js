@@ -34,13 +34,16 @@ class MessageHeader extends React.Component {
 
   render() {
     return (
-      <div className="messageHeaderDiv">
-        <div className="profilePicMsg">
-          <img className="profilePicImgMsg wow bounceIn" src={this.state.userProfPic} alt="conversation recipient profile" />
-        </div>
-        <p className="wow bounceIn msgWith">{this.state.convoWith}</p>
-        <p>{this.state.convoAbout}</p>
-
+      <div>
+        {this.state.convoWith !== ''
+          ? <div className="messageHeaderDiv">
+            <div className="profilePicMsg">
+              <img className="profilePicImgMsg wow bounceIn" src={this.state.userProfPic} alt="conversation recipient profile" />
+            </div>
+            <p className="wow bounceIn msgWith">{this.state.convoWith}</p>
+            <p>{this.state.convoAbout}</p>
+          </div>
+          : <p className="noConvosYet">You haven't started any conversations.</p>}
       </div>
     );
   }

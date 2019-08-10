@@ -127,8 +127,12 @@
 .navBar {
   width: 100%;
   min-height: 90px;
+  max-height: 100px;
   background-color: $mainBlue;
   background-position-y: 1000px;
+  .navBarNav {
+    margin-left: auto;
+  }
 }
 
 .navLink {
@@ -193,3 +197,38 @@
     }
   }
  
+  @media (max-width: 767px) {
+    .navbar-toggler {
+      margin-left: auto;
+    }
+    .navbar-toggler-icon {
+      margin-right: 10px;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(253, 153, 59)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    }
+    .navBar {
+      font-weight: 500;
+      .navbar-collapse {
+        margin-left: auto !important;
+      }
+      .navBarNav, .navbar-nav {
+        position: relative;
+        z-index: 10;
+        width: 5em;
+        .navLink {
+          &:after {
+            border-bottom: solid 3px $oranger;  
+        }
+          .navIcon {
+            color: $oranger;
+          }
+          .navItemTitle {
+            color: $oranger;
+          }
+          .notificationFlag {
+            background-color: $mainBlue;
+            left: -45px;
+          }
+        }
+      }
+    }
+  }

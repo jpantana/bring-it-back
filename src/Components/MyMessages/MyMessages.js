@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 // JSs
 import MessagesAbout from '../MessagesAbout/MessagesAbout';
-import MessagesNavRoute from '../MessagesNavRoute/MessagesNavRoute';
+// import MessagesNavRoute from '../MessagesNavRoute/MessagesNavRoute';
 import MessageRow from '../MessageRow/MessageRow';
 import MessageHeader from '../MessageHeader/MessageHeader';
 import messagesData from '../../helpers/data/messagesData';
@@ -24,12 +24,12 @@ class MyMessages extends React.Component {
 
   componentDidMount() {
     const uid = this.props.match.params.id;
-    if (this.props.location.state) {
-      const { ownersId, itemId } = this.props.location.state;
-      this.setState({ ownersId, itemId, uid });
-    } else {
-      this.setState({ uid });
-    }
+    // if (this.props.location.state) {
+    //   const { ownersId, itemId } = this.props.location.state;
+    //   this.setState({ ownersId, itemId, uid });
+    // } else {
+    this.setState({ uid });
+    // }
     this.getMyMessages(uid);
   }
 
@@ -47,18 +47,7 @@ class MyMessages extends React.Component {
     this.setState({ myText: myTextMsg });
   };
 
-  getMyConversations = (uid) => {
-    if (this.state.itemId !== '') {
-      const findConvo = this.state.messages.filter(m => m.itemId === this.state.itemId);
-      this.setState({ conversation: findConvo });
-    }
-    const msgReceived = this.state.messages.filter(m => m.otheruserid === uid);
-    this.setState({ msgsReceived: msgReceived });
-    this.showThisConvo(msgReceived);
-  };
-
   getMyMessages = (uid) => {
-    // messagesData.getGroupedMessages(uid)
     messagesData.getReceivedMessages()
       .then((res) => {
         this.setState({ messages: res });
@@ -67,11 +56,23 @@ class MyMessages extends React.Component {
       .catch(err => console.error('no group messages', err));
   };
 
+  getMyConversations = (uid) => {
+    if (this.state.itemId !== '') {
+      const findConvo = this.state.messages.filter(m => m.itemId === this.state.itemId);
+      this.setState({ conversation: findConvo });
+    }
+    const msgReceived = this.state.messages.filter(m => m.otheruserid === uid);
+    console.error(msgReceived);
+    this.setState({ msgsReceived: msgReceived });
+    this.showThisConvo(msgReceived);
+  };
+
   showThisConvo =(msgs) => {
     msgs.forEach((m, i) => {
       messagesData.getReceivedMessages()
         .then((res) => {
           const convos = res.filter(r => r.itemId === m.itemId);
+          console.error(convos, 'convos');
           this.setState({ conversation: convos, ownersId: m.uid, itemId: m.itemId });
         })
         .catch(err => console.error('no msg returned', err));
@@ -155,11 +156,12 @@ class MyMessages extends React.Component {
                   </button>
                 </label>
                 </div>
-              : <MessagesNavRoute
-                  key={'msgNavRoute'}
+              : ''
+              // <MessagesNavRoute
+              //   key={'msgNavRoute'}
                 // ownersId={ownersId}
                 // uid={uid}
-            />
+            // />
             }
           </div>
         </div>

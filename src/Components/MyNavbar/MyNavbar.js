@@ -65,16 +65,18 @@ class MyNavbar extends React.Component {
     }
   }
 
+  toggle = this.toggle.bind(this);
+
   toggle() {
     this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen,
+      isOpen: !prevState.isOpen,
     }));
   }
 
-  toggle2 = this.toggle.bind(this);
+  toggle2 = this.toggle2.bind(this);
 
   toggle2() {
-    this.setState({ isOpen: !this.state.isOpen });
+    this.setState({ dropdownOpen: !this.state.dropdownOpen });
   }
 
   openModal = (e) => {
@@ -119,7 +121,7 @@ class MyNavbar extends React.Component {
     const buildNavbar = () => {
       if (authed) {
         return (
-        <Nav className="ml-auto" navbar>
+        <Nav className="navBarNav" navbar>
           <NavItem>
             <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to="/home">
                 <span><i className="fas fa-home navIcon"></i></span>

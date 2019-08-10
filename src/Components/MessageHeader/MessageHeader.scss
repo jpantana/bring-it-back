@@ -32,3 +32,13 @@
     height: 40px;
   }
 }
+
+.noConvosYet {
+  font-family: $font1;
+  font-size: 19px;
+  font-style: italic;
+  color: $blackFont;
+  // text-shadow: 2px 1px 5px $softShadow;
+  margin: auto;
+  background-color: white;
+}
