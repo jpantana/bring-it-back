@@ -3,10 +3,14 @@
 .MessageRow {
   display: flex;
   flex-direction: column;
+  width: 400px;
+  background-color: $shadow;
+  border: 1px solid $upperNav;
 }
 
 .messageP {
-  background-color: lightblue;
+  background-color: $upperNav;
+  width: 45%;
   margin: 5px;
   padding: 10px;
 }

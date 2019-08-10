@@ -19,6 +19,9 @@
     border-radius: 5px;
     font-size: 18px;
     font-family: $font1;
+    &:hover {
+      cursor: pointer;
+    }
     .cameraIcon {
       filter: invert(100%);
       margin-right: 12px;
@@ -31,6 +34,65 @@
     width: 40%;
   }
 }
+
+.itemNameModal, .itemPriceperhour, .itemPriceperday, .itemDescriptionModal, .conditionHeaderModal {
+  font-size: 18px;
+  font-style: italic;
+  font-family: $font1;
+  color: $blackFont;
+  text-decoration: underline;
+}
+
+.addItemPricesDiv {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  margin-bottom: 20px;
+  .formGroupItem {
+    margin: 1px;
+    width: 165px !important;
+  }
+  .posDollarSpanHour {
+    position: relative;
+    top: 40px;
+    right: 115px;
+    background-color: $shadow;
+    .posDollarSignHour {
+      padding: 10px !important;
+      background-color: $upperNav;
+      border: 1px solid $shadow;
+      border-radius: 4px 0 0 4px;
+    }
+  }
+  
+  .posDollarSpanDay {
+    position: relative;
+    top: 40px;
+    right: 108px;
+    background-color: $shadow;
+    .posDollarSignDay {
+      padding: 10px !important;
+      background-color: $upperNav;
+      border: 1px solid $shadow;
+      border-radius: 4px 0 0 4px;
+    }
+  }
+  
+  #itemPriceperhour {
+    width: 55%;
+    margin-left: 2em;
+    border: 1px solid $shadow !important;
+    border-radius: 0px 5px 5px 0px !important
+  }
+  #itemPriceperday {
+    width: 55%;
+    margin-left: 2em;
+    border: 1px solid $shadow !important;
+    border-radius: 0px 5px 5px 0px !important
+  }
+}
+
+
 
 .updateModalBtnsDiv {
   display: flex;

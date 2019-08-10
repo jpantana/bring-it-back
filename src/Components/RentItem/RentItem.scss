@@ -16,30 +16,6 @@
   }
 }
 
-.rentBtn {
-  width: 100px;
-  margin: auto !important;
-  margin-bottom: 15px !important;
-  color: $whiteFont !important;
-  background-color: $mainBlue !important;
-  font-family: $font1 !important;
-  border: 1px solid $mainBlue !important;
-  &:hover {
-    background-color: $whiteFont !important;
-    color: $mainBlue !important;
-    transition: .4s;
-  }
-}
-
-.cancelRental {
-  font-size: 24px;
-  padding: 10px;
-  color: $orange;
-  border: 1px solid $orange;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 .returnTime {
   font-family: $font1;
   font-weight: 700;
@@ -51,18 +27,77 @@
 .hoursRoloDiv {
   display: flex;
   flex-direction: row;
+  border-top: 1px solid $upperNav;
+  border-bottom: 1px solid $upperNav;
+  padding: 15px 0 15px 0;
   .howManyHours {
     font-family: $font1;
-    width: 200px;
     text-align: left;
-    margin-top: 1em;
+    font-size: 17px;
+    margin: auto;
   }
   .rolodexDiv {
     width: 100px;
     height: 100px;
-    margin: auto;
-    border-radius: 10px;
-    background-color: $secondBlue;
+    margin-left: auto;
+    margin-right: 40px;
+    background-color: $softShadow;
+    box-shadow: 4px 1px 9px $softShadow;
   }
 }
 
+.rentalInfoDiv {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  // background-color: $upperNav;
+  .pickupandreturnlocH3 {
+    font-family: $font1;
+    font-size: 18px;
+    color: $blackFont;
+    border-bottom: 1px solid $shadow;
+    padding-bottom: 8px;
+    width: 49%
+  }
+  .editRentalInfoP {
+    font-family: $font1;
+    margin: 3px;
+    width: 200px;
+    text-align: left;
+    color: $blackFont;
+  }
+}
+
+.rentalModalBtnsDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+  .cancelRentalItemBtn {
+    width: 100px;
+    margin-bottom: 15px !important;
+    margin-left: 15px;
+    color: $whiteFont !important;
+    background-color: $orange !important;
+    font-family: $font1 !important;
+    border: 1px solid $orange !important;
+    &:hover {
+      background-color: $whiteFont !important;
+      color: $orange !important;
+      transition: .4s;
+      border: 1px solid $orange !important;
+    } 
+  }
+  .rentBtn {
+    width: 100px;
+    margin-bottom: 15px !important;
+    color: $whiteFont !important;
+    background-color: $mainBlue !important;
+    font-family: $font1 !important;
+    border: 1px solid $mainBlue !important;
+    &:hover {
+      background-color: $whiteFont !important;
+      color: $mainBlue !important;
+      transition: .4s;
+    }
+  }
+}

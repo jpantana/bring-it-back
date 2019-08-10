@@ -149,7 +149,7 @@ class EditItem extends React.Component {
           <ModalBody>
             <form>
               <div className="form-group">
-                <label htmlFor="edit.itemName">Item Name</label>
+                <label className="itemNameModal" htmlFor="edit.itemName">Item Name</label>
                 <input
                   type="text"
                   className="form-control"
@@ -175,7 +175,7 @@ class EditItem extends React.Component {
                 </Dropdown>
               </div>
               <div className="form-group">
-                <label htmlFor="edit.itemDescription">A Brief Description</label>
+                <label className="itemDescriptionModal" htmlFor="edit.itemDescription">A Brief Description</label>
                 <textarea
                   type="text"
                   className="form-control"
@@ -188,14 +188,14 @@ class EditItem extends React.Component {
               <div className="form-group">
 
               <div className="radioDiv">
-                  <h3>Condition</h3>
-                  <label htmlFor="Mint">Mint</label>
+                <p className="conditionHeaderModal">Condition</p>
+                  <label className="mint" htmlFor="Mint">Mint</label>
                   <input name="radioBtn" type="radio" id="Mint" defaultValue="Mint" checked={editedItem.condition === 'Mint' ? 'checked' : false} onChange={this.conditionAdd}/>
-                  <label htmlFor="Good">Good</label>
+                  <label className="good" htmlFor="Good">Good</label>
                   <input name="radioBtn" type="radio" id="Good" defaultValue="Good" checked={editedItem.condition === 'Good' ? 'checked' : false } onChange={this.conditionAdd}/>
-                  <label htmlFor="Fair">Fair</label>
+                  <label className="fair" htmlFor="Fair">Fair</label>
                   <input name="radioBtn" type="radio" id="Fair" defaultValue="Fair" checked={editedItem.condition === 'Fair' ? 'checked' : false } onChange={this.conditionAdd}/>
-                  <label htmlFor="Relic">Relic</label>
+                  <label className="relic" htmlFor="Relic">Relic</label>
                   <input name="radioBtn" type="radio" id="Relic" defaultValue="Relic" checked={editedItem.condition === 'Relic' ? 'checked' : false} onChange={this.conditionAdd}/>
                 </div>
 
@@ -233,28 +233,31 @@ class EditItem extends React.Component {
                         alt="item to be rented" />
                     </div> : '')}
               </div>
-
-              <div className="form-group">
-                <label htmlFor="edit.priceperhour">Price Per Hour</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="edit.priceperhour"
-                  placeholder="$"
-                  defaultValue={editedItem.priceperhour}
-                  onChange={this.priceperhourAdd}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="edit.priceperday">Price Per Day</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id=""
-                  placeholder="$"
-                  defaultValue={editedItem.priceperday}
-                  onChange={this.priceperdayAdd}
-                />
+              <div className="editItemPricesDiv">
+                <div className="form-group formGroupItem">
+                  <label className="itemPriceperhour" htmlFor="edit.priceperhour">Price Per Hour</label>
+                  <span className="posDollarSpanHourEdit"><i class="fas fa-dollar-sign posDollarSignHourEdit"></i></span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="editpriceperhour"
+                    placeholder=""
+                    defaultValue={editedItem.priceperhour}
+                    onChange={this.priceperhourAdd}
+                  />
+                </div>
+                <div className="form-group formGroupItem">
+                  <label className="itemPriceperday" htmlFor="edit.priceperday">Price Per Day</label>
+                  <span className="posDollarSpanDayEdit"><i class="fas fa-dollar-sign posDollarSignDayEdit"></i></span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="editpriceperday"
+                    placeholder=""
+                    defaultValue={editedItem.priceperday}
+                    onChange={this.priceperdayAdd}
+                  />
+                </div>
               </div>
               <div className="updateModalBtnsDiv">
                 <button type="submit" className="btn updateItemBtn" onClick={this.editSingleItem}>Update It</button>

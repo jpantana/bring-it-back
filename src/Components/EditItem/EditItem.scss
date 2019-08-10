@@ -20,6 +20,9 @@
     border-radius: 5px;
     font-size: 18px;
     font-family: $font1;
+    &:hover {
+      cursor: pointer;
+    }
     .cameraIcon {
       filter: invert(100%);
       margin-right: 12px;
@@ -33,8 +36,101 @@
 }
 
 #Mint, #Good, #Fair, #Relic {
-  margin: 5px 40px 5px 5px !important;
+  margin: 5px 30px 5px 8px !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  background-color: $upperNav;
+  color: $upperNavWhite;
+  top: 10px;
+  height: 22px;
+  width: 22px;
+  border: 0;
+  border-radius: 50px;
+  // box-shadow: 4px 1px 8px $shadow;
+  cursor: pointer;     
+  margin-right: 7px;
+  outline: none;
+  &:checked {
+    background-color: $oranger !important;
+  }
+  &:checked::before {
+    position: absolute;
+    font: 13px/1 'Open Sans', sans-serif;
+    left: 7px;
+    top: 4px;
+    content: '\02143';
+    transform: rotate(40deg);
+  }
 }
+
+.mint {
+  border-bottom: 5px solid $mint;
+}
+.good {
+  border-bottom: 5px solid $good;
+}
+.fair {
+  border-bottom: 5px solid $fair;
+}
+.relic {
+  border-bottom: 5px solid $relic
+}
+
+
+
+.editItemPricesDiv {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  margin-bottom: 20px;
+  .formGroupItem {
+    margin: 1px;
+    width: 165px !important;
+  }
+  .posDollarSpanHourEdit {
+    position: relative;
+    top: 40px;
+    right: 115px;
+    background-color: $shadow;
+    .posDollarSignHourEdit {
+      padding: 10px !important;
+      background-color: $upperNav;
+      border: 1px solid $shadow;
+      border-radius: 4px 0 0 4px;
+    }
+  }
+  
+  .posDollarSpanDayEdit {
+    position: relative;
+    top: 40px;
+    right: 108px;
+    background-color: $shadow;
+    .posDollarSignDayEdit {
+      padding: 10px !important;
+      background-color: $upperNav;
+      border: 1px solid $shadow;
+      border-radius: 4px 0 0 4px;
+    }
+  }
+  
+  #editpriceperhour {
+    width: 55%;
+    margin-left: 2em;
+    border: 1px solid $shadow !important;
+    border-radius: 0px 5px 5px 0px !important
+  }
+  #editpriceperday {
+    width: 55%;
+    margin-left: 2em;
+    border: 1px solid $shadow !important;
+    border-radius: 0px 5px 5px 0px !important
+  }
+}
+
+
 
 .updateModalBtnsDiv {
   display: flex;

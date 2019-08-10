@@ -18,6 +18,22 @@ const getGroupedMessages = uid => new Promise((resolve, reject) => {
     })
     .catch(err => reject(err));
 });
+
+const getReceivedMessages = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/messages.json`)
+    .then((res) => {
+      const messages = [];
+      if (res.data !== null) {
+        Object.keys(res.data).forEach((fbKey) => {
+          res.data[fbKey].id = fbKey;
+          messages.push(res.data[fbKey]);
+        });
+      }
+      resolve(messages);
+    }).catch(err => reject(err));
+});
+
+
 const newMessage = message => axios.post(`${baseUrl}/messages.json`, message);
 
-export default { newMessage, getGroupedMessages };
+export default { newMessage, getGroupedMessages, getReceivedMessages };

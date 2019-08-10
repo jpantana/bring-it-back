@@ -178,15 +178,17 @@ class RentItem extends React.Component {
                 /> */}
                 <p className="returnTime">{this.state.itemToRent.returnTime}</p>
               </div>
-              <div>
-                <h3>Your Pickup/Return Location</h3>
-                <p>{street}</p>
-                <p>{city}</p>
-                <p>{state}</p>
-                <p>{zipcode}</p>
+              <div className="editRentalInfoDiv">
+                <h3 className="pickupandreturnlocH3">Your Pickup/Return Location</h3>
+                <p className="editRentalInfoP">{street}</p>
+                <p className="editRentalInfoP">{city}, {state}</p>
+                <p className="editRentalInfoP">{zipcode}</p>
               </div>
-              <button onClick={this.rentItem} className="btn rentBtn">Rent It!</button>
-              <span className="cancelRental" onClick={this.modalShowHide}>X</span>
+
+              <div className="rentalModalBtnsDiv">
+                <button onClick={this.rentItem} className="btn rentBtn">Rent It!</button>
+                <button className="btn cancelRentalItemBtn" onClick={this.modalShowHide}>X</button>
+              </div>
               </form>
             </ModalBody>
         </Modal>

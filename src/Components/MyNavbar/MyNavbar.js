@@ -17,6 +17,7 @@ import {
   DropdownMenu,
 } from 'reactstrap';
 // JSs
+import messagesData from '../../helpers/data/messagesData';
 import UpdateUser from '../UpdateUser/UpdateUser';
 // STYLES
 import './MyNavbar.scss';
@@ -25,7 +26,6 @@ import 'animate.css';
 import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 import brand from '../../SVGs/BringItBackTransparentWHITE.svg';
 import usersData from '../../helpers/data/usersData';
-// import downArrow from '../../SVGs/iconmonstr-arrow-69.svg';
 
 const defaultUserState = {
   firstname: '',
@@ -38,7 +38,6 @@ const defaultUserState = {
   username: '',
   proifle: '',
 };
-
 
 class MyNavbar extends React.Component {
   static propTypes = {
@@ -56,11 +55,13 @@ class MyNavbar extends React.Component {
     user: defaultUserState,
     hasUser: false,
     profilePic: '',
+    msgsReceived: [],
   }
 
   componentWillReceiveProps() {
     if (this.props.authed === true && this.props.useruid !== '') {
       this.getUser();
+      this.getNotifications(this.props.useruid);
     }
   }
 
@@ -104,9 +105,19 @@ class MyNavbar extends React.Component {
     firebase.auth().signOut();
   };
 
+  getNotifications = (uid) => {
+    messagesData.getReceivedMessages()
+      .then((res) => {
+        const msgReceived = res.filter(m => m.otheruserid === uid);
+        this.setState({ msgsReceived: msgReceived });
+        // filter msgs for the below params
+        // get all the messages and sort against the otheruserid to the uid and ping a notification
+      }).catch();
+  };
+
   render() {
     const { authed, username, useruid } = this.props;
-    const { modal, user } = this.state;
+    const { modal, user, msgsReceived } = this.state;
     const buildNavbar = () => {
       if (authed) {
         return (
@@ -137,6 +148,9 @@ class MyNavbar extends React.Component {
               <span><i className="fas fa-envelope navIcon"></i></span>
               <br/>
               <span className="navItemTitle">Notifications</span>
+              {msgsReceived.length > 0
+                ? <span className="notificationFlag">{msgsReceived.length}</span>
+                : ''}
             </NavLink>
           </NavItem>
         </Nav>

@@ -160,6 +160,18 @@
     .navItemTitle {
       font-size: 15px;
     }
+    .notificationFlag {
+      background-color: $oranger;
+      color: $whiteFont;
+      font-size: 13px;
+      padding: 0px 2px 0px 2px;
+      border-radius: 2px;
+      height: 20px;
+      width: 20px;
+      position: relative;
+      top: -40px;
+      right: 30px;
+    }
   }
 
   .footer{

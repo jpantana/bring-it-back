@@ -18,6 +18,7 @@ class MyMessages extends React.Component {
     myText: '',
     messagePostId: '',
     conversation: [],
+    receivedMsg: {},
   }
 
   componentDidMount() {
@@ -54,7 +55,8 @@ class MyMessages extends React.Component {
 
   getMyConversations = () => {
     const findConvo = this.state.messages.filter(m => m.itemId === this.state.itemId);
-    this.setState({ conversation: findConvo });
+    const msgReceived = this.state.messages.filter(m => m.otheruserid === this.state.uid);
+    this.setState({ conversation: findConvo, receivedMsg: msgReceived });
   };
 
   getMyMessages = (uid) => {

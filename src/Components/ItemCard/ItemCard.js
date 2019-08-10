@@ -28,7 +28,11 @@ class ItemCard extends React.Component {
 
   messageThisUser = (e) => {
     e.preventDefault();
-    this.props.messageUserRedirect(e.target.value, this.props.item.id);
+    console.error(e.target.id);
+    const itm = e.target.id;
+    const ownerId = itm.split('.', 1)[0];
+    console.error(ownerId);
+    this.props.messageUserRedirect(ownerId, this.props.item.id);
   };
 
   condtionFontColor = () => {
@@ -93,12 +97,15 @@ class ItemCard extends React.Component {
         {
           this.props.useruid !== this.props.item.ownerId
             ? <span className="msgUserSpan">
-            <span
-              className="msgUserBtn"
-              value={item.ownerId}
-              onClick={this.messageThisUser}
-            >{<i className="fas fa-comment msgIcon"></i>}</span>
-            </span> : ''}
+                <span className="msgUserBtn">
+                  {<i
+                    id={`${item.ownerId}.usertomsg`}
+                    onClick={this.messageThisUser}
+                    className="fas fa-comment msgIcon">
+                  </i>}
+                </span>
+              </span>
+            : ''}
       </div>
     );
   }
