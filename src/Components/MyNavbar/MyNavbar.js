@@ -110,8 +110,6 @@ class MyNavbar extends React.Component {
       .then((res) => {
         const msgReceived = res.filter(m => m.otheruserid === uid);
         this.setState({ msgsReceived: msgReceived });
-        // filter msgs for the below params
-        // get all the messages and sort against the otheruserid to the uid and ping a notification
       }).catch();
   };
 

@@ -1,13 +1,25 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // JSs
 import msgShape from '../../helpers/propz/msgShape';
 // STYLEs
 import './MessageRow.scss';
+import 'animate.css';
 
 class MessageRow extends React.Component {
   static propTypes = {
     convo: msgShape.msgShape,
+    uid: PropTypes.string.isRequired,
+  }
+
+  componentDidMount() {
+    if (this.props.uid === this.props.convo.uid) {
+      this.setState({ received: !this.state.received });
+    }
+  }
+
+  state = {
+    received: false,
   }
 
   render() {
@@ -15,7 +27,7 @@ class MessageRow extends React.Component {
 
     return (
       <div className="MessageRow">
-        <p className="messageP">{convo.message}</p>
+        <p className={`messageP wow bounceIn ${this.state.received === true ? 'sentMessage fadeInRight' : 'receivedMessage fadeInLeft'}`}>{convo.message}</p>
       </div>
     );
   }

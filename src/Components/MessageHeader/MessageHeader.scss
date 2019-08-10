@@ -3,5 +3,32 @@
 .messageHeaderDiv {
   display: flex;
   justify-content: center;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
+  margin-top: auto;
+  .msgWith {
+    font-family: $font1;
+    font-weight: 600;
+    font-size: 20px;
+    color: $whiteFont;
+    margin: 0;
+  }
+  .profilePicMsg {
+    max-height: 40px;
+    max-width: 40px;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: -2px 1px 9px $shadow;
+    .profilePicImgMsg {
+      position: relative;
+      top: -5px;
+      width: 40px;
+      object-fit: contain;
+    }
+  }
+  .userIcon {
+    margin: 5px;
+    height: 40px;
+  }
 }
