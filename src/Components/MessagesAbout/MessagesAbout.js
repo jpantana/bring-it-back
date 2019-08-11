@@ -19,6 +19,10 @@ class MessagesAbout extends React.Component {
     this.showItemName();
   }
 
+  // componentWillUnmount() {
+  //   this.showItemName();
+  // }
+
   showItemName = () => {
     const itmId = document.getElementById(`${this.props.itemId}`);
     itemsData.getAllItems()
