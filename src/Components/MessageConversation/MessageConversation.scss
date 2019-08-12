@@ -13,6 +13,10 @@
     margin: auto;
     padding-top: 1.2em;
     border-radius: 10px;
+    &:hover {
+      background-color: $softerShadow;
+      transition: .4s;
+    }
     .inboxCardGuts {
       display: flex;
       flex-direction: row;

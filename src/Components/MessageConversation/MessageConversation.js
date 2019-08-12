@@ -90,6 +90,7 @@ class MessageConversation extends React.Component {
           {this.state.isClicked === true
             ? <MessageCard
                 key={`convoWith.${this.state.ownersId}`}
+                id={`mcardid.${this.state.ownersId}`}
                 conversation={this.state.conversation}
                 itemId={this.state.itemId}
                 ownersId={this.state.ownersId}

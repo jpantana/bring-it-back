@@ -8,6 +8,7 @@ import Footer from '../Footer/Footer';
 // STYLEs
 import './MyMessages.scss';
 import 'animate.css';
+import MessageCard from '../MessageCard/MessageCard';
 
 class MyMessages extends React.Component {
   state = {
@@ -15,13 +16,17 @@ class MyMessages extends React.Component {
     itemIds: [],
     conversations: [],
     otherUsersId: '',
+    // the below if new message
+    newConvo: false,
+    ownersId: '',
+    itemId: '',
   }
 
   componentDidMount() {
     const uid = this.props.match.params.id;
     if (this.props.location.state) {
       const { ownersId, itemId } = this.props.location.state;
-      this.setState({ ownersId, itemId });
+      this.setState({ ownersId, itemId, newConvo: true });
     }
     this.setState({ uid });
     this.getMyMessages(uid);
@@ -77,6 +82,11 @@ class MyMessages extends React.Component {
       .catch(err => console.error('no group messages', err));
   };
 
+  hideThisCard = () => {
+    this.setState({ newConvo: false });
+  };
+
+
   render() {
     const {
       itemIds,
@@ -99,6 +109,21 @@ class MyMessages extends React.Component {
     return (
       <div className="MyMessages">
         <h4 id="welcomeBanner" className="welcomeMsgCenterBanner wow bounceIn fadeInRight">Welcome to your message center</h4>
+        {this.state.newConvo === true
+          ? <div>
+              <MessageCard
+                id={`mcardid.${this.state.ownersId}`}
+                key={`convoWith.${this.state.ownersId}`}
+                conversation={this.state.conversation}
+                itemId={this.state.itemId}
+                ownersId={this.state.ownersId}
+                uid={this.state.uid}
+                getMyMessages={this.getMyMessages}
+                hideThisCard={this.hideThisCard}
+              />
+            </div>
+          : ''}
+
         <div className="msgConvoDiv">
           {singleMessage}
         </div>

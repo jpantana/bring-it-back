@@ -8,7 +8,7 @@ import 'animate.css';
 
 class MessageHeader extends React.Component {
   static propTypes = {
-    showThisMessage: PropTypes.func.isRequired,
+    showThisMessage: PropTypes.func,
   }
 
   state = {

@@ -28,10 +28,8 @@ class ItemCard extends React.Component {
 
   messageThisUser = (e) => {
     e.preventDefault();
-    console.error(e.target.id);
     const itm = e.target.id;
     const ownerId = itm.split('.', 1)[0];
-    console.error(ownerId);
     this.props.messageUserRedirect(ownerId, this.props.item.id);
   };
 

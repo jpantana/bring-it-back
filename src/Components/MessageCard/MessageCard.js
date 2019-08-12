@@ -21,14 +21,25 @@ const defaultNewMsg = {
   unread: true,
 };
 
+const defaultConversation = [{
+  uid: '',
+  otheruserid: '',
+  timestamp: '',
+  message: '',
+  itemId: '',
+  unread: true,
+}];
+
+
 class MessageCard extends React.Component {
   static propTypes = {
-    conversation: PropTypes.arrayOf(msgShape.msgShape).isRequired,
+    conversation: PropTypes.arrayOf(msgShape.msgShape),
     uid: PropTypes.string.isRequired,
     ownersId: PropTypes.string.isRequired,
     itemId: PropTypes.string.isRequired,
-    showThisMessage: PropTypes.func.isRequired,
+    showThisMessage: PropTypes.func,
     getMyMessages: PropTypes.func.isRequired,
+    hideThisCard: PropTypes.func,
   }
 
   state = {
@@ -37,17 +48,26 @@ class MessageCard extends React.Component {
     ownersId: '',
     itemId: '',
     message: '',
-    conversation: [],
+    conversation: defaultConversation,
     otherUsersId: [],
   }
 
   componentDidMount() {
-    this.setState({
-      conversation: this.props.conversation,
-      uid: firebase.auth().currentUser.uid,
-      ownersId: this.props.ownersId,
-      itemId: this.props.itemId,
-    });
+    if (this.props.conversation === undefined) {
+      this.setState({
+        conversation: [1],
+        uid: firebase.auth().currentUser.uid,
+        ownersId: this.props.ownersId,
+        itemId: this.props.itemId,
+      });
+    } else {
+      this.setState({
+        conversation: this.props.conversation,
+        uid: firebase.auth().currentUser.uid,
+        ownersId: this.props.ownersId,
+        itemId: this.props.itemId,
+      });
+    }
     this.markAsRead();
   }
 
@@ -68,6 +88,7 @@ class MessageCard extends React.Component {
     const { newMsg } = this.state;
     messagesData.newMessage(newMsg)
       .then(() => {
+        this.props.hideThisCard();
         this.props.getMyMessages(this.state.uid);
       })
       .catch(err => console.error('no new message', err));
@@ -76,13 +97,15 @@ class MessageCard extends React.Component {
 
   markAsRead = () => {
     const wholeConvo = this.props.conversation;
-    wholeConvo.forEach((msg) => {
-      if (msg.unread === true) {
-        messagesData.markAsRead(msg.id, false)
-          .then()
-          .catch(err => console.error('still marked as unread', err));
-      }
-    });
+    if (wholeConvo !== undefined) {
+      wholeConvo.forEach((msg) => {
+        if (msg.unread === true) {
+          messagesData.markAsRead(msg.id, false)
+            .then()
+            .catch(err => console.error('still marked as unread', err));
+        }
+      });
+    }
   };
 
   render() {
