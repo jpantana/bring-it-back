@@ -13,11 +13,11 @@ class MessageHeader extends React.Component {
   state = {
     convoWith: '',
     ownersId: '',
-    convoAbout: '',
+    // convoAbout: '',
     userProfPic: '',
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ ownersId: this.props.ownersId });
     this.conversationHeader(this.props.ownersId);
   }
@@ -39,7 +39,7 @@ class MessageHeader extends React.Component {
               <img className="profilePicImgMsg wow bounceIn" src={this.state.userProfPic} alt="conversation recipient profile" />
             </div>
             <p className="wow bounceIn msgWith">{this.state.convoWith}</p>
-            <p>{this.state.convoAbout}</p>
+            {/* <p>{this.state.convoAbout}</p> */}
           </div>
           : <p className="noConvosYet">You haven't started any conversations.</p>}
       </div>

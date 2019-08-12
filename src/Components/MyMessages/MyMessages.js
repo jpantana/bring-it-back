@@ -1,5 +1,6 @@
 import React from 'react';
 // JSs
+import MessageCard from '../MessageCard/MessageCard';
 import MessageConversation from '../MessageConversation/MessageConversation';
 import messagesData from '../../helpers/data/messagesData';
 import itemsData from '../../helpers/data/itemsData';
@@ -12,6 +13,7 @@ class MyMessages extends React.Component {
     itemIds: [],
     conversations: [],
     otherUsersId: '',
+    // isClicked: false,
   }
 
   componentDidMount() {
@@ -70,21 +72,16 @@ class MyMessages extends React.Component {
       .catch(err => console.error('no group messages', err));
   };
 
-  sendMessage = (newMsg) => {
-    if (this.state.itemId !== '') {
-      messagesData.newMessage(newMsg)
-        .then(() => {
-          this.getMyMessages(this.state.uid);
-        })
-        .catch(err => console.error('no new message', err));
-    }
-  };
+  // seeSingleMessage = (item) => {
+  //   this.setState({ isClicked: true, singleItem: item });
+  // };
 
   render() {
     const {
       itemIds,
       otherUsersId,
       conversations,
+      // isClicked,
     } = this.state;
 
     const singleMessage = conversations.map((convo, i) => (
@@ -93,8 +90,9 @@ class MyMessages extends React.Component {
         convo={convo}
         itemIds={itemIds}
         otherUsersId={otherUsersId}
-        sendMessage={this.sendMessage}
+        getMyMessages={this.getMyMessages}
         i={i}
+        seeSingleMessage={this.seeSingleMessage}
       />
     ));
 
@@ -103,6 +101,20 @@ class MyMessages extends React.Component {
         <div>
           {singleMessage}
         </div>
+        {/* { (isClicked === true
+          ? <div className="SingleItemDiv card wow bounceIn fadeInRight">
+            <MessageCard
+              key={`${i}.messageCard`}
+              convo={convo}
+              itemIds={itemIds}
+              otherUsersId={otherUsersId}
+              getMyMessages={this.getMyMessages}
+              i={i}
+              seeSingleMessage={this.seeSingleMessage}
+            />
+            </div>
+          : '')
+          } */}
       </div>
     );
   }

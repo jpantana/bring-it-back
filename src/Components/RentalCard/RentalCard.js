@@ -98,26 +98,32 @@ class RentalCard extends React.Component {
             <div className="cardDetails">
               <i onClick={this.showCardDetails} className="fas fa-ellipsis-h showDetailsBtn bounceIn"></i>
                 <div id="showDetails" className="hide">
-                  <div className="conditionDivRental">
-                    <p className="detailP detHeader rentalThCondition rentalHeaders">Condition</p>
-                    <p className="detailP detInfo rentalCondition rentalsInfo">{rental.condition}</p>
+                  <div className="row flex-nowrap">
+                    <div className="conditionDivRental">
+                      <p className="detailP detHeader rentalThCondition rentalHeaders">Condition</p>
+                      <p className="detailP detInfo rentalCondition rentalsInfo">{rental.condition}</p>
+                    </div>
+                    <div className="hourlyDivRental">
+                      <p className="detailP detHeader rentalThPriceHour rentalHeaders">Hourly</p>
+                      <p className="detailP detInfo rentalPriceHour rentalsInfo">${rental.priceperhour}</p>
+                    </div>
+                    <div className="dailyDivRental">
+                      <p className="detailP detHeader rentalThPriceDay rentalHeaders">Daily</p>
+                      <p className="detailP detInfo rentalPriceDay rentalsInfo">${rental.priceperday}</p>
+                    </div>
                   </div>
-                  <div className="hourlyDivRental">
-                    <p className="detailP detHeader rentalThPriceHour rentalHeaders">Hourly</p>
-                    <p className="detailP detInfo rentalPriceHour rentalsInfo">${rental.priceperhour}</p>
+
+                  <div className="row flex-nowrap">
+                    <div className="pickupDivRental">
+                      <p className="detailP detHeader rentalThPickupDate rentalHeaders">Pickup Date</p>
+                      <p className="detailP detInfo rentalPickupDate rentalsInfo">{rental.pickupDate}</p>
+                    </div>
+                    <div className="returnDivRental">
+                      <p className="detailP detHeader rentalThReturnDate rentalHeaders">Return Date</p>
+                      <p className="detailP detInfo rentalPickupDate rentalsInfo">{rental.returnTime}</p>
+                    </div>
                   </div>
-                  <div className="dailyDivRental">
-                    <p className="detailP detHeader rentalThPriceDay rentalHeaders">Daily</p>
-                    <p className="detailP detInfo rentalPriceDay rentalsInfo">${rental.priceperday}</p>
-                  </div>
-                  <div className="pickupDivRental">
-                    <p className="detailP detHeader rentalThPickupDate rentalHeaders">Pickup Date</p>
-                    <p className="detailP detInfo rentalPickupDate rentalsInfo">{rental.pickupDate}</p>
-                  </div>
-                  <div className="returnDivRental">
-                    <p className="detailP detHeader rentalThReturnDate rentalHeaders">Return Date</p>
-                    <p className="detailP detInfo rentalPickupDate rentalsInfo">{rental.returnTime}</p>
-                  </div>
+
                   <i onClick={this.hideDetails} className="fas fa-angle-double-up hideDetailsBtn"></i>
                 </div>
               </div>

@@ -44,7 +44,7 @@
     }
     #showDetails {
       display: flex;
-      flex-flow: row wrap;
+      flex-flow: column;
       height: 10em;
       overflow: scroll;
       margin: 0 !important;
