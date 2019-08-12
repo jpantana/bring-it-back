@@ -17,11 +17,9 @@ class MessageHeader extends React.Component {
     userProfPic: '',
   }
 
-  componentWillReceiveProps(prevProps) {
-    if (prevProps.ownersId !== this.props.ownersId) {
-      this.setState({ ownersId: prevProps.ownersId });
-      this.conversationHeader(prevProps.ownersId);
-    }
+  componentWillMount() {
+    this.setState({ ownersId: this.props.ownersId });
+    this.conversationHeader(this.props.ownersId);
   }
 
   conversationHeader = (ownersId) => {

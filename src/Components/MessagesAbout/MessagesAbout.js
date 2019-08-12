@@ -36,7 +36,9 @@ class MessagesAbout extends React.Component {
   render() {
     return (
       <div className="MessagesAbout">
-        <p className="msgIsAbt" id={this.props.itemId} >{this.state.itemname}</p>
+        {this.props.itemId !== null
+          ? <p className="msgIsAbt" id={this.props.itemId} >{this.state.itemname}</p>
+          : ''}
       </div>
     );
   }

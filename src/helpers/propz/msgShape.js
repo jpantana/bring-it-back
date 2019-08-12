@@ -7,6 +7,7 @@ const msgShape = PropTypes.shape({
   itemId: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   timestamp: PropTypes.string.isRequired,
+  unread: PropTypes.bool.isRequired,
 });
 
 export default { msgShape };

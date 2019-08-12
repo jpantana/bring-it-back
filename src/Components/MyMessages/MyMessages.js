@@ -1,24 +1,21 @@
 import React from 'react';
-import moment from 'moment';
+// import moment from 'moment';
 // JSs
 import MessageConversation from '../MessageConversation/MessageConversation';
-import MessagesAbout from '../MessagesAbout/MessagesAbout';
+// import MessagesAbout from '../MessagesAbout/MessagesAbout';
 // import MessageRow from '../MessageRow/MessageRow';
-import MessageHeader from '../MessageHeader/MessageHeader';
+// import MessageHeader from '../MessageHeader/MessageHeader';
 import messagesData from '../../helpers/data/messagesData';
+import itemsData from '../../helpers/data/itemsData';
 // STYLEs
 import './MyMessages.scss';
-import itemsData from '../../helpers/data/itemsData';
 
 class MyMessages extends React.Component {
   state = {
     uid: '',
-    ownersId: '',
-    itemId: '',
     itemIds: [],
-    myText: '',
-    conversation: [],
     conversations: [],
+    otherUsersId: '',
   }
 
   componentDidMount() {
@@ -50,9 +47,20 @@ class MyMessages extends React.Component {
         this.setState({ itemIds: Array.from(new Set(msgsItemIdsArr)) });
         // now we have the unique item ids within the messages objects to group by
         const groupOfMsgs = [];
+        const otherPerson = [];
         this.state.itemIds.forEach((itm) => {
           const msgsGroupedByItemId = msgs.filter(m => m.itemId === itm);
           groupOfMsgs.push(msgsGroupedByItemId);
+          msgsGroupedByItemId.forEach((c, i) => {
+            if (c.uid !== uid) {
+              // you sent to
+              otherPerson.push(c.uid);
+            } else if (c.otheruserid !== uid) {
+              // you received from
+              otherPerson.push(c.otheruserid);
+            }
+          });
+          this.setState({ otherUsersId: Array.from(new Set(otherPerson)) });
           // now we have an array of objects that constitute our had conversations
           itemsData.getSingleItem(itm)
             .then(() => {
@@ -66,33 +74,34 @@ class MyMessages extends React.Component {
       .catch(err => console.error('no group messages', err));
   };
 
-  sendMessage = (e) => {
-    e.preventDefault();
-    if (this.state.itemId !== '') {
-      const messageObj = {
-        uid: this.state.uid,
-        otheruserid: this.state.ownersId,
-        timestamp: moment().format('x'),
-        message: this.state.myText,
-        itemId: this.state.itemId,
-        unread: true,
-      };
-      messagesData.newMessage(messageObj)
-        .then((res) => {
-          this.setState({ myText: '' });
-          this.getMyMessages(this.state.uid);
-        })
-        .catch(err => console.error('no new message', err));
-    }
-  };
+  // sendMessage = (e) => {
+  //   e.preventDefault();
+  //   if (this.state.itemId !== '') {
+  //     const messageObj = {
+  //       uid: this.state.uid,
+  //       otheruserid: this.state.ownersId,
+  //       timestamp: moment().format('x'),
+  //       message: this.state.myText,
+  //       itemId: this.state.itemId,
+  //       unread: true,
+  //     };
+  //     messagesData.newMessage(messageObj)
+  //       .then((res) => {
+  //         this.setState({ myText: '' });
+  //         this.getMyMessages(this.state.uid);
+  //       })
+  //       .catch(err => console.error('no new message', err));
+  //   }
+  // };
 
   render() {
     const {
-      conversation,
-      ownersId,
-      myText,
-      uid,
-      itemId,
+      // conversation,
+      // ownersId,
+      // myText,
+      // uid,
+      itemIds,
+      otherUsersId,
       conversations,
     } = this.state;
 
@@ -100,6 +109,10 @@ class MyMessages extends React.Component {
       <MessageConversation
         key={`${i}.messageConversation`}
         convo={convo}
+        itemIds={itemIds}
+        otherUsersId={otherUsersId}
+
+        i={i}
       />
     ));
 
@@ -113,55 +126,58 @@ class MyMessages extends React.Component {
 
     return (
       <div className="MyMessages">
-        {singleMessage}
-        <div className="msgHeaderCompDiv">
+        <div>
+          {singleMessage}
+        </div>
+        {/* <div className="msgHeaderCompDiv">
           <MessageHeader
             key={'messageHeader'}
             ownersId={ownersId}
-          />
-          {itemId !== ''
+          /> */}
+          {/* {itemId !== ''
             ? <MessagesAbout
               key={`messagesAbout.${itemId}`}
               itemId={itemId}
             />
-            : ''}
-        </div>
-        <div className="msgTableDiv">
-          {/* <div>{conversation.length > 0
-            ? myConversations
-            : null
-          }</div> */}
+            : ''} */}
         </div>
 
-        <div className="Messages">
-            <div className="sendMessageForm">
-            {ownersId !== ''
-              ? <div className="msgInputDiv">
-                  <input
-                  type="text"
-                  id="messageInput"
-                  placeholder=" say something kind..."
-                  value={myText}
-                  onChange={this.myMessage}
-                />
-                <label className="msgLabel" htmlFor="messageInput">
-                  <button
-                      className="btn sendMessageBtn"
-                      onClick={this.sendMessage}
-                    >Send
-                  </button>
-                </label>
-                </div>
-              : ''
-              // <MessagesNavRoute
-              //   key={'msgNavRoute'}
-                // ownersId={ownersId}
-                // uid={uid}
-            // />
-            }
-          </div>
-        </div>
-      </div>
+    /* <div className="msgTableDiv">
+        <div>{conversation.length > 0
+          ? myConversations
+          : null
+        }</div>
+      </div> */
+
+    // <div className="Messages">
+    //     <div className="sendMessageForm">
+    //     {ownersId !== ''
+    //       ? <div className="msgInputDiv">
+    //           <input
+    //           type="text"
+    //           id="messageInput"
+    //           placeholder=" say something kind..."
+    //           value={myText}
+    //           onChange={this.myMessage}
+    //         />
+    //         <label className="msgLabel" htmlFor="messageInput">
+    //           <button
+    //               className="btn sendMessageBtn"
+    //               onClick={this.sendMessage}
+    //             >Send
+    //           </button>
+    //         </label>
+    //         </div>
+    //       : ''
+    // <MessagesNavRoute
+    //   key={'msgNavRoute'}
+    // ownersId={ownersId}
+    // uid={uid}
+    // />
+    // }
+    // </div>
+    // </div>
+    // </div>
     );
   }
 }

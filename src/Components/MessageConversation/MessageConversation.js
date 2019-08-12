@@ -1,37 +1,47 @@
 import React from 'react';
 import moment from 'moment';
-// import PropTypes from 'prop-types';
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
+import PropTypes from 'prop-types';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 // JSs
-// import MessagesAbout from '../MessagesAbout/MessagesAbout';
+import MessagesAbout from '../MessagesAbout/MessagesAbout';
 import MessageRow from '../MessageRow/MessageRow';
-// import MessageHeader from '../MessageHeader/MessageHeader';
+import MessageHeader from '../MessageHeader/MessageHeader';
 import messagesData from '../../helpers/data/messagesData';
+import msgShape from '../../helpers/propz/msgShape';
 // STYLEs
 import './MessageConversation.scss';
 
 class MessageConversation extends React.Component {
-  // static propTypes = {
-  //   itemId: PropTypes.string.isRequired,
-  //   uid: PropTypes.string.isRequired,
-  //   ownersId: PropTypes.string.isRequired,
-  // }
+  static propTypes = {
+    convo: PropTypes.arrayOf(msgShape.msgShape).isRequired,
+    // otherUsersId: PropTypes.arrayOf().isRequired,
+    // itemIds: PropTypes.arrayOf().isRequired,
+  }
 
   state = {
-    messages: [],
+    // messages: [],
     uid: '',
     ownersId: '',
-    convoRecip: '',
+    // convoRecip: '',
     itemId: '',
     myText: '',
-    messagePostId: '',
+    // messagePostId: '',
     conversation: [],
-    msgsReceived: [],
+    otherUsersId: [],
+    // sent: [],
+    // received: [],
+    // msgsReceived: [],
   }
 
   componentWillMount() {
-    this.setState({ conversation: this.props.convo });
+    this.setState({
+      conversation: this.props.convo,
+      uid: firebase.auth().currentUser.uid,
+      otherUsersId: this.props.otherUsersId,
+      itemId: this.props.itemIds[this.props.i],
+      ownersId: this.props.otherUsersId[this.props.i],
+    });
   }
 
   myMessage = (e) => {
@@ -40,23 +50,23 @@ class MessageConversation extends React.Component {
     this.setState({ myText: myTextMsg });
   };
 
-  getMyMessages = (uid) => {
-    messagesData.getReceivedMessages()
-      .then((res) => {
-        const msgReceived = res.filter(m => m.otheruserid === uid);
-        msgReceived.forEach((m, i) => {
-          const convos = res.filter(r => r.itemId === m.itemId);
-          this.setState({
-            messages: res,
-            msgsReceived: msgReceived,
-            conversation: convos,
-            ownersId: m.uid,
-            itemId: m.itemId,
-          });
-        });
-      })
-      .catch(err => console.error('no group messages', err));
-  };
+  // getMyMessages = (uid) => {
+  //   messagesData.getReceivedMessages()
+  //     .then((res) => {
+  //       const msgReceived = res.filter(m => m.otheruserid === uid);
+  //       msgReceived.forEach((m, i) => {
+  //         const convos = res.filter(r => r.itemId === m.itemId);
+  //         this.setState({
+  //           messages: res,
+  //           msgsReceived: msgReceived,
+  //           conversation: convos,
+  //           ownersId: m.uid,
+  //           itemId: m.itemId,
+  //         });
+  //       });
+  //     })
+  //     .catch(err => console.error('no group messages', err));
+  // };
 
   sendMessage = (e) => {
     e.preventDefault();
@@ -81,10 +91,10 @@ class MessageConversation extends React.Component {
   render() {
     const {
       conversation,
-      // ownersId,
-      // myText,
+      ownersId,
+      myText,
       uid,
-      // itemId,
+      itemId,
     } = this.state;
 
     const myConversations = conversation.map((convo, i) => (
@@ -97,10 +107,9 @@ class MessageConversation extends React.Component {
 
     return (
       <div className="MyMessages">
-      test test
         <div className="msgHeaderCompDiv">
-          {/* <MessageHeader
-            key={'messageHeader'}
+          <MessageHeader
+            key={`messageHeader${ownersId}`}
             ownersId={ownersId}
           />
           {itemId !== ''
@@ -109,14 +118,14 @@ class MessageConversation extends React.Component {
               itemId={itemId}
             />
             : ''}
-        </div> */}
+        </div>
         <div className="msgTableDiv">
           <div>{conversation.length > 0
             ? myConversations
             : null
           }</div>
         </div>
-{/*
+
         <div className="Messages">
             <div className="sendMessageForm">
             {ownersId !== ''
@@ -138,7 +147,7 @@ class MessageConversation extends React.Component {
                 </div>
               : ''
             }
-          </div> */}
+          </div>
         </div>
       </div>
     );
