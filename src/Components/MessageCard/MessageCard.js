@@ -50,6 +50,7 @@ class MessageCard extends React.Component {
     message: '',
     conversation: defaultConversation,
     otherUsersId: [],
+    msgPostId: '',
   }
 
   componentDidMount() {
@@ -87,8 +88,11 @@ class MessageCard extends React.Component {
     e.preventDefault();
     const { newMsg } = this.state;
     messagesData.newMessage(newMsg)
-      .then(() => {
-        this.props.hideThisCard();
+      .then((res) => {
+        // if (this.props.conversation[0].itemId === '') {
+        //   this.props.hideThisCard();
+        // }
+        this.setState({ msgPostId: res.data.name });
         this.props.getMyMessages(this.state.uid);
       })
       .catch(err => console.error('no new message', err));
