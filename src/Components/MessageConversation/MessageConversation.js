@@ -1,41 +1,45 @@
 import React from 'react';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 // JSs
+import moment from 'moment';
 import MessagesAbout from '../MessagesAbout/MessagesAbout';
 import MessageRow from '../MessageRow/MessageRow';
 import MessageHeader from '../MessageHeader/MessageHeader';
-import messagesData from '../../helpers/data/messagesData';
 import msgShape from '../../helpers/propz/msgShape';
 // STYLEs
 import './MessageConversation.scss';
+
+const defaultNewMsg = {
+  uid: '',
+  otheruserid: '',
+  timestamp: '',
+  message: '',
+  itemId: '',
+  unread: true,
+};
 
 class MessageConversation extends React.Component {
   static propTypes = {
     convo: PropTypes.arrayOf(msgShape.msgShape).isRequired,
     // otherUsersId: PropTypes.arrayOf().isRequired,
     // itemIds: PropTypes.arrayOf().isRequired,
+    sendMessage: PropTypes.func.isRequired,
   }
 
   state = {
-    // messages: [],
+    newMsg: defaultNewMsg,
     uid: '',
     ownersId: '',
-    // convoRecip: '',
     itemId: '',
-    myText: '',
-    // messagePostId: '',
+    message: '',
     conversation: [],
     otherUsersId: [],
-    // sent: [],
-    // received: [],
-    // msgsReceived: [],
   }
 
   componentWillMount() {
-    this.setState({
+    this.removeListener = this.setState({
       conversation: this.props.convo,
       uid: firebase.auth().currentUser.uid,
       otherUsersId: this.props.otherUsersId,
@@ -44,57 +48,55 @@ class MessageConversation extends React.Component {
     });
   }
 
-  myMessage = (e) => {
-    e.preventDefault();
-    const myTextMsg = e.target.value;
-    this.setState({ myText: myTextMsg });
-  };
+  componentWillUnmount() {
+    this.removeListener();
+  }
 
-  // getMyMessages = (uid) => {
-  //   messagesData.getReceivedMessages()
-  //     .then((res) => {
-  //       const msgReceived = res.filter(m => m.otheruserid === uid);
-  //       msgReceived.forEach((m, i) => {
-  //         const convos = res.filter(r => r.itemId === m.itemId);
-  //         this.setState({
-  //           messages: res,
-  //           msgsReceived: msgReceived,
-  //           conversation: convos,
-  //           ownersId: m.uid,
-  //           itemId: m.itemId,
-  //         });
-  //       });
-  //     })
-  //     .catch(err => console.error('no group messages', err));
-  // };
+  makeMsg = (e) => {
+    const buildNewMsg = {
+      uid: this.state.uid,
+      message: e.target.value,
+      otheruserid: this.state.ownersId,
+      timestamp: moment().format('x'),
+      itemId: this.state.itemId,
+      unread: true,
+    };
+    this.setState({ newMsg: buildNewMsg });
+  };
 
   sendMessage = (e) => {
     e.preventDefault();
-    if (this.state.itemId !== '') {
-      const messageObj = {
-        uid: this.state.uid,
-        otheruserid: this.state.ownersId,
-        timestamp: moment().format('x'),
-        message: this.state.myText,
-        itemId: this.state.itemId,
-        unread: true,
-      };
-      messagesData.newMessage(messageObj)
-        .then((res) => {
-          this.setState({ messagePostId: res.data.name, myText: '' });
-          this.getMyMessages(this.state.uid);
-        })
-        .catch(err => console.error('no new message', err));
-    }
+    this.props.sendMessage(this.state.newMsg);
   };
+
+  // sendMessage = (e) => {
+  //   e.preventDefault();
+  //   if (this.state.itemId !== '') {
+  //     const messageObj = {
+  //       uid: this.state.uid,
+  //       otheruserid: this.state.ownersId,
+  //       timestamp: moment().format('x'),
+  //       message: this.state.myText,
+  //       itemId: this.state.itemId,
+  //       unread: true,
+  //     };
+  //     messagesData.newMessage(messageObj)
+  //       .then((res) => {
+  //         this.setState({ messagePostId: res.data.name, myText: '' });
+  //         this.getMyMessages(this.state.uid);
+  //       })
+  //       .catch(err => console.error('no new message', err));
+  //   }
+  // };
 
   render() {
     const {
       conversation,
       ownersId,
-      myText,
       uid,
       itemId,
+      newMsg,
+      // message,
     } = this.state;
 
     const myConversations = conversation.map((convo, i) => (
@@ -134,8 +136,8 @@ class MessageConversation extends React.Component {
                   type="text"
                   id="messageInput"
                   placeholder=" say something kind..."
-                  value={myText}
-                  onChange={this.myMessage}
+                  value={newMsg.message}
+                  onChange={this.makeMsg}
                 />
                 <label className="msgLabel" htmlFor="messageInput">
                   <button

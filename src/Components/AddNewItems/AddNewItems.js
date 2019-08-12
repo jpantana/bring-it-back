@@ -15,7 +15,6 @@ import 'firebase/storage';
 // JSs
 import itemsData from '../../helpers/data/itemsData';
 // PROPs
-// import itemShape from '../../helpers/propz/itemShape';
 import categoriesShape from '../../helpers/propz/categoriesShape';
 // STYLES
 import './AddNewItems.scss';
