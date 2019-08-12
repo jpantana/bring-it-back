@@ -10,6 +10,7 @@ import ItemCard from '../ItemCard/ItemCard';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import SearchAndSort from '../SearchAndSort/SearchAndSort';
 import itemsRentedData from '../../helpers/data/itemsRentedData';
+import Footer from '../Footer/Footer';
 // STYLEs
 import 'animate.css';
 import './Home.scss';
@@ -173,7 +174,7 @@ class Home extends React.Component {
           <button className="btn closeNoRentModalBtn">X</button>
         </Modal>
         <div className="form-group">
-          <div className="searchAndSort">
+          <div className="searchAndSort animated pulse">
             <SearchAndSort
               key={categoryName}
               categoryName={categoryName}
@@ -194,6 +195,9 @@ class Home extends React.Component {
             <div className="row allCardsDiv" id="allCardsDiv">
               { (items.length > 0 ? makeItemCards : '') }
             </div>
+          </div>
+          <div className="footerDiv">
+            <Footer key={'footer'} />
           </div>
       </div>
     );

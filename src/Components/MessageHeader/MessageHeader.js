@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 // JSs
 import usersData from '../../helpers/data/usersData';
 // STYLEs
@@ -7,7 +8,7 @@ import 'animate.css';
 
 class MessageHeader extends React.Component {
   static propTypes = {
-
+    showThisMessage: PropTypes.func.isRequired,
   }
 
   state = {
@@ -30,9 +31,14 @@ class MessageHeader extends React.Component {
       }).catch(err => console.error('no users in msg header', err));
   };
 
+  // hideThisMessage = (e) => {
+  //   e.preventDefault();
+  //   this.props.showThisMessage();
+  // };
+
   render() {
     return (
-      <div>
+      <div onClick={this.hideThisMessage}>
         {this.state.convoWith !== ''
           ? <div className="messageHeaderDiv">
             <div className="profilePicMsg">

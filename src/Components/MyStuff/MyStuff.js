@@ -8,6 +8,7 @@ import Items from '../Items/Items';
 import AddNewItems from '../AddNewItems/AddNewItems';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import EditItem from '../EditItem/EditItem';
+import Footer from '../Footer/Footer';
 // STYLES
 import './MyStuff.scss';
 // PROPS
@@ -220,6 +221,9 @@ class MyStuff extends React.Component {
                   <i className="fas fa-star"></i>
                 </div>
               </div>) }
+          </div>
+          <div className="footerDiv">
+            <Footer key={'footer'} />
           </div>
         </div>
     );

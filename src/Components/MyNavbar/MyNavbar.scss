@@ -177,25 +177,6 @@
       right: 30px;
     }
   }
-
-  .footer{
-    font-family: $font1;
-    color: $blackFont;
-    background-color: $fontHoverColor;
-    height: 50px;
-    width: 100%;
-    margin: auto;
-    .footerLink {
-      text-decoration: none;
-      margin-top: 40% !important;
-      font-family: $font1;
-      color: $blackFont;
-      &:hover {
-        color: black;
-        text-decoration: none;
-      }
-    }
-  }
  
   @media (max-width: 767px) {
     .navbar-toggler {

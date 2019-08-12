@@ -221,7 +221,7 @@ class AddNewItems extends React.Component {
               <div className="addItemPricesDiv">
                 <div className="form-group formGroupItem">
                   <label className="itemPriceperhour" htmlFor="itemPriceperhour">Price Per Hour</label>
-                  <span className="posDollarSpanHour"><i class="fas fa-dollar-sign posDollarSignHour"></i></span>
+                  <span className="posDollarSpanHour"><i className="fas fa-dollar-sign posDollarSignHour"></i></span>
                   <input
                     type="text"
                     className="form-control"
@@ -233,7 +233,7 @@ class AddNewItems extends React.Component {
                 </div>
                 <div className="form-group formGroupItem">
                   <label className="itemPriceperday" htmlFor="itemPriceperday">Price Per Day</label>
-                  <span className="posDollarSpanDay"><i class="fas fa-dollar-sign posDollarSignDay"></i></span>
+                  <span className="posDollarSpanDay"><i className="fas fa-dollar-sign posDollarSignDay"></i></span>
                   <input
                     type="text"
                     className="form-control"

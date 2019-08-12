@@ -1,63 +1,82 @@
 @import '../../styles/variables.scss';
 
 .MyMessages {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  width: 100%;
-  margin-top: 1.5em;
-  min-height: 30em;
-  .msgHeaderCompDiv {
+  margin-top: 1em;
+  min-height: 100%;
+  .welcomeMsgCenterBanner {
+    font-family: $font1;
+    font-size: 30px;
+    padding: 10px;
+    color: $whiteFont;
+    background-color: $orange;
+    border-radius: 10px;
+    width: 18em;
     margin: auto;
-    width: 25em;
-    background-color: $mainBlue;
-    height: auto;
-    border-radius: 9px 9px 2px 2px;
+    text-align: center;
   }
-  .msgTableDiv {
+  .msgConvoDiv {
     margin: auto;
-    min-height: 17em;
-  }
-  .Messages {
-    display: flex;
-    flex-flow: row;
-    justify-content: center;
-    .sendMessageForm {
-      .msgInputDiv {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        background-color: $upperNav;
-        border-radius: 2px 2px 9px 9px;
-        width: 25em;
-        padding: 8px;
-        .msgLabel {
-          .sendMessageBtn {
-            position: relative;
-            right: -0px;
-            background-color: $secondBlue !important;
-            border-radius: 0px 15px 15px 0px;
-            width: 60px;
-            height: 30px;
-            font-family: $font1;
-            font-size: 14px;
-            font-weight: 600;
-            color: white !important;
-            text-align: center;
-            border: .5px solid $secondBlue !important;
-            &:hover {
-              background-color: $mainBlue !important;
-            }
-          }
-        }
-        #messageInput {
-          border-radius: 20px 0 0 20px;
-          height: 30px !important;
-          border: .5px solid $secondBlue;
-          border-right: none;
-          width: 20em;
-        }
-      }
-    }
   }
 }
+
+// .MyMessages {
+//   display: flex;
+//   flex-flow: column;
+//   justify-content: center;
+//   width: 100%;
+//   margin-top: 1.5em;
+//   min-height: 30em;
+//   .msgHeaderCompDiv {
+//     margin: auto;
+//     width: 25em;
+//     background-color: $mainBlue;
+//     height: auto;
+//     border-radius: 9px 9px 2px 2px;
+//   }
+//   .msgTableDiv {
+//     margin: auto;
+//     min-height: 17em;
+//   }
+//   .Messages {
+//     display: flex;
+//     flex-flow: row;
+//     justify-content: center;
+//     .sendMessageForm {
+//       .msgInputDiv {
+//         display: flex;
+//         flex-flow: row nowrap;
+//         justify-content: center;
+//         background-color: $upperNav;
+//         border-radius: 2px 2px 9px 9px;
+//         width: 25em;
+//         padding: 8px;
+//         .msgLabel {
+//           .sendMessageBtn {
+//             position: relative;
+//             right: -0px;
+//             background-color: $secondBlue !important;
+//             border-radius: 0px 15px 15px 0px;
+//             width: 60px;
+//             height: 30px;
+//             font-family: $font1;
+//             font-size: 14px;
+//             font-weight: 600;
+//             color: white !important;
+//             text-align: center;
+//             border: .5px solid $secondBlue !important;
+//             &:hover {
+//               background-color: $mainBlue !important;
+//             }
+//           }
+//         }
+//         #messageInput {
+//           border-radius: 20px 0 0 20px;
+//           height: 30px !important;
+//           border: .5px solid $secondBlue;
+//           border-right: none;
+//           width: 20em;
+//         }
+//       }
+//     }
+//   }
+// }

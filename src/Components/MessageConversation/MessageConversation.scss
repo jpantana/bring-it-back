@@ -2,28 +2,72 @@
 
 
 .MessageInboxLine{
-  height: 10em;
-  width: 12em;
-  background-color: $shadow;
   display: flex;
   flex-direction: column;
-  padding: 7px;
-  margin: 5px;
-  .profilePicMsgInbox {
-    max-height: 40px;
-    max-width: 40px;
+  justify-content: center;
+  padding: 1em;
+  .messageHeaderDivInbox {
+    height: 5em;
+    width: 21em;
+    background-color: $softShadow;
     margin: auto;
-    margin-top: 10px;
-    border-radius: 50px;
-    overflow: hidden;
-    box-shadow: -2px 1px 9px $shadow;
-    .profilePicImgMsgInbox {
-      position: relative;
-      top: -5px;
-      width: 40px;
-      object-fit: contain;
+    padding-top: 1.2em;
+    border-radius: 10px;
+    .inboxCardGuts {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      .profilePicMsgInbox {
+        max-height: 40px;
+        max-width: 40px;
+        border-radius: 50px;
+        overflow: hidden;
+        box-shadow: -2px 1px 9px $shadow;
+        .profilePicImgMsgInbox {
+          position: relative;
+          top: -5px;
+          width: 40px;
+          object-fit: contain;
+        }
+      }
+      .inboxItemDetails {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        .msgWithInbox {
+          font-family: $font1;
+          font-size: 17px;
+          font-weight: 600;
+          font-style: italic;
+          color: $upperNav;
+          margin: 5px;
+          margin-right: 25px;
+        }
+        .aboutInboxDiv {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          margin-top: -.3em;
+          .aboutInbox {
+            font-family: $font1;
+            font-size: 12px;
+            font-style: italic;
+            text-decoration: underline;
+            color: $blackFont;
+          }
+          .msgIsAbtInbox {
+            font-family: $font1;
+            font-size: 14px;
+            color: $blackFont;
+            width: 180px;
+            margin-top: -.7em;
+          }
+        }
+      }
     }
   }
+  
+  
 }
 
 

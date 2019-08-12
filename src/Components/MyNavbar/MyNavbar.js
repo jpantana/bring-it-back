@@ -56,6 +56,7 @@ class MyNavbar extends React.Component {
     hasUser: false,
     profilePic: '',
     msgsReceived: [],
+    msgsUnread: [],
   }
 
   componentWillReceiveProps() {
@@ -111,13 +112,19 @@ class MyNavbar extends React.Component {
     messagesData.getReceivedMessages()
       .then((res) => {
         const msgReceived = res.filter(m => m.otheruserid === uid);
-        this.setState({ msgsReceived: msgReceived });
+        const msgsAreUnread = [];
+        msgReceived.forEach((m) => {
+          if (m.unread === true) {
+            msgsAreUnread.push(m.unread);
+          }
+        });
+        this.setState({ msgsReceived: msgReceived, msgsUnread: msgsAreUnread });
       }).catch();
   };
 
   render() {
     const { authed, username, useruid } = this.props;
-    const { modal, user, msgsReceived } = this.state;
+    const { modal, user, msgsUnread } = this.state;
     const buildNavbar = () => {
       if (authed) {
         return (
@@ -148,8 +155,8 @@ class MyNavbar extends React.Component {
               <span><i className="fas fa-envelope navIcon"></i></span>
               <br/>
               <span className="navItemTitle">Notifications</span>
-              {msgsReceived.length > 0
-                ? <span className="notificationFlag">{msgsReceived.length}</span>
+              {msgsUnread.length > 0
+                ? <span className="notificationFlag">{msgsUnread.length}</span>
                 : ''}
             </NavLink>
           </NavItem>
@@ -206,9 +213,6 @@ class MyNavbar extends React.Component {
             {buildNavbar()}
           </Collapse>
         </Navbar>
-        {/* <div className="footer-copyright footer">© 2018 Bring It Back | by
-          <a href="https://josh-pantana.firebaseapp.com/" className="footerLink"> <em>Josh Pantana</em></a>
-        </div> */}
       </div>
     );
   }

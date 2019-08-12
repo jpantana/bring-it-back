@@ -1,11 +1,13 @@
 import React from 'react';
+import $ from 'jquery';
 // JSs
-import MessageCard from '../MessageCard/MessageCard';
 import MessageConversation from '../MessageConversation/MessageConversation';
 import messagesData from '../../helpers/data/messagesData';
 import itemsData from '../../helpers/data/itemsData';
+import Footer from '../Footer/Footer';
 // STYLEs
 import './MyMessages.scss';
+import 'animate.css';
 
 class MyMessages extends React.Component {
   state = {
@@ -13,7 +15,6 @@ class MyMessages extends React.Component {
     itemIds: [],
     conversations: [],
     otherUsersId: '',
-    // isClicked: false,
   }
 
   componentDidMount() {
@@ -24,12 +25,16 @@ class MyMessages extends React.Component {
     }
     this.setState({ uid });
     this.getMyMessages(uid);
+    this.hideBanner();
   }
 
-  myMessage = (e) => {
-    e.preventDefault();
-    const myTextMsg = e.target.value;
-    this.setState({ myText: myTextMsg });
+  hideBanner = () => {
+    setTimeout(() => {
+      $('#welcomeBanner').addClass(' fadeOutLeft');
+    }, 2500);
+    setTimeout(() => {
+      $('#welcomeBanner').addClass(' hide');
+    }, 3100);
   };
 
 
@@ -72,16 +77,11 @@ class MyMessages extends React.Component {
       .catch(err => console.error('no group messages', err));
   };
 
-  // seeSingleMessage = (item) => {
-  //   this.setState({ isClicked: true, singleItem: item });
-  // };
-
   render() {
     const {
       itemIds,
       otherUsersId,
       conversations,
-      // isClicked,
     } = this.state;
 
     const singleMessage = conversations.map((convo, i) => (
@@ -98,23 +98,13 @@ class MyMessages extends React.Component {
 
     return (
       <div className="MyMessages">
-        <div>
+        <h4 id="welcomeBanner" className="welcomeMsgCenterBanner wow bounceIn fadeInRight">Welcome to your message center</h4>
+        <div className="msgConvoDiv">
           {singleMessage}
         </div>
-        {/* { (isClicked === true
-          ? <div className="SingleItemDiv card wow bounceIn fadeInRight">
-            <MessageCard
-              key={`${i}.messageCard`}
-              convo={convo}
-              itemIds={itemIds}
-              otherUsersId={otherUsersId}
-              getMyMessages={this.getMyMessages}
-              i={i}
-              seeSingleMessage={this.seeSingleMessage}
-            />
-            </div>
-          : '')
-          } */}
+        <div className="footerDiv">
+          <Footer key={'footer'} />
+        </div>
       </div>
     );
   }

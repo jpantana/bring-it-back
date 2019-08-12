@@ -5,24 +5,11 @@ import 'firebase/auth';
 // JSs
 import usersData from '../../helpers/data/usersData';
 import itemsData from '../../helpers/data/itemsData';
-// import moment from 'moment';
-// import messagesData from '../../helpers/data/messagesData';
-// import MessagesAbout from '../MessagesAbout/MessagesAbout';
-// import MessageRow from '../MessageRow/MessageRow';
-// import MessageHeader from '../MessageHeader/MessageHeader';
+import MessageCard from '../MessageCard/MessageCard';
 import msgShape from '../../helpers/propz/msgShape';
 // STYLEs
 import './MessageConversation.scss';
-import MessageCard from '../MessageCard/MessageCard';
-
-const defaultNewMsg = {
-  uid: '',
-  otheruserid: '',
-  timestamp: '',
-  message: '',
-  itemId: '',
-  unread: true,
-};
+import 'animate.css';
 
 class MessageConversation extends React.Component {
   static propTypes = {
@@ -41,12 +28,6 @@ class MessageConversation extends React.Component {
     uid: '',
     itemname: '',
     isClicked: false,
-    // newMsg: defaultNewMsg,
-    // ownersId: '',
-    // itemId: '',
-    // message: '',
-    // conversation: [],
-    // otherUsersId: [],
   }
 
   componentDidMount() {
@@ -60,29 +41,6 @@ class MessageConversation extends React.Component {
     this.conversationHeader(this.props.otherUsersId[this.props.i]);
     this.showItemName(this.props.itemIds[this.props.i]);
   }
-
-  // makeMsg = (e) => {
-  //   const buildNewMsg = {
-  //     uid: this.state.uid,
-  //     message: e.target.value,
-  //     otheruserid: this.state.ownersId,
-  //     timestamp: moment().format('x'),
-  //     itemId: this.state.itemId,
-  //     unread: true,
-  //   };
-  //   this.setState({ newMsg: buildNewMsg });
-  // };
-
-  // sendMessage = (e) => {
-  //   e.preventDefault();
-  //   const { newMsg } = this.state;
-  //   messagesData.newMessage(newMsg)
-  //     .then(() => {
-  //       this.props.getMyMessages(this.state.uid);
-  //     })
-  //     .catch(err => console.error('no new message', err));
-  //   this.setState({ newMsg: defaultNewMsg });
-  // };
 
   conversationHeader = (ownersId) => {
     this.setState({ ownersId });
@@ -101,37 +59,31 @@ class MessageConversation extends React.Component {
   };
 
   showThisMessage = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     this.setState({ isClicked: !this.state.isClicked });
   };
 
   render() {
-    // const {
-    //   conversation,
-    //   ownersId,
-    //   uid,
-    //   itemId,
-    //   newMsg,
-    // } = this.state;
-
-    // const myConversations = conversation.map((convo, i) => (
-    //     <MessageRow
-    //       key={`${i}.messageRow`}
-    //       convo={convo}
-    //       uid={uid}
-    //     />
-    // ))
-
-
     return (
-      <div onClick={this.showThisMessage} className="MessageInboxLine">
+      <div className="MessageInboxLine">
 
-        <div className="messageHeaderDiv">
+        <div onClick={this.showThisMessage} className="messageHeaderDivInbox">
+          <div className="inboxCardGuts">
             <div className="profilePicMsgInbox">
               <img className="profilePicImgMsgInbox wow bounceIn" src={this.state.userProfPic} alt="conversation recipient profile" />
             </div>
-            <p className="wow bounceIn msgWith">{this.state.convoWith}</p>
-            <p className="msgIsAbt" id={this.state.itemId} >{this.state.itemname}</p>
+            <div className="inboxItemDetails">
+              <p className="wow bounceIn msgWithInbox">{this.state.convoWith}</p>
+              <div className="aboutInboxDiv">
+                <p className="aboutInbox">About...</p>
+                <p className="msgIsAbtInbox" id={this.state.itemId} >{this.state.itemname}</p>
+              </div>
+            </div>
+          </div>
+
+
         </div>
 
         <div>
@@ -139,55 +91,14 @@ class MessageConversation extends React.Component {
             ? <MessageCard
                 key={`convoWith.${this.state.ownersId}`}
                 conversation={this.state.conversation}
-                itemId={this.state.ownersId}
+                itemId={this.state.itemId}
                 ownersId={this.state.ownersId}
                 uid={this.state.uid}
+                getMyMessages={this.props.getMyMessages}
                 showThisMessage={this.showThisMessage}
               />
             : ''}
         </div>
-        {/* <div className="msgHeaderCompDiv">
-          <MessageHeader
-            key={`messageHeader${ownersId}`}
-            ownersId={ownersId}
-          />
-          {itemId !== ''
-            ? <MessagesAbout
-              key={`messagesAbout.${itemId}`}
-              itemId={itemId}
-            />
-            : ''}
-        </div>
-        <div className="msgTableDiv">
-          <div>{conversation.length > 0
-            ? myConversations
-            : null
-          }</div>
-        </div>
-
-        <div className="Messages">
-            <div className="sendMessageForm">
-            {ownersId !== ''
-              ? <div className="msgInputDiv">
-                  <input
-                  type="text"
-                  id="messageInput"
-                  placeholder=" say something kind..."
-                  value={newMsg.message}
-                  onChange={this.makeMsg}
-                />
-                <label className="msgLabel" htmlFor="messageInput">
-                  <button
-                      className="btn sendMessageBtn"
-                      onClick={this.sendMessage}
-                    >Send
-                  </button>
-                </label>
-                </div>
-              : ''
-            }
-          </div>
-        </div> */}
       </div>
     );
   }

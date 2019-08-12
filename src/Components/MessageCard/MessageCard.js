@@ -22,12 +22,14 @@ const defaultNewMsg = {
 };
 
 class MessageCard extends React.Component {
-  // static propTypes = {
-  //   convo: PropTypes.arrayOf(msgShape.msgShape).isRequired,
-  //   // otherUsersId: PropTypes.arrayOf().isRequired,
-  //   // itemIds: PropTypes.arrayOf().isRequired,
-  //   getMyMessages: PropTypes.func.isRequired,
-  // }
+  static propTypes = {
+    conversation: PropTypes.arrayOf(msgShape.msgShape).isRequired,
+    uid: PropTypes.string.isRequired,
+    ownersId: PropTypes.string.isRequired,
+    itemId: PropTypes.string.isRequired,
+    showThisMessage: PropTypes.func.isRequired,
+    getMyMessages: PropTypes.func.isRequired,
+  }
 
   state = {
     newMsg: defaultNewMsg,
@@ -46,6 +48,7 @@ class MessageCard extends React.Component {
       ownersId: this.props.ownersId,
       itemId: this.props.itemId,
     });
+    this.markAsRead();
   }
 
   makeMsg = (e) => {
@@ -71,6 +74,17 @@ class MessageCard extends React.Component {
     this.setState({ newMsg: defaultNewMsg });
   };
 
+  markAsRead = () => {
+    const wholeConvo = this.props.conversation;
+    wholeConvo.forEach((msg) => {
+      if (msg.unread === true) {
+        messagesData.markAsRead(msg.id, false)
+          .then()
+          .catch(err => console.error('still marked as unread', err));
+      }
+    });
+  };
+
   render() {
     const {
       conversation,
@@ -89,11 +103,12 @@ class MessageCard extends React.Component {
     ));
 
     return (
-      <div className="MyMessages">
+      <div className="MessageCard">
         <div className="msgHeaderCompDiv">
           <MessageHeader
             key={`messageHeader${ownersId}`}
             ownersId={ownersId}
+            showThisMessage={this.props.showThisMessage}
           />
           {itemId !== ''
             ? <MessagesAbout

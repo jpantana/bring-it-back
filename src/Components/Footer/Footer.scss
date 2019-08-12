@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+
+.footer{
+  font-family: $font1;
+  color: $shadow;
+  padding: 10px;
+  width: 100%;
+  margin: auto;
+  font-size: 13px;
+  .footerLink {
+    text-decoration: none;
+    font-size: 13px;
+    margin-top: 40% !important;
+    font-family: $font1;
+    color: $shadow;
+    padding-left: 5px;
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
+  .nameFooter {
+    font-size: 13px;
+    color: $shadow;
+  }
+}

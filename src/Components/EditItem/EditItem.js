@@ -236,7 +236,7 @@ class EditItem extends React.Component {
               <div className="editItemPricesDiv">
                 <div className="form-group formGroupItem">
                   <label className="itemPriceperhour" htmlFor="edit.priceperhour">Price Per Hour</label>
-                  <span className="posDollarSpanHourEdit"><i class="fas fa-dollar-sign posDollarSignHourEdit"></i></span>
+                  <span className="posDollarSpanHourEdit"><i className="fas fa-dollar-sign posDollarSignHourEdit"></i></span>
                   <input
                     type="text"
                     className="form-control"
@@ -248,7 +248,7 @@ class EditItem extends React.Component {
                 </div>
                 <div className="form-group formGroupItem">
                   <label className="itemPriceperday" htmlFor="edit.priceperday">Price Per Day</label>
-                  <span className="posDollarSpanDayEdit"><i class="fas fa-dollar-sign posDollarSignDayEdit"></i></span>
+                  <span className="posDollarSpanDayEdit"><i className="fas fa-dollar-sign posDollarSignDayEdit"></i></span>
                   <input
                     type="text"
                     className="form-control"
