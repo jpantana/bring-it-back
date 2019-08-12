@@ -140,7 +140,7 @@
   justify-content: space-between;
   padding: 4px; 
   .availableIcon {
-    color: $orange;
+    color: $oranger;
     text-shadow: 1px 1px 3px $shadow;
   }
 }
@@ -155,7 +155,7 @@
     background-color: transparent !important;
     .msgIcon {
       font-size: 20px;
-      color: $mainBlue;
+      color: $secondBlue;
       text-shadow: 2px 1px 5px lightgrey;
       &:hover {
         cursor: pointer;

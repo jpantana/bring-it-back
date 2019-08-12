@@ -90,6 +90,10 @@
 .navDropDown {
   color: $orange;
   font-size: 20px;
+  &:hover {
+    transition: .4s;
+    color: $oranger;
+  }
 }
 
 #settingsDropDown {

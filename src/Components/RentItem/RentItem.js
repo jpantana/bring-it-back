@@ -165,17 +165,6 @@ class RentItem extends React.Component {
                     />
                   </div>
                 </div>
-
-                {/* <label htmlFor="howLong">How long do you need it?</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="howLong"
-                  aria-describedby="how long"
-                  placeholder="e.g. 26 hrs"
-                  defaultValue={0}
-                  onChange={this.rentThisLong}
-                /> */}
                 <p className="returnTime">{this.state.itemToRent.returnTime}</p>
               </div>
               <div className="editRentalInfoDiv">
@@ -192,7 +181,6 @@ class RentItem extends React.Component {
               </form>
             </ModalBody>
         </Modal>
-        {/* <img onClick={this.modalShowHide} className="cartIcon" src={cart} alt="cart icon"/> */}
         <i onClick={this.modalShowHide} className="fas fa-cart-plus cartIcon"></i>
       </div>
     );

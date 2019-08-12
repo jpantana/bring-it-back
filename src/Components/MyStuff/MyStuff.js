@@ -9,12 +9,13 @@ import AddNewItems from '../AddNewItems/AddNewItems';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import EditItem from '../EditItem/EditItem';
 import Footer from '../Footer/Footer';
+import usersData from '../../helpers/data/usersData';
 // STYLES
 import './MyStuff.scss';
 // PROPS
 // SVGs
 import addIcon from '../../SVGs/iconmonstr-plus-circle-thin.svg';
-import usersData from '../../helpers/data/usersData';
+import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 
 const defaultItemState = {
   name: '',
@@ -211,7 +212,9 @@ class MyStuff extends React.Component {
                   <h2 className="usernameMyStuff">Hi {this.state.userObj.firstname}!</h2>
                   <p>You have <span>{this.state.items.length}</span> items in your store up for rent.</p>
                 <div className="profileImgContainerDiv">
-                  <img className="mystuffProfilePic" src={this.state.userObj.profile} alt="user profile visual" />
+                  {this.state.userObj.profile !== ''
+                    ? <img className="mystuffProfilePic" src={this.state.userObj.profile} alt="user profile visual" />
+                    : <img src={userIcon} className="lgUserGenericProfile" alt="no user profile placeholder"/>}
                 </div>
                 <div className="stars">
                   <i className="fas fa-star"></i>

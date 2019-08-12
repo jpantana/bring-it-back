@@ -5,6 +5,8 @@ import usersData from '../../helpers/data/usersData';
 // STYLEs
 import './MessageHeader.scss';
 import 'animate.css';
+// SVGs
+import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 
 class MessageHeader extends React.Component {
   static propTypes = {
@@ -31,10 +33,10 @@ class MessageHeader extends React.Component {
       }).catch(err => console.error('no users in msg header', err));
   };
 
-  // hideThisMessage = (e) => {
-  //   e.preventDefault();
-  //   this.props.showThisMessage();
-  // };
+  hideThisMessage = (e) => {
+    e.preventDefault();
+    this.props.showThisMessage();
+  };
 
   render() {
     return (
@@ -42,7 +44,11 @@ class MessageHeader extends React.Component {
         {this.state.convoWith !== ''
           ? <div className="messageHeaderDiv">
             <div className="profilePicMsg">
-              <img className="profilePicImgMsg wow bounceIn" src={this.state.userProfPic} alt="conversation recipient profile" />
+            {this.state.userProfPic !== ''
+              ? <img className="profilePicImgMsg wow bounceIn" src={this.state.userProfPic} alt="conversation recipient profile" />
+              : <img className="userIcon3" src={userIcon} alt="icon for a user"/>
+            }
+              {/* <img className="profilePicImgMsg wow bounceIn" src={this.state.userProfPic} alt="conversation recipient profile" /> */}
             </div>
             <p className="wow bounceIn msgWith">{this.state.convoWith}</p>
             {/* <p>{this.state.convoAbout}</p> */}

@@ -10,12 +10,14 @@ import msgShape from '../../helpers/propz/msgShape';
 // STYLEs
 import './MessageConversation.scss';
 import 'animate.css';
+// SVGs
+import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 
 class MessageConversation extends React.Component {
   static propTypes = {
     convo: PropTypes.arrayOf(msgShape.msgShape).isRequired,
-    // otherUsersId: PropTypes.arrayOf().isRequired,
-    // itemIds: PropTypes.arrayOf().isRequired,
+    otherUsersId: PropTypes.array.isRequired,
+    itemIds: PropTypes.array.isRequired,
     getMyMessages: PropTypes.func.isRequired,
   }
 
@@ -28,6 +30,7 @@ class MessageConversation extends React.Component {
     uid: '',
     itemname: '',
     isClicked: false,
+    hideSmallCard: false,
   }
 
   componentDidMount() {
@@ -62,30 +65,33 @@ class MessageConversation extends React.Component {
     if (e) {
       e.preventDefault();
     }
-    this.setState({ isClicked: !this.state.isClicked });
+    this.setState({ isClicked: !this.state.isClicked, hideSmallCard: !this.state.hideSmallCard });
   };
 
   render() {
     return (
       <div className="MessageInboxLine">
+        {this.state.hideSmallCard === true
+          ? ''
+          : <div onClick={this.showThisMessage} className="messageHeaderDivInbox">
+              <div className="inboxCardGuts">
+                <div className="profilePicMsgInbox">
+                  {this.state.userProfPic !== ''
+                    ? <img className="profilePicImgMsgInbox wow bounceIn" src={this.state.userProfPic} alt="conversation recipient profile" />
+                    : <img className="userIcon2" src={userIcon} alt="icon for a user"/>
+                  }
 
-        <div onClick={this.showThisMessage} className="messageHeaderDivInbox">
-          <div className="inboxCardGuts">
-            <div className="profilePicMsgInbox">
-              <img className="profilePicImgMsgInbox wow bounceIn" src={this.state.userProfPic} alt="conversation recipient profile" />
-            </div>
-            <div className="inboxItemDetails">
-              <p className="wow bounceIn msgWithInbox">{this.state.convoWith}</p>
-              <div className="aboutInboxDiv">
-                <p className="aboutInbox">About...</p>
-                <p className="msgIsAbtInbox" id={this.state.itemId} >{this.state.itemname}</p>
+                </div>
+                <div className="inboxItemDetails">
+                  <p className="wow bounceIn msgWithInbox">{this.state.convoWith}</p>
+                  <div className="aboutInboxDiv">
+                    <p className="aboutInbox">About...</p>
+                    <p className="msgIsAbtInbox" id={this.state.itemId} >{this.state.itemname}</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-
-
-        </div>
-
+        }
         <div>
           {this.state.isClicked === true
             ? <MessageCard

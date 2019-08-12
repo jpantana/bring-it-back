@@ -6,7 +6,6 @@
   justify-content: center;
   width: 100%;
   margin-top: 1.5em;
-  min-height: 30em;
   .msgHeaderCompDiv {
     margin: auto;
     width: 25em;
@@ -16,7 +15,9 @@
   }
   .msgTableDiv {
     margin: auto;
-    min-height: 17em;
+    min-height: 14em;
+    max-height: 17em;
+    overflow: scroll;
   }
   .Messages {
     display: flex;

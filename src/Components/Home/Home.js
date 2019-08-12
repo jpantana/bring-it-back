@@ -174,7 +174,7 @@ class Home extends React.Component {
           <button className="btn closeNoRentModalBtn">X</button>
         </Modal>
         <div className="form-group">
-          <div className="searchAndSort animated pulse">
+          <div className="searchAndSort">
             <SearchAndSort
               key={categoryName}
               categoryName={categoryName}

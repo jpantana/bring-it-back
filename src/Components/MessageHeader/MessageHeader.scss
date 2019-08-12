@@ -32,6 +32,10 @@
     margin: 5px;
     height: 40px;
   }
+  .userIcon3 {
+    height: 40px;
+    filter: invert(100%);
+  }
 }
 
 .noConvosYet {
@@ -39,7 +43,6 @@
   font-size: 19px;
   font-style: italic;
   color: $blackFont;
-  // text-shadow: 2px 1px 5px $softShadow;
   margin: auto;
   background-color: white;
 }
