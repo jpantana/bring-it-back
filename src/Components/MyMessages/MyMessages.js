@@ -71,6 +71,7 @@ class MyMessages extends React.Component {
               otherPerson.push(c.otheruserid);
             }
           });
+          // MAY NEED TO RETHINK THIS LINE BELOW AND ABOVE. RECIPS WILL BE BACKWARDS
           this.setState({ otherUsersId: Array.from(new Set(otherPerson)) });
           // now we have an array of objects that constitute our had conversations
           itemsData.getSingleItem(itm)

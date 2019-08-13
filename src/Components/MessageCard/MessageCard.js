@@ -37,9 +37,9 @@ class MessageCard extends React.Component {
     uid: '',
     ownersId: '',
     itemId: '',
-    message: '',
+    // message: '',
     conversation: [],
-    otherUsersId: [],
+    // otherUsersId: [],
     msgPostId: '',
   }
 

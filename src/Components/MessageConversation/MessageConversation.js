@@ -39,10 +39,12 @@ class MessageConversation extends React.Component {
   componentDidMount() {
     if (this.props.ownersId) {
       this.setState({
+        conversation: [],
         ownersId: this.props.ownersId,
         itemId: this.props.itemId,
         uid: firebase.auth().currentUser.uid,
         otherUsersId: this.props.ownersId,
+        // no
       });
       // look at the props of conversation on new message request
       // you need to request item for its name and username and profile pic from props.param
@@ -57,7 +59,7 @@ class MessageConversation extends React.Component {
         ownersId: this.props.otherUsersId[this.props.i],
       });
       this.conversationHeader(this.props.otherUsersId[this.props.i]);
-      this.showItemName(this.props.itemIds[this.props.i]);  
+      this.showItemName(this.props.itemIds[this.props.i]);
     }
   }
 
@@ -65,7 +67,27 @@ class MessageConversation extends React.Component {
     this.setState({ ownersId });
     usersData.getUsers(ownersId)
       .then((res) => {
-        this.setState({ convoWith: res[0].username, userProfPic: res[0].profile });
+        console.error(res.length < 1);
+        // if (res[0].username) {
+        itemsData.getSingleItem(this.state.itemId)
+        // we know that the itemId is the person that owns the id, but not that they are convo instigator or not
+        // convoWith is only 50% accurate
+          .then((resp) => {
+            usersData.getUsers(resp.data.ownerId)
+              .then((r) => {
+                if (r[0].uid === this.state.uid) {
+                  console.error('owner is uid');
+                }
+                console.error(r[0].uid, this.state.uid);
+                this.setState({ convoWith: r[0].username, userProfPic: r[0].profile });
+              }).catch(err => console.error('no user returned via item id', err));
+            this.setState({ });
+          }).catch(err => console.error('no item found', err));
+        // may have an issue not rightly identifying owner if uid is the owner
+        // }
+        // else {
+        //   this.setState({ convoWith: res[0].username, userProfPic: res[0].profile });
+        // }
       }).catch(err => console.error('no users in msg header', err));
   };
 
