@@ -23,7 +23,7 @@
       display: flex;
       flex-direction: column;
       .addNewSpan {
-        margin-right: 170px; // very important to small cards wrap
+        // margin-right: 170px; // used to be very important to small cards wrap
         margin-left: 9px;
         padding-left: 17px !important;
         text-align: center !important;
@@ -114,3 +114,50 @@
 
 
 
+@media (max-width: 1120px) {
+  .myStuffContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important; 
+  }
+
+  .profileDataDiv {
+    box-shadow: 4px 1px 8px $softShadow;
+    margin-top: 1em;
+    margin-right: 3em;
+    background: linear-gradient($upperNavWhite, $upperNav);
+    height: 18em;
+    width: 22em;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    border-radius: 5px 5px 0 0;
+    border: 1px solid $upperNav;
+    padding-bottom: 1em;
+    
+    .profileImgContainerDiv {
+      margin: auto;
+      width: 15em;
+      height: 15em;
+      .mystuffProfilePic {
+        width: 15em;
+        margin-top: -3em;
+      }
+    }
+  }
+  .usernameMyStuff {
+    width: 11em !important;
+    font-family: $font1;
+    color: $whiteFont;
+  }
+}
+
+// @media (max-width: 450px) {
+//   .usernameMyStuff {
+//     width: 18em;
+//   }
+//   .usernameMyStuff {
+//     width: 5em;
+//   }
+// }

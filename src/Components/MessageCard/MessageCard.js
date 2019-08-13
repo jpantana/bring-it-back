@@ -21,16 +21,6 @@ const defaultNewMsg = {
   unread: true,
 };
 
-const defaultConversation = [{
-  uid: '',
-  otheruserid: '',
-  timestamp: '',
-  message: '',
-  itemId: '',
-  unread: true,
-}];
-
-
 class MessageCard extends React.Component {
   static propTypes = {
     conversation: PropTypes.arrayOf(msgShape.msgShape),
@@ -48,7 +38,7 @@ class MessageCard extends React.Component {
     ownersId: '',
     itemId: '',
     message: '',
-    conversation: defaultConversation,
+    conversation: [],
     otherUsersId: [],
     msgPostId: '',
   }
@@ -87,11 +77,11 @@ class MessageCard extends React.Component {
   sendMessage = (e) => {
     e.preventDefault();
     const { newMsg } = this.state;
+    const tempItem = [...this.state.conversation];
+    tempItem.push(newMsg);
+    this.setState({ conversation: tempItem });
     messagesData.newMessage(newMsg)
       .then((res) => {
-        // if (this.props.conversation[0].itemId === '') {
-        //   this.props.hideThisCard();
-        // }
         this.setState({ msgPostId: res.data.name });
         this.props.getMyMessages(this.state.uid);
       })

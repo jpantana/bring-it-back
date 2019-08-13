@@ -92,8 +92,8 @@ class RentalCard extends React.Component {
         <div className="RentalCard card">
           <div className="card-body">
             <div className="rentalImgContainer">
-              {/* <img src={rental.imageUrl} alt={rental.name} className="card-img-top rentalImg" /> */}
-              <img src="https://via.placeholder.com/300x300" alt="placeholder img" />
+              <img src={rental.imageUrl} alt={rental.name} className="card-img-top rentalImg" />
+              {/* <img src="https://via.placeholder.com/300x300" alt="placeholder img" /> */}
             </div>
             <div className="cardDetails">
               <i onClick={this.showCardDetails} className="fas fa-ellipsis-h showDetailsBtn bounceIn"></i>

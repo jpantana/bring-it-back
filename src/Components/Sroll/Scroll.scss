@@ -38,3 +38,87 @@
     filter: invert(100%);
   }
 }
+
+@media (max-width: 950px) {
+  .scrollCardsRight {
+    height: 60px;
+    width: 40px;
+    position: absolute;
+    left: 95%;
+    top: 250px;
+    #arrow {
+      position: relative;
+      top: 23%;
+      right: -10%;
+      height: 35px;
+    }
+  }
+  
+  .scrollCardsLeft {
+    height: 60px;
+    width: 40px;
+    position: absolute;
+    right: 95%;
+    top: 250px;
+    #arrowLeft {
+      position: relative;
+      top: 23%;
+      right: 10%;
+      height: 35px;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .scrollCardsRight {
+    left: 94%;
+  }
+  .scrollCardsLeft {
+    right: 94%;
+  } 
+}
+
+@media (max-width: 690px) {
+  .scrollCardsRight {
+    left: 93%;
+  }
+  .scrollCardsLeft {
+    right: 93%;
+  } 
+}
+
+@media (max-width: 590px) {
+  .scrollCardsRight {
+    left: 92%;
+  }
+  .scrollCardsLeft {
+    right: 92%;
+  } 
+}
+
+@media (max-width: 490px) {
+  .scrollCardsRight {
+    left: 91%;
+  }
+  .scrollCardsLeft {
+    right: 91%;
+  } 
+}
+
+@media (max-width: 390px) {
+  .scrollCardsRight {
+    left: 90%;
+  }
+  .scrollCardsLeft {
+    right: 90%;
+  } 
+}
+
+@media (max-width: 320px) {
+  .scrollCardsRight {
+    left: 89%;
+  }
+  .scrollCardsLeft {
+    right: 89%;
+  } 
+}

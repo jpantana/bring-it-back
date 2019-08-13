@@ -20,13 +20,16 @@ class MyMessages extends React.Component {
     newConvo: false,
     ownersId: '',
     itemId: '',
+    // for message card depending on where it gets called from
+    isClicked: false,
+    hideSmallCard: false,
   }
 
   componentDidMount() {
     const uid = this.props.match.params.id;
     if (this.props.location.state) {
       const { ownersId, itemId } = this.props.location.state;
-      this.setState({ ownersId, itemId, newConvo: true });
+      this.setState({ ownersId, itemId });
     }
     this.setState({ uid });
     this.getMyMessages(uid);
@@ -86,6 +89,12 @@ class MyMessages extends React.Component {
     this.setState({ newConvo: false });
   };
 
+  showThisMessage = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    this.setState({ isClicked: !this.state.isClicked, hideSmallCard: !this.state.hideSmallCard });
+  };
 
   render() {
     const {
@@ -94,7 +103,31 @@ class MyMessages extends React.Component {
       conversations,
     } = this.state;
 
-    const singleMessage = conversations.map((convo, i) => (
+    // const singleMessage = conversations.map((convo, i) => (
+    //   <MessageConversation
+    //     key={`${i}.messageConversation`}
+    //     convo={convo}
+    //     itemIds={itemIds}
+    //     otherUsersId={otherUsersId}
+    //     getMyMessages={this.getMyMessages}
+    //     i={i}
+    //     // seeSingleMessage={this.seeSingleMessage}
+    //     showThisMessage={this.showThisMessage}
+    //     isClicked={this.state.isClicked}
+    //     hideSmallCard={this.state.hideSmallCard}
+    //   />
+    // ));
+
+    // const loadZLocs = load ? (
+    //   <ZomatoLocation
+    //   key={'zomato'}
+    //   zomatoLocations={zomatoLocs}
+    //   currentLocations={locations}
+    //   addZomatoLocation={this.addZomatoLocation} />) : (
+    //   <Spinner type="grow" className="zLocSpinner m-5" color="info" />);
+
+    const singleMessage = !this.props.location.state ? (
+      conversations.map((convo, i) => (
       <MessageConversation
         key={`${i}.messageConversation`}
         convo={convo}
@@ -102,9 +135,24 @@ class MyMessages extends React.Component {
         otherUsersId={otherUsersId}
         getMyMessages={this.getMyMessages}
         i={i}
-        seeSingleMessage={this.seeSingleMessage}
+        // seeSingleMessage={this.seeSingleMessage}
+        showThisMessage={this.showThisMessage}
+        isClicked={this.state.isClicked}
+        hideSmallCard={this.state.hideSmallCard}
       />
-    ));
+      )))
+      : (
+        <MessageConversation
+          key={`${otherUsersId}.messageConversation`}
+          itemIds={itemIds}
+          otherUsersId={otherUsersId}
+          getMyMessages={this.getMyMessages}
+          showThisMessage={this.showThisMessage}
+          isClicked={this.state.isClicked}
+          hideSmallCard={this.state.hideSmallCard}
+          itemId={this.state.itemId}
+          ownersId={this.state.ownersId}
+      />);
 
     return (
       <div className="MyMessages">
@@ -120,6 +168,9 @@ class MyMessages extends React.Component {
                 uid={this.state.uid}
                 getMyMessages={this.getMyMessages}
                 hideThisCard={this.hideThisCard}
+                isClicked={this.state.isClicked}
+                hideSmallCard={this.state.hideSmallCard}
+                showThisMessage={this.showThisMessage}
               />
             </div>
           : ''}

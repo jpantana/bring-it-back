@@ -19,6 +19,11 @@ class MessageConversation extends React.Component {
     otherUsersId: PropTypes.array.isRequired,
     itemIds: PropTypes.array.isRequired,
     getMyMessages: PropTypes.func.isRequired,
+    isClicked: PropTypes.bool.isRequired,
+    hideSmallCard: PropTypes.bool.isRequired,
+    showThisMessage: PropTypes.func.isRequired,
+    itemId: PropTypes.string,
+    ownersId: PropTypes.string,
   }
 
   state = {
@@ -29,20 +34,31 @@ class MessageConversation extends React.Component {
     userProfPic: '',
     uid: '',
     itemname: '',
-    isClicked: false,
-    hideSmallCard: false,
   }
 
   componentDidMount() {
-    this.setState({
-      conversation: this.props.convo,
-      uid: firebase.auth().currentUser.uid,
-      otherUsersId: this.props.otherUsersId,
-      itemId: this.props.itemIds[this.props.i],
-      ownersId: this.props.otherUsersId[this.props.i],
-    });
-    this.conversationHeader(this.props.otherUsersId[this.props.i]);
-    this.showItemName(this.props.itemIds[this.props.i]);
+    if (this.props.ownersId) {
+      this.setState({
+        ownersId: this.props.ownersId,
+        itemId: this.props.itemId,
+        uid: firebase.auth().currentUser.uid,
+        otherUsersId: this.props.ownersId,
+      });
+      // look at the props of conversation on new message request
+      // you need to request item for its name and username and profile pic from props.param
+      this.conversationHeader(this.props.ownersId);
+      this.showItemName(this.props.itemId);
+    } else {
+      this.setState({
+        conversation: this.props.convo,
+        uid: firebase.auth().currentUser.uid,
+        otherUsersId: this.props.otherUsersId,
+        itemId: this.props.itemIds[this.props.i],
+        ownersId: this.props.otherUsersId[this.props.i],
+      });
+      this.conversationHeader(this.props.otherUsersId[this.props.i]);
+      this.showItemName(this.props.itemIds[this.props.i]);  
+    }
   }
 
   conversationHeader = (ownersId) => {
@@ -61,19 +77,24 @@ class MessageConversation extends React.Component {
       .catch(err => console.error('no convo about item', err));
   };
 
-  showThisMessage = (e) => {
+  showWholeMessage = (e) => {
     if (e) {
       e.preventDefault();
     }
-    this.setState({ isClicked: !this.state.isClicked, hideSmallCard: !this.state.hideSmallCard });
+    this.props.showThisMessage();
+    // this.setState({ isClicked: !this.state.isClicked, hideSmallCard: !this.state.hideSmallCard });
   };
+
+  // getAdditionalInfoForNewConvo = () => {
+
+  // };
 
   render() {
     return (
       <div className="MessageInboxLine">
-        {this.state.hideSmallCard === true
+        {this.props.hideSmallCard === true
           ? ''
-          : <div onClick={this.showThisMessage} className="messageHeaderDivInbox">
+          : <div onClick={this.showWholeMessage} className="messageHeaderDivInbox">
               <div className="inboxCardGuts">
                 <div className="profilePicMsgInbox">
                   {this.state.userProfPic !== ''
@@ -93,7 +114,7 @@ class MessageConversation extends React.Component {
             </div>
         }
         <div>
-          {this.state.isClicked === true
+          {this.props.isClicked === true
             ? <MessageCard
                 key={`convoWith.${this.state.ownersId}`}
                 id={`mcardid.${this.state.ownersId}`}
@@ -102,7 +123,10 @@ class MessageConversation extends React.Component {
                 ownersId={this.state.ownersId}
                 uid={this.state.uid}
                 getMyMessages={this.props.getMyMessages}
-                showThisMessage={this.showThisMessage}
+                showThisMessage={this.props.showThisMessage}
+                sendNewMessage={this.sendNewMessage}
+                isClicked={this.props.isClicked}
+                hideSmallCard={this.props.hideSmallCard}
               />
             : ''}
         </div>
