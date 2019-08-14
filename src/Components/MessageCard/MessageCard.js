@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 // JSs
@@ -8,7 +8,7 @@ import messagesData from '../../helpers/data/messagesData';
 import MessagesAbout from '../MessagesAbout/MessagesAbout';
 import MessageRow from '../MessageRow/MessageRow';
 import MessageHeader from '../MessageHeader/MessageHeader';
-// import msgShape from '../../helpers/propz/msgShape';
+import msgShape from '../../helpers/propz/msgShape';
 // STYLEs
 import './MessageCard.scss';
 
@@ -23,18 +23,18 @@ const defaultNewMsg = {
 };
 
 class MessageCard extends React.Component {
-  // static propTypes = {
-  //   conversation: PropTypes.arrayOf(msgShape.msgShape),
-  //   uid: PropTypes.string.isRequired,
-  //   ownersId: PropTypes.string.isRequired,
-  //   itemId: PropTypes.string.isRequired,
-  //   showThisMessage: PropTypes.func,
-  //   getMyMessages: PropTypes.func.isRequired,
-  //   hideThisCard: PropTypes.func,
-  //   itemOwnerId: PropTypes.string,
-  //   otherUsersId: PropTypes.string,
-  //   convoWith: PropTypes.string,
-  // }
+  static propTypes = {
+    conversation: PropTypes.arrayOf(msgShape.msgShape),
+    uid: PropTypes.string.isRequired,
+    ownersId: PropTypes.string,
+    itemId: PropTypes.string.isRequired,
+    showThisMessage: PropTypes.func,
+    getMyMessages: PropTypes.func.isRequired,
+    hideThisCard: PropTypes.func,
+    itemOwnerId: PropTypes.string,
+    otherUsersId: PropTypes.string,
+    convoWith: PropTypes.string,
+  }
 
   state = {
     newMsg: defaultNewMsg,
@@ -111,7 +111,6 @@ class MessageCard extends React.Component {
     this.setState({ newMsg: defaultNewMsg });
   };
 
-// NEEDS WORK 
   markAsRead = () => {
     const wholeConvo = this.props.conversation;
     if (wholeConvo !== undefined) {

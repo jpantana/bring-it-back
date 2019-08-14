@@ -17,12 +17,8 @@ import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 class MessageConversation extends React.Component {
   static propTypes = {
     convo: PropTypes.arrayOf(msgShape.msgShape),
-    // otherUsersId: PropTypes.array.isRequired,
-    itemIds: PropTypes.array.isRequired,
+    i: PropTypes.number,
     getMyMessages: PropTypes.func.isRequired,
-    isClicked: PropTypes.bool.isRequired,
-    hideSmallCard: PropTypes.bool.isRequired,
-    showThisMessage: PropTypes.func.isRequired,
     itemId: PropTypes.string,
     ownersId: PropTypes.string,
   }
@@ -35,6 +31,8 @@ class MessageConversation extends React.Component {
     userProfPic: '',
     uid: '',
     itemname: '',
+    hideSmallCard: false,
+    isClicked: false,
   }
 
   componentDidMount() {
@@ -49,33 +47,21 @@ class MessageConversation extends React.Component {
       this.conversationStarter(this.props.itemId);
       this.whoIsTheOtherUser(this.props.ownersId);
       }
-
     if (typeof(this.props.ownersId) === 'undefined') {
       const userid = firebase.auth().currentUser.uid;
-      const findWhoOwnsItem = [];
-      const findWhoIsOtherUser = [];
-      const findOutItemId = [];
-      this.props.convo.forEach((c) => {
-        findWhoOwnsItem.push(c.itemOwnerId);
-        findOutItemId.push(c.itemId);
-        if (userid === c.sender) {
-          findWhoIsOtherUser.push(c.otheruserid);
-        } else {
-          findWhoIsOtherUser.push(c.senderid);
-        }
-      });
-      const whoOwnsItem = Array.from(new Set(findWhoOwnsItem));
-      const whoIsOtherUser = Array.from(new Set(findWhoIsOtherUser));
-      const whatsIsItemId = Array.from(new Set(findOutItemId))
+      const { convo } = this.props;
+      const findOutItemId = convo[0].itemId;
+      const findWhoOwnsItem = convo[0].itemOwnerId;
+      const findWhoIsOtherUser = (convo[0].senderid !== userid ? convo[0].senderid : convo[0].receiverid);
       this.setState({
         uid: userid,
         conversation: this.props.convo,
-        otherUsersId: whoIsOtherUser[0],
-        itemId: whatsIsItemId[0],
-        itemOwnerId: whoOwnsItem[0],
+        otherUsersId: findWhoIsOtherUser,
+        itemId: findOutItemId,
+        itemOwnerId: findWhoOwnsItem,
       });
-      this.conversationStarter(whatsIsItemId[0]);
-      this.whoIsTheOtherUser(whoIsOtherUser[0]);
+      this.conversationStarter(findOutItemId);
+      this.whoIsTheOtherUser(findWhoIsOtherUser);
     }
   }
 
@@ -93,20 +79,19 @@ class MessageConversation extends React.Component {
       }).catch(err => console.error('no other user found', err));
   };
 
-  showWholeMessage = (e) => {
+  showThisMessage = (e) => {
     if (e) {
       e.preventDefault();
     }
-    this.props.showThisMessage();
-    // all cards share the state of hideSmallCard so they all hide and show based on a single click
+    this.setState({ isClicked: !this.state.isClicked, hideSmallCard: !this.state.hideSmallCard });
   };
 
   render() {
     return (
       <div className="MessageInboxLine">
-        {this.props.hideSmallCard === true
+        {this.state.hideSmallCard === true
           ? ''
-          : <div onClick={this.showWholeMessage} className="messageHeaderDivInbox">
+          : <div onClick={this.showThisMessage} className="messageHeaderDivInbox">
               <div className="inboxCardGuts">
                 <div className="profilePicMsgInbox">
                   {this.state.userProfPic !== ''
@@ -126,7 +111,7 @@ class MessageConversation extends React.Component {
             </div>
         }
         <div>
-          {this.props.isClicked === true
+          {this.state.isClicked === true
             ? <MessageCard
                 key={`convoWith.${this.state.itemId}`}
                 id={`mcardid.${this.state.itemId}`}
@@ -136,10 +121,11 @@ class MessageConversation extends React.Component {
                 otherUsersId={this.state.otherUsersId}
                 uid={this.state.uid}
                 getMyMessages={this.props.getMyMessages}
-                showThisMessage={this.props.showThisMessage}
-                isClicked={this.props.isClicked}
-                hideSmallCard={this.props.hideSmallCard}
+                showThisMessage={this.showThisMessage}
                 convoWith={this.state.convoWith}
+                isClicked={this.state.isClicked}
+                hideSmallCard={this.state.hideSmallCard}
+                ownersId={this.props.ownersId}
               />
             : ''}
         </div>

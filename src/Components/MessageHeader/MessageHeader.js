@@ -31,7 +31,6 @@ class MessageHeader extends React.Component {
     this.setState({ otherUser });
     usersData.getUsers(otherUser)
       .then((res) => {
-        console.error(res);
         this.setState({ convoWith: this.props.convoWith, userProfPic: res[0].profile });
       }).catch(err => console.error('no users in msg header', err));
   };

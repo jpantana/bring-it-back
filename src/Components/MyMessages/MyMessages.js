@@ -16,13 +16,8 @@ class MyMessages extends React.Component {
     itemIds: [],
     conversations: [],
     otherUsersId: '',
-    // the below if new message
-    // newConvo: false,
     ownersId: '',
     itemId: '',
-    // for message card depending on where it gets called from
-    isClicked: false,
-    hideSmallCard: false,
   }
 
   componentDidMount() {
@@ -55,12 +50,10 @@ class MyMessages extends React.Component {
           msgsItemIdsArr.push(m.itemId);
         });
         const uniqueItemIds = Array.from(new Set(msgsItemIdsArr));
-        this.setState({ itemIds: uniqueItemIds });
         const groupOfMsgs = [];
         this.state.itemIds.forEach((itm) => {
           const msgsGroupedByItemId = msgs.filter(m => m.itemId === itm);
           groupOfMsgs.push(msgsGroupedByItemId);
-          // will return as many arrays as IDS which may be fewer than inteneded conversations
           });
         const onlyTwoAtATime = [];
         msgs.forEach((m) => {
@@ -69,7 +62,6 @@ class MyMessages extends React.Component {
         });
         const userIdsInConversations = Array.from(new Set(onlyTwoAtATime));
         const removeUid = userIdsInConversations.filter(id => id !== this.state.uid);
-        // trying to build arrays of objects for both itemids and unique user ids
         const conversation = [];
         removeUid.forEach((unq) => {
           const uniqueUserConversations = [];
@@ -99,38 +91,6 @@ class MyMessages extends React.Component {
           }
         });
         this.setState({ conversations: wholeConversation });
-        console.error(wholeConversation, 'loop arr');
-
-        // now messages are sorted by unique user id
-        // const wholeConvos = [];
-        // uniqueItemIds.forEach((itmId) => {
-        //   const uniqueItms = [];
-        //   conversation.forEach((convo) => {
-        //     convo.forEach((c) => {
-        //       if (c.itemId === itmId) {
-        //       uniqueItms.push(c);
-        //       }
-        //     });
-        //     wholeConvos.push(uniqueItms);
-        //   });
-        //   this.setState({ something: wholeConvos });
-        // });
-
-
-        // uniqueItemIds.forEach((itemId) => {
-        //   const uniqueConversations = [];
-        //   removeUid.forEach((id) => {
-        //     const assembleConvos = [];
-        //     msgs.forEach((msg, i) => {
-        //       if (msg.senderid === id || msg.receiverid === id) {
-        //         assembleConvos.push(msg);
-        //         // has to be in this if that isolates the user id and not the item id
-        //       }
-        //     });
-        //     uniqueConversations.push(assembleConvos);
-        //     this.setState({ conversations: uniqueConversations });
-        //   });
-        // });
       })
       .catch(err => console.error('no group messages', err));
   };
@@ -139,44 +99,27 @@ class MyMessages extends React.Component {
     this.setState({ newConvo: false });
   };
 
-  showThisMessage = (e) => {
-    if (e) {
-      e.preventDefault();
-    }
-    this.setState({ isClicked: !this.state.isClicked, hideSmallCard: !this.state.hideSmallCard });
-  };
-
   render() {
     const {
-      itemIds,
       itemId,
       conversations,
     } = this.state;
-
-    const test = '';
 
     const singleMessage = !this.props.location.state ? (
       conversations.map((convo, i) => (
         <MessageConversation
           key={`${i}.messageConversation`}
           convo={convo}
-          itemIds={itemIds}
           i={i}
           getMyMessages={this.getMyMessages}
           showThisMessage={this.showThisMessage}
-          isClicked={this.state.isClicked}
-          hideSmallCard={this.state.hideSmallCard}
-          test={test}
         />
       )))
       : (
         <MessageConversation
           key={`${itemId}.messageConversation`}
-          itemIds={itemIds}
           getMyMessages={this.getMyMessages}
           showThisMessage={this.showThisMessage}
-          isClicked={this.state.isClicked}
-          hideSmallCard={this.state.hideSmallCard}
           itemId={itemId}
           ownersId={this.state.ownersId}
       />);
@@ -185,9 +128,6 @@ class MyMessages extends React.Component {
       <div className="MyMessages">
         <h4 id="welcomeBanner" className="welcomeMsgCenterBanner wow bounceIn fadeInRight">Welcome to your message center</h4>
           <div className="msgConvoDiv">
-          {/* {this.state.startingConvo === true
-            ? <p className="noConvosYet animated wow pulse">No conversations yet.</p>
-            : <div>{singleMessage}</div>} */}
             {singleMessage}
           </div>
         <div className="footerDiv">
