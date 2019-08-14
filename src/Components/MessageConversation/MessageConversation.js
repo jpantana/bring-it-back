@@ -13,10 +13,11 @@ import 'animate.css';
 // SVGs
 import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 
+
 class MessageConversation extends React.Component {
   static propTypes = {
-    convo: PropTypes.arrayOf(msgShape.msgShape).isRequired,
-    otherUsersId: PropTypes.array.isRequired,
+    convo: PropTypes.arrayOf(msgShape.msgShape),
+    // otherUsersId: PropTypes.array.isRequired,
     itemIds: PropTypes.array.isRequired,
     getMyMessages: PropTypes.func.isRequired,
     isClicked: PropTypes.bool.isRequired,
@@ -29,74 +30,67 @@ class MessageConversation extends React.Component {
   state = {
     convoWith: '',
     itemId: '',
-    otherUsersId: [],
-    ownersId: '',
+    otherUsersId: '',
+    itemOwnerId: '',
     userProfPic: '',
     uid: '',
     itemname: '',
   }
 
   componentDidMount() {
-    if (this.props.ownersId) {
+    if (typeof(this.props.ownersId) !== 'undefined') {
       this.setState({
         conversation: [],
-        ownersId: this.props.ownersId,
         itemId: this.props.itemId,
         uid: firebase.auth().currentUser.uid,
+        itemOwnerId: this.props.ownersId,
         otherUsersId: this.props.ownersId,
-        // no
       });
-      // look at the props of conversation on new message request
-      // you need to request item for its name and username and profile pic from props.param
-      this.conversationHeader(this.props.ownersId);
-      this.showItemName(this.props.itemId);
-    } else {
+      this.conversationStarter(this.props.itemId);
+      this.whoIsTheOtherUser(this.props.ownersId);
+      }
+
+    if (typeof(this.props.ownersId) === 'undefined') {
+      const userid = firebase.auth().currentUser.uid;
+      const findWhoOwnsItem = [];
+      const findWhoIsOtherUser = [];
+      const findOutItemId = [];
+      this.props.convo.forEach((c) => {
+        findWhoOwnsItem.push(c.itemOwnerId);
+        findOutItemId.push(c.itemId);
+        if (userid === c.sender) {
+          findWhoIsOtherUser.push(c.otheruserid);
+        } else {
+          findWhoIsOtherUser.push(c.senderid);
+        }
+      });
+      const whoOwnsItem = Array.from(new Set(findWhoOwnsItem));
+      const whoIsOtherUser = Array.from(new Set(findWhoIsOtherUser));
+      const whatsIsItemId = Array.from(new Set(findOutItemId))
       this.setState({
+        uid: userid,
         conversation: this.props.convo,
-        uid: firebase.auth().currentUser.uid,
-        otherUsersId: this.props.otherUsersId,
-        itemId: this.props.itemIds[this.props.i],
-        ownersId: this.props.otherUsersId[this.props.i],
+        otherUsersId: whoIsOtherUser[0],
+        itemId: whatsIsItemId[0],
+        itemOwnerId: whoOwnsItem[0],
       });
-      this.conversationHeader(this.props.otherUsersId[this.props.i]);
-      this.showItemName(this.props.itemIds[this.props.i]);
+      this.conversationStarter(whatsIsItemId[0]);
+      this.whoIsTheOtherUser(whoIsOtherUser[0]);
     }
   }
 
-  conversationHeader = (ownersId) => {
-    this.setState({ ownersId });
-    usersData.getUsers(ownersId)
-      .then((res) => {
-        console.error(res.length < 1);
-        // if (res[0].username) {
-        itemsData.getSingleItem(this.state.itemId)
-        // we know that the itemId is the person that owns the id, but not that they are convo instigator or not
-        // convoWith is only 50% accurate
-          .then((resp) => {
-            usersData.getUsers(resp.data.ownerId)
-              .then((r) => {
-                if (r[0].uid === this.state.uid) {
-                  console.error('owner is uid');
-                }
-                console.error(r[0].uid, this.state.uid);
-                this.setState({ convoWith: r[0].username, userProfPic: r[0].profile });
-              }).catch(err => console.error('no user returned via item id', err));
-            this.setState({ });
-          }).catch(err => console.error('no item found', err));
-        // may have an issue not rightly identifying owner if uid is the owner
-        // }
-        // else {
-        //   this.setState({ convoWith: res[0].username, userProfPic: res[0].profile });
-        // }
-      }).catch(err => console.error('no users in msg header', err));
+  conversationStarter = (itemId) => {
+    itemsData.getSingleItem(itemId)
+      .then((resp) => {
+          this.setState({ itemname: resp.data.name })
+    }).catch(err => console.error('no item found', err));
   };
 
-  showItemName = (itmId) => {
-    itemsData.getSingleItem(itmId)
+  whoIsTheOtherUser = (otherUserId) => {
+    usersData.getUsers(otherUserId)
       .then((res) => {
-        this.setState({ itemname: res.data.name });
-      })
-      .catch(err => console.error('no convo about item', err));
+        this.setState({ convoWith: res[0].username, userProfPic: res[0].profile });
+      }).catch(err => console.error('no other user found', err));
   };
 
   showWholeMessage = (e) => {
@@ -104,12 +98,8 @@ class MessageConversation extends React.Component {
       e.preventDefault();
     }
     this.props.showThisMessage();
-    // this.setState({ isClicked: !this.state.isClicked, hideSmallCard: !this.state.hideSmallCard });
+    // all cards share the state of hideSmallCard so they all hide and show based on a single click
   };
-
-  // getAdditionalInfoForNewConvo = () => {
-
-  // };
 
   render() {
     return (
@@ -138,17 +128,18 @@ class MessageConversation extends React.Component {
         <div>
           {this.props.isClicked === true
             ? <MessageCard
-                key={`convoWith.${this.state.ownersId}`}
-                id={`mcardid.${this.state.ownersId}`}
+                key={`convoWith.${this.state.itemId}`}
+                id={`mcardid.${this.state.itemId}`}
                 conversation={this.state.conversation}
                 itemId={this.state.itemId}
-                ownersId={this.state.ownersId}
+                itemOwnerId={this.state.itemOwnerId}
+                otherUsersId={this.state.otherUsersId}
                 uid={this.state.uid}
                 getMyMessages={this.props.getMyMessages}
                 showThisMessage={this.props.showThisMessage}
-                sendNewMessage={this.sendNewMessage}
                 isClicked={this.props.isClicked}
                 hideSmallCard={this.props.hideSmallCard}
+                convoWith={this.state.convoWith}
               />
             : ''}
         </div>

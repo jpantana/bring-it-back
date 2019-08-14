@@ -11,25 +11,28 @@ import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 class MessageHeader extends React.Component {
   static propTypes = {
     showThisMessage: PropTypes.func,
+    convoWith: PropTypes.string,
+    otherUser: PropTypes.string,
   }
 
   state = {
     convoWith: '',
     ownersId: '',
-    // convoAbout: '',
+    otherUser: '',
     userProfPic: '',
   }
 
   componentDidMount() {
-    this.setState({ ownersId: this.props.ownersId });
-    this.conversationHeader(this.props.ownersId);
+    this.setState({ otherUser: this.props.otherUser });
+    this.conversationHeader(this.props.otherUser);
   }
 
-  conversationHeader = (ownersId) => {
-    this.setState({ ownersId });
-    usersData.getUsers(ownersId)
+  conversationHeader = (otherUser) => {
+    this.setState({ otherUser });
+    usersData.getUsers(otherUser)
       .then((res) => {
-        this.setState({ convoWith: res[0].username, userProfPic: res[0].profile });
+        console.error(res);
+        this.setState({ convoWith: this.props.convoWith, userProfPic: res[0].profile });
       }).catch(err => console.error('no users in msg header', err));
   };
 
@@ -53,7 +56,7 @@ class MessageHeader extends React.Component {
             <p className="wow bounceIn msgWith">{this.state.convoWith}</p>
             {/* <p>{this.state.convoAbout}</p> */}
           </div>
-          : <p className="noConvosYet">You haven't started any conversations.</p>}
+          : <p className="startAConversation">break the ice with {this.props.convoWith}!</p>}
       </div>
     );
   }

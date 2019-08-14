@@ -16,6 +16,16 @@
   }
   .msgConvoDiv {
     margin: auto;
+    .noConvosYet {
+      margin: auto;
+      color: $secondBlue;
+      width: 10.4em;
+      font-family: $font1;
+      font-weight: 600;
+      font-size: 20px;
+      margin-top: 35px;
+      border-bottom: 8px solid $mainBlue;
+    }
   }
 }
 

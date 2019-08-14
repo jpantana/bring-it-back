@@ -111,7 +111,7 @@ class MyNavbar extends React.Component {
   getNotifications = (uid) => {
     messagesData.getReceivedMessages()
       .then((res) => {
-        const msgReceived = res.filter(m => m.otheruserid === uid);
+        const msgReceived = res.filter(m => m.receiverid === uid);
         const msgsAreUnread = [];
         msgReceived.forEach((m) => {
           if (m.unread === true) {

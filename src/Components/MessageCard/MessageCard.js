@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 // JSs
@@ -8,54 +8,70 @@ import messagesData from '../../helpers/data/messagesData';
 import MessagesAbout from '../MessagesAbout/MessagesAbout';
 import MessageRow from '../MessageRow/MessageRow';
 import MessageHeader from '../MessageHeader/MessageHeader';
-import msgShape from '../../helpers/propz/msgShape';
+// import msgShape from '../../helpers/propz/msgShape';
 // STYLEs
 import './MessageCard.scss';
 
 const defaultNewMsg = {
-  uid: '',
-  otheruserid: '',
+  senderid: '',
+  receiverid: '',
   timestamp: '',
   message: '',
   itemId: '',
+  itemOwnerId: '',
   unread: true,
 };
 
 class MessageCard extends React.Component {
-  static propTypes = {
-    conversation: PropTypes.arrayOf(msgShape.msgShape),
-    uid: PropTypes.string.isRequired,
-    ownersId: PropTypes.string.isRequired,
-    itemId: PropTypes.string.isRequired,
-    showThisMessage: PropTypes.func,
-    getMyMessages: PropTypes.func.isRequired,
-    hideThisCard: PropTypes.func,
-  }
+  // static propTypes = {
+  //   conversation: PropTypes.arrayOf(msgShape.msgShape),
+  //   uid: PropTypes.string.isRequired,
+  //   ownersId: PropTypes.string.isRequired,
+  //   itemId: PropTypes.string.isRequired,
+  //   showThisMessage: PropTypes.func,
+  //   getMyMessages: PropTypes.func.isRequired,
+  //   hideThisCard: PropTypes.func,
+  //   itemOwnerId: PropTypes.string,
+  //   otherUsersId: PropTypes.string,
+  //   convoWith: PropTypes.string,
+  // }
 
   state = {
     newMsg: defaultNewMsg,
     uid: '',
     ownersId: '',
     itemId: '',
-    // message: '',
     conversation: [],
-    // otherUsersId: [],
     msgPostId: '',
+    otherUser: '',
   }
 
   componentDidMount() {
-    if (this.props.conversation === undefined) {
+    if (this.props.conversation.length < 1) {
       this.setState({
-        conversation: [1],
         uid: firebase.auth().currentUser.uid,
         ownersId: this.props.ownersId,
         itemId: this.props.itemId,
       });
     } else {
+      const findOtherUser= [];
+      const findItemOwner = [];
+      const useruid = firebase.auth().currentUser.uid;
+      this.props.conversation.forEach((c) => {
+        findItemOwner.push(c.itemOwnerId);
+        if (c.senderid === useruid) {
+          findOtherUser.push(c.receiverid);
+        } else if (c.receiverid === useruid) {
+          findOtherUser.push(c.senderid);
+        }
+      });
+      const otherUser = Array.from(new Set(findOtherUser));
+      const itemOwner = Array.from(new Set(findItemOwner));
       this.setState({
-        conversation: this.props.conversation,
         uid: firebase.auth().currentUser.uid,
-        ownersId: this.props.ownersId,
+        conversation: this.props.conversation,
+        otherUser: otherUser[0],
+        ownersId: itemOwner[0],
         itemId: this.props.itemId,
       });
     }
@@ -63,13 +79,19 @@ class MessageCard extends React.Component {
   }
 
   makeMsg = (e) => {
+    if (typeof(this.props.otherUsersId) !== 'undefined') {
+      this.setState({ receiver: this.props.otherUsersId });
+    } else {
+      this.setState({ receiver: this.state.otherUser });
+    }
     const buildNewMsg = {
-      uid: this.state.uid,
+      senderid: this.state.uid,
       message: e.target.value,
-      otheruserid: this.state.ownersId,
+      receiverid: this.state.receiver,
       timestamp: moment().format('x'),
       itemId: this.state.itemId,
       unread: true,
+      itemOwnerId: this.props.itemOwnerId,
     };
     this.setState({ newMsg: buildNewMsg });
   };
@@ -89,6 +111,7 @@ class MessageCard extends React.Component {
     this.setState({ newMsg: defaultNewMsg });
   };
 
+// NEEDS WORK 
   markAsRead = () => {
     const wholeConvo = this.props.conversation;
     if (wholeConvo !== undefined) {
@@ -109,6 +132,7 @@ class MessageCard extends React.Component {
       uid,
       itemId,
       newMsg,
+      otherUser,
     } = this.state;
 
     const myConversations = conversation.map((convo, i) => (
@@ -124,8 +148,9 @@ class MessageCard extends React.Component {
         <div className="msgHeaderCompDiv">
           <MessageHeader
             key={`messageHeader${ownersId}`}
-            ownersId={ownersId}
+            otherUser={otherUser}
             showThisMessage={this.props.showThisMessage}
+            convoWith={this.props.convoWith}
           />
           {itemId !== ''
             ? <MessagesAbout

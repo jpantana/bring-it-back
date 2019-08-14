@@ -12,14 +12,14 @@ class MessageRow extends React.Component {
     uid: PropTypes.string.isRequired,
   }
 
-  componentDidMount() {
-    if (this.props.uid === this.props.convo.uid) {
-      this.setState({ received: !this.state.received });
-    }
-  }
-
   state = {
     received: false,
+  }
+
+  componentDidMount() {
+    if (this.props.uid === this.props.convo.senderid) {
+      this.setState({ received: !this.state.received });
+    }
   }
 
   render() {
