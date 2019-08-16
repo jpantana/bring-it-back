@@ -31,3 +31,8 @@
   color: $blackFont;
 }
 
+@media (max-width: 550px) {
+  .MessageRow {
+    width: auto;
+  }
+}

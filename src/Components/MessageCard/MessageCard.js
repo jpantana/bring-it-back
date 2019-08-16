@@ -126,7 +126,7 @@ class MessageCard extends React.Component {
     const wholeConvo = this.props.conversation;
     if (wholeConvo !== undefined) {
       wholeConvo.forEach((msg) => {
-        if (msg.unread === true) {
+        if (msg.unread === true && msg.senderid !== this.state.uid) {
           messagesData.markAsRead(msg.id, false)
             .then()
             .catch(err => console.error('still marked as unread', err));
@@ -138,7 +138,9 @@ class MessageCard extends React.Component {
   removedUnreadNotificatonInSmallCard = () => {
     messagesData.getSingleMessage(this.props.unreadMsgId)
       .then((res) => {
-        this.props.showButtonIfUnread(res.data);
+        const convoArr = [res.data];
+        console.error(convoArr, 'conv on card');
+        this.props.showButtonIfUnread(convoArr);
       })
       .catch(err => console.error('no single msg returned', err));
   };

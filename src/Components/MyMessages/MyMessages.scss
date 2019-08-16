@@ -17,7 +17,7 @@
   .msgConvoDiv {
     // border: 1px solid $softShadow;
     border-radius: 2px;
-    width: 28em;
+    width: auto;
     margin: auto;
     margin-top: 1em;
     padding: 15px;
@@ -31,5 +31,18 @@
       margin-top: 35px;
       border-bottom: 8px solid $mainBlue;
     }
+  }
+}
+
+@media (max-width: 550px) {
+  .MyMessages {
+    width: auto !important;
+    margin: auto !important;
+    margin-left: 10px !important;
+  }
+  .welcomeMsgCenterBanner {
+    width: 11.5em !important;
+    margin: auto !important;
+    margin-left: 15px !important;
   }
 }

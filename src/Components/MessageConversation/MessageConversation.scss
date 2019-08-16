@@ -19,9 +19,9 @@
     }
     .blueButtonForUnread {
       color: $mainBlue;
-      margin-top: 15px;
-      position: absolute;
-      left: 64%;
+      position: relative;
+      top: -2.8em;
+      left: 55%;
       &:hover {
         color: $orange;
         transition: .4s;
@@ -84,4 +84,26 @@
 
 .userIcon2 {
   height: 40px;
+}
+
+@media (max-width: 550px) {
+  .messageHeaderDivInbox {
+    width: 18em !important;
+  }
+  // .profilePicMsgInbox {
+  //   max-height: 40px;
+  //   max-width: 40px;
+  //   border-radius: 50px;
+  //   overflow: hidden;
+  //   box-shadow: -2px 1px 9px $shadow;
+  //   margin-left: 10px;
+  // }
+  .inboxItemDetails {
+    .msgWithInbox {
+      margin-right: -10px !important;
+    }
+  }
+  .aboutInboxDiv {
+    margin-right: -2em !important;
+  }
 }

@@ -208,7 +208,7 @@ class MyNavbar extends React.Component {
           </div>
         </div>
         <Navbar className="navBar" expand="md">
-          <NavbarToggler onClick={this.toggle} />
+          <NavbarToggler onClick={this.toggle} className="bounceIn wow" />
           <Collapse isOpen={this.state.isOpen} navbar>
             {buildNavbar()}
           </Collapse>

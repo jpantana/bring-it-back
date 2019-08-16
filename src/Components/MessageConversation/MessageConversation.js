@@ -91,11 +91,12 @@ class MessageConversation extends React.Component {
 
   showButtonIfUnread = (convo) => {
     convo.forEach((msg) => {
-      console.error(msg.id);
       if (msg.unread === true) {
-        console.error(msg, ' in the if');
         // only works, bc last msg will always be unread if any is
         this.setState({ isUnread: true, unreadMsgId: msg.id });
+      }
+      if (msg.unread === false) {
+        this.setState({ isUnread: false, unreadMsgId: msg.id });
       }
     });
   };
@@ -106,7 +107,6 @@ class MessageConversation extends React.Component {
         {this.state.hideSmallCard === true
           ? ''
           : <div onClick={this.showThisMessage} className="messageHeaderDivInbox">
-        {this.state.isUnread === true ? <span className="fa fa-circle animated pulse blueButtonForUnread"></span>: ''}
               <div className="inboxCardGuts">
                 <div className="profilePicMsgInbox">
                   {this.state.userProfPic !== ''
@@ -123,6 +123,9 @@ class MessageConversation extends React.Component {
                   </div>
                 </div>
               </div>
+              {this.state.isUnread === true
+                ? <span className="fa fa-circle animated pulse blueButtonForUnread"></span>
+                : ''}
             </div>
         }
         <div>

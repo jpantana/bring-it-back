@@ -15,7 +15,7 @@
   }
   .msgTableDiv {
     margin: auto;
-    min-height: 14em;
+    min-height: 13em;
     max-height: 17em;
     overflow: scroll;
   }
@@ -60,5 +60,21 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 550px) {
+  .MessageCard {
+    width: 22em;
+     .msgHeaderCompDiv {
+      margin: auto;
+      width: 100%;
+     }
+     .msgTableDiv {
+       width: 22em;
+     }
+     .msgInputDiv {
+        width: 22em !important;
+     }
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
-// import 'firebase/auth';
 import {
   Modal,
   ModalHeader,
@@ -17,6 +16,8 @@ import editIcon from '../../SVGs/iconmonstr-edit-10.svg';
 import cameraIcon from '../../SVGs/iconmonstr-photo-camera-thin.svg';
 // STYLEs
 import './UpdateUser.scss';
+// SVGs
+import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 
 const defaultUserState = {
   firstname: '',
@@ -46,10 +47,6 @@ class UpdateUser extends React.Component {
     hideInfoBlock: false,
     justSavePhoto: false,
   }
-
-  // getDesiredStateFromProps() {
-  //   console.error(this.props);
-  // }
 
   editUserinfo = (e) => {
     e.preventDefault();
@@ -170,12 +167,23 @@ class UpdateUser extends React.Component {
             <div>
                 {this.state.hideInfoBlock === false
                   ? <div className="hideBlockInfoDiv">
-                      <img className="userUpdateEditIcon" src={editIcon} alt="edit icon" onClick={this.editUserinfo} />
-                      <p className="updateUserUsername">{`${user.username}`}</p>
-                      <p className="updateUserFirstname">{`${user.firstname} ${user.lastname}`}</p>
-                      <p className="updateUserStreet">{`${user.street}`}</p>
-                      <p className="updateUserCity">{`${user.city}, ${user.state}`}</p>
-                    </div>
+                        <div className="updateProfModalDetsFlex">
+                          <div className="updateProPicContainer">
+                            {this.props.user.profile !== ''
+                              ? <img src={this.props.user.profile} className="userprofUpdateProf" alt="" />
+                              : <img src={userIcon} className="userIconUpdateProf" alt="stock user icon" />
+                              }
+                          </div>
+                          <div className="updateModalDetailItemsDiv">
+                            <p className="updateUserUsername">{`${user.username}`}</p>
+                            <p className="updateUserFirstname">{`${user.firstname} ${user.lastname}`}</p>
+                            <p className="updateUserStreet">{`${user.street}`}</p>
+                            <p className="updateUserCity">{`${user.city}, ${user.state}`}</p>
+                          </div>
+                      </div>
+                    <img className="userUpdateEditIcon" src={editIcon} alt="edit icon" onClick={this.editUserinfo} />
+                  </div>
+                      
                   : ''}
                   {(image !== '' && progress === 100
                     ? <div className="imgUploadDiv">
