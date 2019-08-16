@@ -13,12 +13,13 @@
 .myStuffContainer {
   width: 100%;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
+  flex-flow: row nowrap !important;
+  justify-content: center;
   .smallCardsDiv {
+    margin: auto;
     margin-left: 3em;
     margin-top: 1em;
-    width: 20em;
+    width: auto;
     display: flex;
     flex-flow: row wrap;
     .addNewWrapper {
@@ -61,8 +62,9 @@
     }
   }
   .SingleItemDiv {
-    margin-top: 1em;
-    margin-right: 3em;
+    width: 45em;
+    margin: auto;
+    margin-top: 1em !important;
     border: none !important;
   }
   .profileDataDiv {
@@ -121,7 +123,8 @@
     width: 100%;
     height: auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: column !important;
+    margin: auto !important;
     justify-content: center !important;
     .myStuffContainer {
       display: flex;
@@ -178,16 +181,88 @@
 }
 .SingleItemDiv {
     margin-top: 1em;
-    margin-right: 3em;
-    width: 90%;
+    margin: auto !important;
+    // margin-left: -3em !important;
+    width: auto; // 90%
     border: none !important;
-  }
+}
 
-// @media (max-width: 450px) {
-//   .usernameMyStuff {
-//     width: 18em;
-//   }
-//   .usernameMyStuff {
-//     width: 5em;
-//   }
-// }
+
+@media (max-width: 750px) {
+  .SingleItemDiv {
+    margin-top: 1em;
+    margin: auto !important;
+    width: 30em !important; // 90%
+  }
+}
+
+@media (max-width: 430px) {
+    .myStuffContainer {
+      width: auto !important;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center !important;
+      .myStuffContainer {
+        display: flex;
+        flex-direction: column !important;
+        align-self: center;
+        margin: auto !important;
+      }
+      .smallCardsDiv {
+        width: 20em !important;
+        height: 24em !important;
+        overflow: scroll;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center !important;
+        margin: auto !important;
+        padding-bottom: 1em;
+        border-bottom: .5px solid $softShadow;
+        .addNewWrapper {
+          display: flex;
+          flex-direction: column;
+          margin: auto !important;
+          justify-content: center !important;
+          width: 100% !important;
+          .addNewSpan {
+            margin: auto;
+            width: 100% !important;
+          }
+          .ItemsContainer {
+            width: auto !important;
+            .ItemsWrapper {
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+  .profileDataDiv {
+    margin-top: 1em;
+    margin: auto !important;
+    margin-top: 3em !important;
+    height: 18em;
+    width: 20em !important;
+    padding-bottom: 1em;
+    .profileImgContainerDiv {
+      margin: auto;
+      max-width: 18em;
+      max-height: 18em;
+      .mystuffProfilePic {
+        max-width: 18em;
+        margin-top: -3em;
+      }
+    }
+  }
+  .usernameMyStuff {
+    width: auto !important;
+    padding: 5px;
+  }
+  .SingleItemDiv {
+    margin: auto !important;
+    margin-top: 1em;
+    width: 20em !important;
+  }
+  // end media query
+}

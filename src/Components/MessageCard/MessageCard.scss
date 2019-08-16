@@ -78,3 +78,10 @@
      }
   }
 }
+
+@media (max-width: 413px) {
+  .MessageCard {
+    width: 22em;
+    margin-left: -1.2em;
+  }
+}

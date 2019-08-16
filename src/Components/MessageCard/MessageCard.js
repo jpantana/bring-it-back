@@ -139,7 +139,6 @@ class MessageCard extends React.Component {
     messagesData.getSingleMessage(this.props.unreadMsgId)
       .then((res) => {
         const convoArr = [res.data];
-        console.error(convoArr, 'conv on card');
         this.props.showButtonIfUnread(convoArr);
       })
       .catch(err => console.error('no single msg returned', err));

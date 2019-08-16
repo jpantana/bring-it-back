@@ -10,7 +10,6 @@
   box-shadow: 5px 1px 9px $shadow;
   border-radius: 5px 5px 0 0; 
   &:hover {
-    // transform: scale(1.03);
     box-shadow: -10px -4px 9px $shadow;
     transition: .4s;
   }
@@ -94,6 +93,7 @@
     }
   }
   .singleItemDiv {
+    width: 20em !important;
     padding: 5px;
     display: flex;
     flex-direction: column;
@@ -180,7 +180,106 @@
     border-bottom: 7px solid $relic;
   }
 }
-
 .mystuffMap {
   margin: auto;
 }
+
+@media (max-width: 750px) {
+  .SingleItem {
+    width: 30em !important;
+    margin: auto !important;
+    .cardHeader {
+      flex-direction: column !important;
+      width: 30em !important;
+      .full-card-title {
+        font-size: 25px !important;
+        height: 50px;
+        margin: auto;
+        margin-top: 5px !important;
+        }
+        .allCardIcons {
+        width: auto !important;
+        .conditionalIconSpan {
+          height: 20px;
+        }
+        .singleIcon {
+          margin: auto;
+        }
+      }
+    }
+    .mainCard {
+      display: flex;
+      flex-direction: column !important;
+      width: 30em !important;
+      .imgAndIsAvailWrapper {
+        width: 30em !important;
+        .imgDiv {
+          min-width: 29em !important;
+          max-width: 30em !important;
+          .SingleItemImg {
+            width: 29.9em !important;
+          }
+        }
+      }
+      .singleItemDiv {
+        margin: auto !important;
+        .mystuffMap {
+          .leafletMap {
+
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .SingleItem {
+    width: 20em !important;
+    // margin: auto !important;
+    .cardHeader {
+      flex-direction: column !important;
+      width: 20em !important;
+      .full-card-title {
+        font-size: 25px !important;
+        height: 50px;
+        margin: auto;
+        margin-top: 5px !important;
+        // margin-left: 0px !important;
+        }
+        .allCardIcons {
+        width: auto !important;
+        .conditionalIconSpan {
+          height: 20px;
+        }
+        .singleIcon {
+          margin: auto;
+        }
+      }
+    }
+    .mainCard {
+      display: flex;
+      flex-direction: column !important;
+      width: 20em !important;
+      .imgAndIsAvailWrapper {
+        width: 20em !important;
+        .imgDiv {
+          min-width: 19em !important;
+          max-width: 29em !important;
+          .SingleItemImg {
+            width: 19.9em !important;
+          }
+        }
+      }
+      .singleItemDiv {
+        margin: auto !important;
+        .mystuffMap {
+          .leafletMap {
+
+          }
+        }
+      }
+    }
+  }
+}
+

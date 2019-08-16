@@ -18,6 +18,7 @@ class MyMessages extends React.Component {
     otherUsersId: '',
     ownersId: '',
     itemId: '',
+    // cardIsDisplayed: false,
   }
 
   componentDidMount() {
@@ -95,9 +96,9 @@ class MyMessages extends React.Component {
       .catch(err => console.error('no group messages', err));
   };
 
-  hideThisCard = () => {
-    this.setState({ newConvo: false });
-  };
+  // hideAllSmallCards = () => {
+  //   this.setState({ cardIsDisplayed: !this.state.cardIsDisplayed });
+  // };
 
   render() {
     const {
@@ -113,6 +114,7 @@ class MyMessages extends React.Component {
           i={i}
           getMyMessages={this.getMyMessages}
           showThisMessage={this.showThisMessage}
+          // hideAllSmallCards={this.hideAllSmallCards}
         />
       )))
       : (
@@ -128,7 +130,10 @@ class MyMessages extends React.Component {
       <div className="MyMessages">
         <h4 id="welcomeBanner" className="welcomeMsgCenterBanner wow bounceIn fadeInRight">Welcome to your message center</h4>
           <div className="msgConvoDiv">
-            {singleMessage}
+            {/* {this.state.cardIsDisplayed === false
+              ? singleMessage
+              : ''} */}
+              {singleMessage}
           </div>
         <div className="footerDiv">
           <Footer key={'footer'} />

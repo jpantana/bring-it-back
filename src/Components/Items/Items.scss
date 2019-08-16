@@ -4,7 +4,6 @@
   display: flex;
   font-family: $font1;
   color: $blackFont;
-  // background-color: $upperNav !important;
   width: 11em !important;
   height: 8.5em;
   padding: 0;
@@ -55,5 +54,13 @@
         transition: .4s;
       }
     }
+  }
+}
+
+@media (max-width: 430px) {
+  .nameCard {
+    margin: auto !important;
+    margin-top: .5em !important;
+    margin-bottom: .5em !important;
   }
 }
