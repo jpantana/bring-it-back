@@ -15,25 +15,32 @@ import 'firebase/storage';
 // JSs
 import itemsData from '../../helpers/data/itemsData';
 // PROPs
-import itemShape from '../../helpers/propz/itemShape';
 import categoriesShape from '../../helpers/propz/categoriesShape';
 // STYLES
 import './AddNewItems.scss';
 // SVGs
 import cameraIcon from '../../SVGs/iconmonstr-photo-camera-thin.svg';
 
+const defaultItemState = {
+  name: '',
+  category: 'Category',
+  condition: '',
+  categoryId: '',
+  ownerId: '',
+  description: '',
+  imageUrl: 'https://via.placeholder.com/400x400',
+  isAvailable: true,
+  priceperday: '',
+  priceperhour: '',
+};
+
 class AddNewItems extends React.Component {
   static propTypes = {
     addNewItem: PropTypes.func.isRequired,
     getUserItems: PropTypes.func.isRequired,
     userid: PropTypes.string.isRequired,
-    newItem: itemShape.itemShape,
-    addNewItemForm: PropTypes.func.isRequired,
     categories: PropTypes.arrayOf(categoriesShape.categoriesShape).isRequired,
     showCategories: PropTypes.func.isRequired,
-    categoryIdStateChg: PropTypes.func.isRequired,
-    categoryId: PropTypes.string.isRequired,
-    newImageUrl: PropTypes.func.isRequired,
   }
 
   toggle = this.toggle.bind(this);
@@ -43,6 +50,8 @@ class AddNewItems extends React.Component {
     image: '',
     imageUrl: '',
     progress: 0,
+    newItem: defaultItemState,
+    categoryId: '',
   }
 
   toggle() {
@@ -53,35 +62,51 @@ class AddNewItems extends React.Component {
 
   postNewItem = (e) => {
     e.preventDefault();
-    const { getUserItems, addNewItem, categoryId } = this.props;
-    const saveNewItem = { ...this.props.newItem };
+    const { getUserItems, userid } = this.props;
+    const { categoryId } = this.state;
+    const saveNewItem = { ...this.state.newItem };
     saveNewItem.ownerId = firebase.auth().currentUser.uid;
     saveNewItem.categoryId = categoryId;
     itemsData.addNewItem(saveNewItem)
       .then(() => {
-        addNewItem(e);
-        getUserItems(this.props.userid);
+        getUserItems(userid);
       }).catch(err => console.error('item was not added', err));
   };
 
-  nameAdd = e => this.props.addNewItemForm('name', e);
+  addNewItemForm = (name, e) => {
+    const tempItem = { ...this.state.newItem };
+    tempItem[name] = e.target.value;
+    this.setState({ newItem: tempItem });
+  };
 
-  conditionAdd = e => this.props.addNewItemForm('condition', e);
+  newImageUrl = (url) => {
+    const oldState = { ...this.state };
+    oldState.newItem.imageUrl = url;
+    this.setState(oldState);
+  };
 
-  ownerIdAdd = e => this.props.addNewItemForm('ownerId', e);
+  categoryIdStateChg = (e) => {
+    this.setState({ categoryId: e.target.id });
+  };
 
-  descriptionAdd = e => this.props.addNewItemForm('description', e);
+  nameAdd = e => this.addNewItemForm('name', e);
 
-  isAvailableAdd = e => this.props.addNewItemForm('isAvailable', e);
+  conditionAdd = e => this.addNewItemForm('condition', e);
 
-  priceperdayAdd = e => this.props.addNewItemForm('priceperday', e);
+  ownerIdAdd = e => this.addNewItemForm('ownerId', e);
 
-  priceperhourAdd = e => this.props.addNewItemForm('priceperhour', e);
+  descriptionAdd = e => this.addNewItemForm('description', e);
+
+  isAvailableAdd = e => this.addNewItemForm('isAvailable', e);
+
+  priceperdayAdd = e => this.addNewItemForm('priceperday', e);
+
+  priceperhourAdd = e => this.addNewItemForm('priceperhour', e);
 
   addCategory = (e) => {
     e.preventDefault();
-    this.props.addNewItemForm('category', e);
-    this.props.categoryIdStateChg(e);
+    this.addNewItemForm('category', e);
+    this.categoryIdStateChg(e);
   };
 
   // Image Upload Section
@@ -95,14 +120,19 @@ class AddNewItems extends React.Component {
     firebase.storage().ref('images').child(filename).getDownloadURL()
       .then((url) => {
         this.setState({ imageUrl: url });
-        this.props.newImageUrl(url);
+        this.newImageUrl(url);
       })
       .catch(err => console.error('no image url', err));
   };
 
   render() {
-    const { image, progress, imageUrl } = this.state;
-    const { newItem, categories } = this.props;
+    const {
+      image,
+      progress,
+      imageUrl,
+      newItem,
+    } = this.state;
+    const { categories } = this.props;
     const catLoop = categories.map(category => (
       <DropdownItem
         key={`dropd.${category.id}`}
@@ -119,7 +149,7 @@ class AddNewItems extends React.Component {
           <ModalBody>
             <form>
               <div className="form-group">
-                <label htmlFor="itemName">Item Name</label>
+                <label className="itemNameModal" htmlFor="itemName">Item Name</label>
                 <input
                   type="text"
                   className="form-control"
@@ -145,7 +175,7 @@ class AddNewItems extends React.Component {
                 </Dropdown>
               </div>
               <div className="form-group">
-                <label htmlFor="itemDescription">A Brief Description</label>
+                <label className="itemDescriptionModal" htmlFor="itemDescription">A Brief Description</label>
                 <textarea
                   type="text"
                   className="form-control"
@@ -157,59 +187,67 @@ class AddNewItems extends React.Component {
               </div>
               <div className="form-group">
                 <div className="radioDiv">
-                  <h3>Condition</h3>
-                  <label htmlFor="Mint">Mint</label>
+                  <p className="conditionHeaderModal">Condition</p>
+                  <label className="mint" htmlFor="Mint">Mint</label>
                   <input name="radioBtn" type="radio" id="Mint" defaultValue="Mint" onClick={this.conditionAdd}/>
-                  <label htmlFor="Good">Good</label>
+                  <label className="good" htmlFor="Good">Good</label>
                   <input name="radioBtn" type="radio" id="Good" defaultValue="Good" onClick={this.conditionAdd}/>
-                  <label htmlFor="Fair">Fair</label>
+                  <label className="fair" htmlFor="Fair">Fair</label>
                   <input name="radioBtn" type="radio" id="Fair" defaultValue="Fair" onClick={this.conditionAdd}/>
-                  <label htmlFor="Relic">Relic</label>
+                  <label className="relic" htmlFor="Relic">Relic</label>
                   <input name="radioBtn" type="radio" id="Relic" defaultValue="Relic" onClick={this.conditionAdd}/>
                 </div>
               </div>
-              <div className="form-group">
-                <label><img src={cameraIcon} alt="camera icon" />Upload An Image
-                <FileUploader
-                    hidden
-                    accept='image/*'
-                    name='image'
-                    storageRef={firebase.storage().ref('images/')}
-                    onUploadStart={this.handleUploadStart}
-                    onUploadSuccess={this.handleUploadSuccess}
+              <div className="form-group editSeeImg">
+                <label className="imgEditLabel">
+                  <img className="cameraIcon" src={cameraIcon} alt="camera icon" />Upload An Image
+                    <FileUploader
+                        hidden
+                        accept='image/*'
+                        name='image'
+                        storageRef={firebase.storage().ref('images/')}
+                        onUploadStart={this.handleUploadStart}
+                        onUploadSuccess={this.handleUploadSuccess}
+                      />
+                </label>
+                 {(image !== '' && progress === 100
+                   ? <div className="thumbnailDiv">
+                      <img
+                        className="img-thumbnail imgThumbnail"
+                        src={imageUrl}
+                        alt="item to be rented" />
+                    </div> : '')}
+              </div>
+              <div className="addItemPricesDiv">
+                <div className="form-group formGroupItem">
+                  <label className="itemPriceperhour" htmlFor="itemPriceperhour">Price Per Hour</label>
+                  <span className="posDollarSpanHour"><i className="fas fa-dollar-sign posDollarSignHour"></i></span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="itemPriceperhour"
+                    placeholder=""
+                    defaultValue={newItem.priceperhour}
+                    onChange={this.priceperhourAdd}
                   />
-              </label>
-                 {(image !== '' && progress === 100 ? <div>
-                  <img
-                    className="img-thumbnail"
-                    src={imageUrl}
-                    alt="item to be rented" />
-                 </div> : '')}
+                </div>
+                <div className="form-group formGroupItem">
+                  <label className="itemPriceperday" htmlFor="itemPriceperday">Price Per Day</label>
+                  <span className="posDollarSpanDay"><i className="fas fa-dollar-sign posDollarSignDay"></i></span>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="itemPriceperday"
+                    placeholder=""
+                    defaultValue={newItem.priceperday}
+                    onChange={this.priceperdayAdd}
+                  />
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="itemPriceperhour">Price Per Hour</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="itemPriceperhour"
-                  placeholder="$"
-                  defaultValue={newItem.priceperhour}
-                  onChange={this.priceperhourAdd}
-                />
+              <div className="updateModalBtnsDiv">
+                <button type="submit" className="btn updateItemBtn" onClick={this.postNewItem}>Add It</button>
+                <button type="submit" className="btn cancelUpdateBtn" onClick={this.props.addNewItem}>Cancel</button>
               </div>
-              <div className="form-group">
-                <label htmlFor="itemPriceperday">Price Per Day</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="itemPriceperday"
-                  placeholder="$"
-                  defaultValue={newItem.priceperday}
-                  onChange={this.priceperdayAdd}
-                />
-              </div>
-              <button type="submit" className="btn btn-primary" onClick={this.postNewItem}>Add It</button>
-              <button type="submit" className="btn btn-danger" onClick={this.props.addNewItem}>Cancel</button>
             </form>
           </ModalBody>
         </div>

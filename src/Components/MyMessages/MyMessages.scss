@@ -1,1 +1,63 @@
 @import '../../styles/variables.scss';
+
+.MyMessages {
+  margin-top: 1em;
+  min-height: 100%;
+  .welcomeMsgCenterBanner {
+    font-family: $font1;
+    font-size: 30px;
+    padding: 10px;
+    color: $whiteFont;
+    background-color: $orange;
+    border-radius: 10px;
+    width: 18em;
+    margin: auto;
+    text-align: center;
+  }
+  .msgConvoDiv {
+    // border: 1px solid $softShadow;
+    border-radius: 2px;
+    width: auto;
+    margin: auto;
+    margin-top: 1em;
+    padding: 15px;
+    .noConvosYet {
+      margin: auto;
+      color: $secondBlue;
+      width: 10.4em;
+      font-family: $font1;
+      font-weight: 600;
+      font-size: 20px;
+      margin-top: 35px;
+      border-bottom: 8px solid $mainBlue;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .MyMessages {
+    width: auto !important;
+    margin: auto !important;
+    margin-left: 0px !important;
+  }
+  .welcomeMsgCenterBanner {
+    width: 11.5em !important;
+    margin: auto !important;
+    margin-left: -5px !important;
+  }
+  .msgConvoDiv {
+    padding: 0 !important;
+    margin: 0 !important;
+    margin-left: 10px !important;
+    width: auto !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .MyMessages {
+    margin-left: 7px !important;
+  }
+  .welcomeMsgCenterBanner {
+    margin-left: -7px !important;
+  }
+}

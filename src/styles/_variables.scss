@@ -1,8 +1,12 @@
-$upperNav: rgb(233, 233, 233);
+$upperNavWhite: rgb(255, 255, 255);
+$upperNav: rgb(240, 240, 240);
 
-$mainBlue: rgb(95, 145, 217);
+$mainBlue: #5f91d9;
+$secondBlue: rgb(81, 135, 211);
 
 $shadow: rgb(160, 160, 160);
+$softShadow: rgb(206, 204, 204);
+$softerShadow: rgb(223, 219, 219);
 
 $blackFont: rgb(65,65,65);
 
@@ -13,10 +17,17 @@ $font1: Helvetica,Arial,sans-serif;
 
 $font2: 'Yellowtail', cursive;
 
-$orange: rgb(231, 141, 54);
+$orange: #e78d36;
+$oranger: rgb(253, 153, 59);
 
-$msgBackground1: rgba(95, 145, 217, .5);
-$msgBackground2: rgba(231, 141, 54, .5);
+$mint: rgb(96, 179, 96);
+$good: rgb(214, 224, 65);
+$fair: rgb(231, 141, 54);
+$relic: rgb(255, 38, 0);
+
+
+$msgBackground1: rgba(176, 206, 248, 0.5);
+$msgBackground2: rgba(247, 138, 37, 0.5);
 
 // font-family: 'Handlee', cursive;
 // font-family: 'Monoton', cursive;

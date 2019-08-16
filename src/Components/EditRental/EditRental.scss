@@ -1,7 +1,9 @@
 @import '../../styles/variables.scss';
 
 .EditRental {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .cartIcon {
@@ -39,5 +41,81 @@
   font-size: 14px;
   color: $orange;
   margin-top: 15px;
+}
 
+.hoursRoloDivEdit {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid $upperNav;
+  border-bottom: 1px solid $upperNav;
+  padding: 15px 0 15px 0;
+  .howManyHoursEdit {
+    font-family: $font1;
+    text-align: left;
+    font-size: 17px;
+    margin: auto;
+  }
+  .rolodexDivEdit {
+    width: 100px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: 40px;
+    background-color: $softShadow;
+    box-shadow: 4px 1px 9px $softShadow;
+  }
+}
+
+.editRentalInfoDiv {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  .pickupandreturnlocH3 {
+    font-family: $font1;
+    font-size: 18px;
+    color: $blackFont;
+    border-bottom: 1px solid $shadow;
+    padding-bottom: 8px;
+    width: 49%
+  }
+  .editRentalInfoP {
+    font-family: $font1;
+    margin: 3px;
+    width: 200px;
+    text-align: left;
+    color: $blackFont;
+  }
+}
+
+.editRentalModalBtnsDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+  .cancelUpdateBtn {
+    width: 100px;
+    margin-bottom: 15px !important;
+    margin-left: 15px;
+    color: $whiteFont !important;
+    background-color: $orange !important;
+    font-family: $font1 !important;
+    border: 1px solid $orange !important;
+    &:hover {
+      background-color: $whiteFont !important;
+      color: $orange !important;
+      transition: .4s;
+      border: 1px solid $orange !important;
+    } 
+  }
+  .editRentalItemBtn {
+    width: 100px;
+    margin-bottom: 15px !important;
+    color: $whiteFont !important;
+    background-color: $mainBlue !important;
+    font-family: $font1 !important;
+    border: 1px solid $mainBlue !important;
+    &:hover {
+      background-color: $whiteFont !important;
+      color: $mainBlue !important;
+      transition: .4s;
+    }
+  }
 }

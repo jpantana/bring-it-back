@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
-// import 'firebase/auth';
 import {
   Modal,
   ModalHeader,
@@ -17,6 +16,8 @@ import editIcon from '../../SVGs/iconmonstr-edit-10.svg';
 import cameraIcon from '../../SVGs/iconmonstr-photo-camera-thin.svg';
 // STYLEs
 import './UpdateUser.scss';
+// SVGs
+import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 
 const defaultUserState = {
   firstname: '',
@@ -46,10 +47,6 @@ class UpdateUser extends React.Component {
     hideInfoBlock: false,
     justSavePhoto: false,
   }
-
-  // getDesiredStateFromProps() {
-  //   console.error(this.props);
-  // }
 
   editUserinfo = (e) => {
     e.preventDefault();
@@ -148,12 +145,14 @@ class UpdateUser extends React.Component {
       progress,
     } = this.state;
     return (
-      <div>
+      <div className="UpdateUser">
         <Modal isOpen={this.props.modal} >
-          <ModalHeader>Update Your Profile</ModalHeader>
+          <ModalHeader className="updateModalHeader">Update Your User Profile</ModalHeader>
             <ModalBody>
-            <div>
-              <label><img src={cameraIcon} alt="camera icon" /> Upload a profile picture!
+            <div className="fileUploaderDiv">
+              <label className="fileUploader">
+                <img className="cameraIcon" src={cameraIcon} alt="camera icon" />
+                Upload a profile picture!
                 <FileUploader
                     hidden
                     accept='image/*'
@@ -167,25 +166,36 @@ class UpdateUser extends React.Component {
             </div>
             <div>
                 {this.state.hideInfoBlock === false
-                  ? <div>
-                      <img src={editIcon} alt="edit icon" onClick={this.editUserinfo} />
-                      <p>{`${user.firstname} ${user.lastname}`}</p>
-                      <p>{`${user.username}`}</p>
-                      <p>{`${user.street}`}</p>
-                      <p>{`${user.city}, ${user.city}`}</p>
-                    </div>
+                  ? <div className="hideBlockInfoDiv">
+                        <div className="updateProfModalDetsFlex">
+                          <div className="updateProPicContainer">
+                            {this.props.user.profile !== ''
+                              ? <img src={this.props.user.profile} className="userprofUpdateProf" alt="" />
+                              : <img src={userIcon} className="userIconUpdateProf" alt="stock user icon" />
+                              }
+                          </div>
+                          <div className="updateModalDetailItemsDiv">
+                            <p className="updateUserUsername">{`${user.username}`}</p>
+                            <p className="updateUserFirstname">{`${user.firstname} ${user.lastname}`}</p>
+                            <p className="updateUserStreet">{`${user.street}`}</p>
+                            <p className="updateUserCity">{`${user.city}, ${user.state}`}</p>
+                          </div>
+                      </div>
+                    <img className="userUpdateEditIcon" src={editIcon} alt="edit icon" onClick={this.editUserinfo} />
+                  </div>
+                      
                   : ''}
                   {(image !== '' && progress === 100
-                    ? <div>
+                    ? <div className="imgUploadDiv">
                         <img
-                          className="img-thumbnail"
+                          className="img-thumbnail imgInModal"
                           src={imageUrl}
                           alt="profile pic being uploaded" />
                       </div> : ''
                   )}
                   {(image !== '' && fillForm === false
-                    ? <div>
-                      <Button onClick={this.savePicOnly} >Save Profile Picture</Button>
+                    ? <div className="saveUpdateBtnDiv">
+                      <Button className="saveUpdateProfileBtn" onClick={this.savePicOnly} >Save Profile Picture</Button>
                     </div>
                     : ''
                   )}
@@ -193,11 +203,11 @@ class UpdateUser extends React.Component {
 
               {fillForm === true
                 ? <form>
-                    <div className="form-group">
-                      <label htmlFor="editfirstName">First Name</label>
+                    <div className="form-group updateProfForm">
+                      <label className="updateFirstNameLabel" htmlFor="editfirstName">First Name</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className="form-control updateFirstNameInput"
                         id="editfirstName"
                         aria-describedby="firstname"
                         placeholder="First Name"
@@ -206,10 +216,10 @@ class UpdateUser extends React.Component {
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="editlastname">Last Name</label>
+                      <label className="updateLastNameLabel" htmlFor="editlastname">Last Name</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className="form-control updateLastNameInput"
                         id="editlastname"
                         aria-describedby="lastname"
                         placeholder="Last Name"
@@ -218,10 +228,10 @@ class UpdateUser extends React.Component {
                       />
                     </div>
                     <div className="form-group">
-                    <label htmlFor="editlastName">Create A User Name</label>
+                    <label className="editUsernameLabel" htmlFor="edituserName">Create A User Name</label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control editUsername"
                       id="edituserName"
                       placeholder="user123"
                       defaultValue={editUser.username}
@@ -274,10 +284,14 @@ class UpdateUser extends React.Component {
                       onChange={this.zipcodeChange}
                     />
                   </div>
-                  <Button onClick={this.formEditSubmit} >Save Changes</Button>
+                  <div className="saveUpdateBtnDiv">
+                    <Button className="saveUpdateProfileBtn" onClick={this.formEditSubmit} >Update</Button>
+                  </div>
                 </form>
                 : '' }
-            <Button onClick={this.callOpenModal} >Cancel</Button>
+              <div className="canceBtnUpdateModalDiv">
+                <Button className="canceBtnUpdateModal" onClick={this.callOpenModal} >Cancel</Button>
+              </div>
             </ModalBody>
         </Modal>
       </div>

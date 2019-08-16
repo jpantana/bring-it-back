@@ -1,18 +1,21 @@
 import React from 'react';
 import { Modal } from 'reactstrap';
 // JSs
-import Leaflet from '../Leaflet/Leaflet';
+// import Leaflet from '../Leaflet/Leaflet';
 import SingleItem from '../SingleItem/SingleItem';
 import itemsData from '../../helpers/data/itemsData';
 import Items from '../Items/Items';
 import AddNewItems from '../AddNewItems/AddNewItems';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import EditItem from '../EditItem/EditItem';
+import Footer from '../Footer/Footer';
+import usersData from '../../helpers/data/usersData';
 // STYLES
 import './MyStuff.scss';
 // PROPS
 // SVGs
 import addIcon from '../../SVGs/iconmonstr-plus-circle-thin.svg';
+import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 
 const defaultItemState = {
   name: '',
@@ -21,58 +24,62 @@ const defaultItemState = {
   categoryId: '',
   ownerId: '',
   description: '',
-  imageUrl: 'https://via.placeholder.com/200x200',
+  imageUrl: 'https://via.placeholder.com/400x400',
   isAvailable: true,
   priceperday: '',
   priceperhour: '',
 };
 
+const defaultUserState = {
+  firstname: '',
+  lastname: '',
+  street: '',
+  city: '',
+  state: '',
+  zipcode: '',
+  uid: '',
+  username: '',
+  proifle: '',
+};
 class MyStuff extends React.Component {
   state = {
     items: [],
     itemId: '',
     isClicked: false,
     singleItem: defaultItemState,
-    newItem: defaultItemState,
     editItem: defaultItemState,
     isOpen: false,
     userid: '',
     categories: [],
-    categoryId: '',
+    editIsOpen: false,
+    itemDeleted: false,
+    userObj: defaultUserState,
   }
 
-  // CRUD ON ITEMS DATA
-  // callback function from Item that allows you to see a single item (sibling component to Item)
-  seeSingleItem = (item) => {
-    this.setState({ isClicked: true, singleItem: item }); // change to FALSE
-  };
-
-  // callback function that allows you to click single item card to hide it
-  unseeSingleItem = () => {
-    this.setState({ isClicked: false });
-  };
+  componentDidMount() {
+    const uid = this.props.match.params.id;
+    this.setState({ userid: uid });
+    this.getUserItems(uid);
+    this.showThisUsername(uid);
+  }
 
   getUserItems = (uid) => {
     itemsData.getItems(uid)
       .then((items) => {
-        this.setState({ items });
+        this.setState({ items, isOpen: false, editIsOpen: false });
       })
       .catch(err => console.error('no items to display', err));
   };
 
-  addNewItemForm = (name, e) => {
-    const tempItem = { ...this.state.newItem };
-    tempItem[name] = e.target.value;
-    this.setState({ newItem: tempItem });
+  seeSingleItem = (item) => {
+    this.setState({ isClicked: true, singleItem: item });
   };
 
-  editItemForm = (name, e) => {
-    const tempItem = { ...this.state.editItem };
-    tempItem[name] = e.target.value;
-    this.setState({ editItem: tempItem });
+  unseeSingleItem = () => {
+    this.setState({ isClicked: false });
   };
 
-  // callback function. opens and closes and clears modal
+  // open close add new modal
   addNewItem = (e) => {
     e.preventDefault();
     this.setState({
@@ -81,6 +88,7 @@ class MyStuff extends React.Component {
     });
   };
 
+  // open close edit item modal
   closeEditModal = (e) => {
     e.preventDefault();
     this.setState({
@@ -91,31 +99,18 @@ class MyStuff extends React.Component {
   };
 
   editItemEvent = (e) => {
-    e.preventDefault();
     const itm = e.target.id;
     const itemId = itm.split('.', 1)[0];
     itemsData.getSingleItem(itemId)
       .then((resp) => {
-        this.setState({ itemId, editItem: resp.data, editIsOpen: !this.state.editIsOpen });
+        this.setState({
+          isClicked: false,
+          itemId,
+          editItem: resp.data,
+          editIsOpen: !this.state.editIsOpen,
+        });
       })
       .catch();
-  };
-
-  updateImageUrl = (url) => {
-    const oldState = { ...this.state };
-    oldState.editItem.imageUrl = url;
-    this.setState(oldState);
-  };
-
-  newImageUrl = (url) => {
-    const oldState = { ...this.state };
-    oldState.newItem.imageUrl = url;
-    this.setState(oldState);
-  };
-
-  // CATEGORIES DATA SET
-  categoryIdStateChg = (e) => {
-    this.setState({ categoryId: e.target.id });
   };
 
   showCategories = () => {
@@ -134,12 +129,13 @@ class MyStuff extends React.Component {
       }).catch(err => console.error('item not deleted', err));
   };
 
-  componentDidMount() {
-    const uid = this.props.match.params.id;
-    this.setState({ userid: uid });
-    this.getUserItems(uid); // only shows your user's items
-  }
-
+  showThisUsername = (uid) => {
+    usersData.getUsers(uid)
+      .then((res) => {
+        this.setState({ userObj: res[0] });
+      })
+      .catch(err => console.error('no userstore on mystuff', err));
+  };
 
   render() {
     const {
@@ -148,6 +144,7 @@ class MyStuff extends React.Component {
       singleItem,
       itemId,
       userid,
+      categories,
     } = this.state;
     const makeItemCards = items.map(item => (
         <Items
@@ -162,115 +159,76 @@ class MyStuff extends React.Component {
     return (
       <div className="MyStuff">
                 <Modal isOpen={this.state.isOpen} >
-                  {<AddNewItems
-                    addNewItemForm={this.addNewItemForm}
-                    newItem={this.state.newItem}
-                    defaultItemState = {this.defaultItemState}
+                  <AddNewItems
+                    key={`addNewItem.${itemId}`}
                     addNewItem={this.addNewItem}
-                    userid={this.state.userid}
+                    userid={userid}
                     getUserItems={this.getUserItems}
                     showCategories={this.showCategories}
-                    categories={this.state.categories}
-                    categoryIdStateChg={this.categoryIdStateChg}
-                    categoryId={this.state.categoryId}
-                    newImageUrl={this.newImageUrl}
-                  />}
+                    categories={categories}
+                  />
                 </Modal>
                 <Modal isOpen={this.state.editIsOpen} >
-                <EditItem
-                  key={`editItem.${itemId}`}
-                  id={itemId}
-                  categories={this.state.categories}
-                  editItem={this.state.editItem}
-                  categoryIdStateChg={this.categoryIdStateChg}
-                  categoryId={this.state.categoryId}
-                  showCategories={this.showCategories}
-                  userid={this.state.userid}
-                  getUserItems={this.getUserItems}
-                  editItemForm={this.editItemForm}
-                  closeEditModal={this.closeEditModal}
-                  updateImageUrl={this.updateImageUrl}
-                />
+                  <EditItem
+                    key={`editItem.${itemId}`}
+                    id={itemId}
+                    categories={this.state.categories}
+                    showCategories={this.showCategories}
+                    userid={this.state.userid}
+                    getUserItems={this.getUserItems}
+                    closeEditModal={this.closeEditModal}
+                    editItem={this.state.editItem}
+                  />
                 </Modal>
-        <div className="myStuffWrapper">
-          <div className="">
-            <span className="addNewSpan" onClick={this.addNewItem}>
-              Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
-            </span>
-            { makeItemCards }
+        <div className="myStuffContainer">
+
+          <div className="smallCardsDiv">
+            <div className="addNewWrapper">
+              <span className="addNewSpan wow bounceIn fadeInLeft" onClick={this.addNewItem}>
+                Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
+              </span>
+
+              <div className="ItemsContainer">
+                <div className="ItemsWrapper">
+                  { makeItemCards }
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="col col-6">
-            { (isClicked === true ? <SingleItem
-              key={`single.${singleItem.id}`}
-              singleItem={singleItem}
-              isClicked={isClicked}
-              unseeSingleItem={this.unseeSingleItem}
-              deleteItemEvent={this.deleteItemEvent}
-              editItemEvent={this.editItemEvent}
-            /> : '') }
+            { (isClicked === true
+              ? <div className="SingleItemDiv card wow bounceIn fadeInRight">
+                <SingleItem
+                key={`single.${singleItem.id}`}
+                userid={userid}
+                singleItem={singleItem}
+                isClicked={isClicked}
+                unseeSingleItem={this.unseeSingleItem}
+                deleteItemEvent={this.deleteItemEvent}
+                editItemEvent={this.editItemEvent}
+                />
+                </div>
+              : <div className="profileDataDiv wow bounceIn fadeInRight">
+                  <h2 className="usernameMyStuff">Hi {this.state.userObj.firstname}!</h2>
+                  <p>You have <span>{this.state.items.length}</span> items in your store up for rent.</p>
+                <div className="profileImgContainerDiv">
+                  {this.state.userObj.profile !== ''
+                    ? <img className="mystuffProfilePic" src={this.state.userObj.profile} alt="user profile visual" />
+                    : <img src={userIcon} className="lgUserGenericProfile" alt="no user profile placeholder"/>}
+                </div>
+                <div className="stars">
+                  <i className="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
+                </div>
+              </div>) }
+          </div>
+          <div className="footerDiv">
+            <Footer key={'footer'} />
           </div>
         </div>
-
-        <div className="mystuffMap">
-          <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
-        </div>
-        <div className="MyStuff">
-          <Modal isOpen={this.state.isOpen} >
-            {<AddNewItems
-              addNewItemForm={this.addNewItemForm}
-              newItem={this.state.newItem}
-              defaultItemState = {this.defaultItemState}
-              addNewItem={this.addNewItem}
-              userid={this.state.userid}
-              getUserItems={this.getUserItems}
-              showCategories={this.showCategories}
-              categories={this.state.categories}
-              categoryIdStateChg={this.categoryIdStateChg}
-              categoryId={this.state.categoryId}
-              newImageUrl={this.newImageUrl}
-            />}
-          </Modal>
-          <Modal isOpen={this.state.editIsOpen} >
-          <EditItem
-            key={`editItem.${itemId}`}
-            id={itemId}
-            categories={this.state.categories}
-            editItem={this.state.editItem}
-            categoryIdStateChg={this.categoryIdStateChg}
-            categoryId={this.state.categoryId}
-            showCategories={this.showCategories}
-            userid={this.state.userid}
-            getUserItems={this.getUserItems}
-            editItemForm={this.editItemForm}
-            closeEditModal={this.closeEditModal}
-            updateImageUrl={this.updateImageUrl}
-          />
-          </Modal>
-        <div className="myStuffWrapper">
-        <div className="">
-          <span className="addNewSpan" onClick={this.addNewItem}>
-            Rent More Of Your Stuff {<img src={addIcon} alt="add new icon" className="bounceIn addIcon" />}
-          </span>
-          { makeItemCards }
-        </div>
-
-        <div className="col col-6">
-          { (isClicked === true ? <SingleItem
-            key={`single.${singleItem.id}`}
-            singleItem={singleItem}
-            isClicked={isClicked}
-            unseeSingleItem={this.unseeSingleItem}
-            deleteItemEvent={this.deleteItemEvent}
-            editItemEvent={this.editItemEvent}
-          /> : '') }
-        </div>
-        </div>
-
-        <div className="mystuffMap">
-          <Leaflet key={'unique4'} id='mystuffMap' userid={userid} />
-        </div>
-      </div>
     );
   }
 }

@@ -4,6 +4,7 @@
 .MyNavbar {
   display: flex;
   flex-flow: row wrap;
+  width: 100%;
 }
 
 .upperNav {
@@ -13,6 +14,7 @@
   height: auto;
   background-color: white;
   border-bottom: 10px solid $orange;
+  background: linear-gradient(to left, $upperNav, $upperNavWhite);
 }
 
 .userDisplayDiv {
@@ -22,16 +24,25 @@
 
 .userName {
   color: $blackFont;
+  font-weight: 600;
   font-family: $font1;
   margin: auto;
   margin-right: 10px;
 }
+
+.userdropdownText {
+  text-align: left !important;
+  font-family: $font1;
+}
+
 .profilePic {
   margin: 5px;
+  margin-right: 15px;
   max-height: 40px;
   max-width: 40px;
   border-radius: 50px;
   overflow: hidden;
+  box-shadow: -2px 1px 9px $shadow;
   .profilePicImg {
     position: relative;
     top: -5px;
@@ -44,9 +55,46 @@
   height: 40px;
 }
 
-.dropdownIcon {
-  margin-right: 10px;
-  filter: invert(20%);
+.updateCogWheelIcon {
+  color: $secondBlue;
+  font-size: 19px;
+  padding-right: 8px;
+  margin-left: -11px;
+  &:hover {
+    transform: scale(1.1);
+    color: $mainBlue;
+  }
+}
+
+.updateUserIcon {
+  color: $mainBlue;
+  font-size: 19px;
+  padding-right: 8px;
+  margin-left: -10px;
+  &:hover {
+    transform: scale(1.1);
+    color: $mainBlue;
+  }
+}
+
+.signoutIcon {
+  color: $mainBlue;
+  font-size: 19px;
+  padding-right: 8px;
+  margin-left: -10px;
+  &:hover {
+    transform: scale(1.1);
+    color: $mainBlue;
+  }
+}
+
+.navDropDown {
+  color: $orange;
+  font-size: 20px;
+  &:hover {
+    transition: .4s;
+    color: $oranger;
+  }
 }
 
 #settingsDropDown {
@@ -63,7 +111,6 @@
     }
   }
   .btn {
-    // font-size: 18px;
     box-shadow: none !important;
     &:active {
       box-shadow: none !important;
@@ -71,24 +118,26 @@
   }
 }
 .brandSVG {
-  width: 200px;
+  width: 220px;
   position: absolute;
   z-index: 100;
-  // top: 42px;
-  top: 70px;
+  top: 80px;
   left: 20px;
   &:hover {
-    // filter: invert(50%);
+    transform: scale(1.1);
     transition: 1s;
-    // filter: blur(2px) grayscale(20%);
   }
 }
 
 .navBar {
   width: 100%;
-  height: 65px;
+  min-height: 90px;
+  max-height: 100px;
   background-color: $mainBlue;
   background-position-y: 1000px;
+  .navBarNav {
+    margin-left: auto;
+  }
 }
 
 .navLink {
@@ -100,6 +149,9 @@
   padding-right: 10px !important;
   &:hover {
     color: $fontHoverColor;
+    .navIcon {
+      color: $orange;
+    }
   }
     &:after {
         display:block;
@@ -114,5 +166,62 @@
     &.fromLeft:after{  
         transform-origin:  0% 50%; 
     }
+    .navItemTitle {
+      font-size: 15px;
+    }
+    .notificationFlag {
+      background-color: $oranger;
+      color: $whiteFont;
+      font-size: 13px;
+      padding: 0px 2px 0px 2px;
+      border-radius: 2px;
+      height: 20px;
+      width: 20px;
+      position: relative;
+      top: -40px;
+      right: 30px;
+    }
   }
-
+ 
+  @media (max-width: 767px) {
+    .navbar-toggler {
+      margin-left: auto;
+    }
+    .navbar-toggler-icon {
+      margin-right: 10px;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(253, 153, 59)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    }
+    .navBar {
+      font-weight: 500;
+      .navbar-collapse {
+        margin-left: auto !important;
+      }
+      .navBarNav, .navbar-nav {
+        position: relative;
+        right: -1em;
+        z-index: 101;
+        width: 12em;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        background-color: $upperNavWhite;
+        border-radius: 4px;
+        box-shadow: 2px 1px 8px $upperNav;
+        .navLink {
+          &:after {
+            border-bottom: solid 3px $oranger;  
+        }
+          .navIcon {
+            color: $oranger;
+          }
+          .navItemTitle {
+            color: $oranger;
+          }
+          .notificationFlag {
+            background-color: $mainBlue;
+            left: -45px;
+          }
+        }
+      }
+    }
+  }

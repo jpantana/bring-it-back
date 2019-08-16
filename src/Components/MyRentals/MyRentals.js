@@ -3,6 +3,9 @@ import React from 'react';
 import itemsRentedData from '../../helpers/data/itemsRentedData';
 import itemsData from '../../helpers/data/itemsData';
 import RentalCard from '../RentalCard/RentalCard';
+import Footer from '../Footer/Footer';
+// STYLEs
+import './MyRentals.scss';
 
 class MyRentals extends React.Component {
   state = {
@@ -58,7 +61,14 @@ class MyRentals extends React.Component {
     ));
 
     return (
-      <div>{makeRentalCards}</div>
+      <div className="MyRentals">
+        <div className="MyRentalCardsDiv">
+          {makeRentalCards}
+        </div>
+        <div className="footerDiv">
+          <Footer key={'footer'} />
+        </div>
+      </div>
     );
   }
 }

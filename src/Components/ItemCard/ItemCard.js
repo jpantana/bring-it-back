@@ -6,8 +6,6 @@ import RentItem from '../RentItem/RentItem';
 import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './ItemCard.scss';
-// SVGs
-import checkIcon from '../../SVGs/iconmonstr-check-mark-6.svg';
 
 class ItemCard extends React.Component {
   static propTypes = {
@@ -30,14 +28,33 @@ class ItemCard extends React.Component {
 
   messageThisUser = (e) => {
     e.preventDefault();
-    this.props.messageUserRedirect(e.target.value, this.props.item.id);
+    const itm = e.target.id;
+    const ownerId = itm.split('.', 1)[0];
+    this.props.messageUserRedirect(ownerId, this.props.item.id);
   };
+
+  condtionFontColor = () => {
+    const { item } = this.props;
+    if (item.condition === 'Mint') {
+      return <span className="itemCondition mint">{item.condition}</span>;
+    }
+    if (item.condition === 'Good') {
+      return <span className="itemCondition good">{item.condition}</span>;
+    }
+    if (item.condition === 'Fair') {
+      return <span className="itemCondition fair">{item.condition}</span>;
+    }
+    if (item.condition === 'Relic') {
+      return <span className="itemCondition relic">{item.condition}</span>;
+    }
+    return null;
+  }
 
   render() {
     const { item, rentThisItem } = this.props;
 
     return (
-      <div className="ItemCard card">
+      <div className="ItemCard card wow bounceIn fadeInRight">
         <div className="card-body">
           <div className="imgContainer">
             <img src={item.imageUrl} alt={item.name} className="card-img-top itemImg" />
@@ -45,25 +62,27 @@ class ItemCard extends React.Component {
           </div>
           <h5 className="card-title allCardsTitle">{item.name}</h5>
           <div className="cardDetails">
-            <table>
-              <tbody>
-                <tr>
-                  <th className="thCondition">Condition</th>
-                  <th className="thPriceHour">Hourly</th>
-                  <th className="thPriceDay">Daily</th>
-                </tr>
-                <tr>
-                  <td className="itemCondition">{item.condition}</td>
-                  <td className="itemPriceHour">${item.priceperhour}</td>
-                  <td className="itemPriceDay">${item.priceperday}</td>
-                </tr>
-              </tbody>
-            </table>
+
+            <div className="cardDetailsWrapper">
+              <div className="details">
+                <span id="itemPriceHour" className="detailReportings">${item.priceperhour}</span>
+                <span id="itemPriceDay" className="detailReportings">${item.priceperday}</span>
+              </div>
+              <div className="cardDetailHeaders">
+                <span className="thPriceHour detailsHeaders">Per Hour</span>
+                <span className="thPriceDay detailsHeaders">Per Day</span>
+              </div>
+            </div>
+
+            <div className="cardPrintoutsWrapper">
+              { this.condtionFontColor() }
+            </div>
+
           </div>
         </div>
         <div className="allCardIconsHome">
           <span>{item.isAvailable === true
-            ? <img src={checkIcon} alt="checkbox icon svg" className="iconSvg" />
+            ? <i className="fas fa-check-circle availableIcon"></i>
             : <p className="availableAgainDate">Available after {this.rentedInfo()}</p> }</span>
           <span className="editDeleteSpan">
           {item.isAvailable === true ? <RentItem
@@ -76,12 +95,15 @@ class ItemCard extends React.Component {
         {
           this.props.useruid !== this.props.item.ownerId
             ? <span className="msgUserSpan">
-            <button
-              className="btn msgUserBtn"
-              value={item.ownerId}
-              onClick={this.messageThisUser}
-            >Message Owner</button>
-            </span> : ''}
+                <span className="msgUserBtn">
+                  {<i
+                    id={`${item.ownerId}.usertomsg`}
+                    onClick={this.messageThisUser}
+                    className="fas fa-comment msgIcon">
+                  </i>}
+                </span>
+              </span>
+            : ''}
       </div>
     );
   }

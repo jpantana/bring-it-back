@@ -1,0 +1,12 @@
+@import '../../styles/variables.scss';
+
+.MyRentals {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  .MyRentalCardsDiv {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  } 
+}

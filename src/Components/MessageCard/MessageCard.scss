@@ -1,0 +1,87 @@
+@import '../../styles/variables.scss';
+
+.MessageCard {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1.5em;
+  .msgHeaderCompDiv {
+    margin: auto;
+    width: 25em;
+    background-color: $mainBlue;
+    height: auto;
+    border-radius: 9px 9px 2px 2px;
+  }
+  .msgTableDiv {
+    margin: auto;
+    min-height: 13em;
+    max-height: 17em;
+    overflow: scroll;
+  }
+  .Messages {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    .sendMessageForm {
+      .msgInputDiv {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        background-color: $upperNav;
+        border-radius: 2px 2px 9px 9px;
+        width: 25em;
+        padding: 8px;
+        .msgLabel {
+          .sendMessageBtn {
+            position: relative;
+            right: -0px;
+            background-color: $secondBlue !important;
+            border-radius: 0px 15px 15px 0px;
+            width: 60px;
+            height: 30px;
+            font-family: $font1;
+            font-size: 14px;
+            font-weight: 600;
+            color: white !important;
+            text-align: center;
+            border: .5px solid $secondBlue !important;
+            &:hover {
+              background-color: $mainBlue !important;
+            }
+          }
+        }
+        #messageInput {
+          border-radius: 20px 0 0 20px;
+          height: 30px !important;
+          border: .5px solid $secondBlue;
+          border-right: none;
+          width: 20em;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .MessageCard {
+    width: 22em;
+     .msgHeaderCompDiv {
+      margin: auto;
+      width: 100%;
+     }
+     .msgTableDiv {
+       width: 22em;
+     }
+     .msgInputDiv {
+        width: 22em !important;
+     }
+  }
+}
+
+@media (max-width: 413px) {
+  .MessageCard {
+    width: 22em;
+    margin-left: -1.2em;
+  }
+}

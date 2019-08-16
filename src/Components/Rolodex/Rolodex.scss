@@ -1,0 +1,49 @@
+@import '../../styles/variables.scss';
+
+.Rolodex {
+  position: relative;
+  top: -20px;
+}
+
+#carouselExampleControls {
+  width: 80px;
+  margin-top: 5px;
+  margin-left: 35px;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+#rotate {
+  position: relative;
+  color: $blackFont;
+  color: $whiteFont;
+  top: 38px;
+  font-size: 48px;
+  margin-bottom: 60px;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  position: relative;
+  height: 60px;
+  background-color: $blackFont !important;
+  transform: scale(1.3) !important;
+  margin-bottom: -50px !important;
+}
+
+.holdsNum {
+  position: relative;
+  left: 9px;
+}
+
+.nudge {
+  position: relative;
+  left: -5px;
+}

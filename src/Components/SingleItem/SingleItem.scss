@@ -5,14 +5,12 @@
   flex-flow: row wrap;
   justify-content: space-between !important;
   border-radius: none !important;
-  padding: 10px;
-  margin: 10px;
   width: 45em;
   height: auto;
   box-shadow: 5px 1px 9px $shadow;
+  border-radius: 5px 5px 0 0; 
   &:hover {
-    transform: scale(1.03);
-    box-shadow: 4px 4px 12px $shadow;
+    box-shadow: -10px -4px 9px $shadow;
     transition: .4s;
   }
 }
@@ -21,38 +19,37 @@
   display: flex;
   flex-flow: row nowrap !important;
   width: 100% !important;
+  background-color: $secondBlue;
+  border-radius: 5px 5px 0 0; 
   .full-card-title {
     font-family: $font1 !important;
     font-weight: 700;
     font-size: 25px !important;
-    color: $blackFont !important;
+    color: $whiteFont !important;
     height: 50px;
     margin-right: auto;
-    margin-top: 15px;
+    margin-top: 25px;
+    margin-left: 30px;
   }
   .allCardIcons {
-    width: 15em;
+    width: 18em;
+    display: flex;
+    flex-flow: row nowrap !important;
+    justify-content: center;
     margin-top: 1px;
-    margin-right: -35px;
     .conditionalIconSpan {
       height: 20px;
     }
-    .isRented {
-      margin-top: 18px;
-      font-family: $font1;
-      font-size: 12px;
-      font-style: italic;
-      color: $blackFont;
-    }
     .singleIcon {
-      filter: invert(50%);
-      margin: 10px;
+      filter: invert(100%);
+      margin: 20px;
       padding: 5px !important;
-      height: 1.7em;
+      height: 2em;
       &:hover {
-        filter: invert(0%);
-        height: 1.8em;
+        filter: invert(90%);
+        transform: scale(1.1);
         transition: .4s;
+        cursor: pointer;
       }
     }
   }
@@ -63,88 +60,226 @@
   display: flex;
   flex-flow: row nowrap !important;
   justify-content: space-between;
-  width: 100%;
-  .singleItemDetails {
-    width: 18em;
-  }
-  .imgDiv {
-    width: 23em;
-    height: 27em;
-    overflow: hidden;
-    box-shadow: 5px 1px 9px $shadow;
-    margin-bottom: 25px;
-    .SingleItemImg {
-      object-fit: contain;
-      margin: auto;
-      border-radius: 0 !important;
+  .imgAndIsAvailWrapper {
+    .imgDiv {
+      min-width: 23em !important;
+      max-width: 23em !important;
+      height: 27em;
+      overflow: hidden;
+      box-shadow: 5px 1px 9px $shadow;
+      margin-bottom: 25px;
+      .SingleItemImg {
+        object-fit: contain;
+        margin: auto;
+        border-radius: 0 !important;
+      }
     }
-  }
-  .singleItemDetails {
-    min-height: 27em;
-    box-shadow: 5px 1px 9px $shadow;
-    margin-bottom: 25px;
-  }
-  .card-text {
-    text-align: left;
-    padding-left: 20px;
-    font-family: $font1;
-    color: $blackFont;
-  }
-  .priceSpan {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    .price {
-      font-size: 1.3em;
-      font-weight: bold;
-      .afterPrice {
+    .availabilityDiv {
+      border-bottom: 1px solid $softShadow;
+      width: 75%;
+      margin: auto;
+      .isAvailable, .isNotAvailable {
+        width: 80%;
+        margin-left: 1.5em;
+        font-family: $font1;
+        font-size: 15px;
         color: $shadow;
-        font-style: italic;
-        font-weight: 200;
-        font-size: .7em;
+        list-style-type: circle;
+      }
+      .checkIcon {
+        color: $oranger;
+        margin-right: 5px;
       }
     }
   }
-  .aboutSpan {
-    text-align: center !important;
-    font-style: italic;
-    font-size: 13px;
-    text-decoration: underline;
-    color: $blackFont;
-  }
-  .itemDescription {
-    text-align: justify;
-    border-top: .5px solid $shadow;
-    border-bottom: .5px solid $shadow;
-    color: $blackFont;
-    margin: 3px;
-    padding: 2px;
-  }
-  .singleItemTable {
-    font-family: $font1;
-    color: $blackFont;
-  }
-  .thConditionSI {
-    color: $shadow !important;
-    font-weight: bolder !important;
-    text-decoration: underline !important;
-  }
-    .singleItemCondition {
-      font-size: 13px !important;
+  .singleItemDiv {
+    width: 20em !important;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .singleItemDescrip{
+      font-family: $font1;
+      font-size: 14px;
+      padding: 5px;
+      margin: 15px;
+      margin-top: -4em;
+      margin-left: 2em;
+      height: 15em;
+      width: 19em;
+      overflow: scroll;
+      text-align: justify;
+      border-radius: 2px;
+      border: 1px solid $softShadow;
+      box-shadow: 5px 2px 9px $softShadow;
     }
-    .thCategorySI {
-      color: $shadow !important;
-      font-weight: bolder !important;
-      text-decoration: underline;
+    .detailHeaderSingleItem {
+      padding: 0;
+      .thConditionSI {
+        padding: 0;
+      }
+      .singleItemCondition {
+        padding: 0;
+      }
     }
-    .singleItemCategory {
-      font-size: 13px !important;
-    }  
-
+    
+  }
 }
 
+.conditionAndCatContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end !important;
+  width: 100%;
+  margin-right: 4em;
+  .detailContentSingleItem {
+    padding: 0;
+    font-family: $font1;
+    font-size: 20px;
+    text-align: right;
+    margin-right: 2em;
+    margin-left: 2.5em;
+    .thCategorySI {
+      background-color: $mainBlue;
+      color: $whiteFont;
+      margin-left: auto;
+      padding: 1px 5px 1px 1px;
+      font-size: 12px;
+      font-style: italic;
+    }
+    .singleItemCategory {
+      margin-top: -15px;
+      padding: 0;
+      font-size: 14px;
+      font-style: italic;
+      color: $mainBlue;
+      font-weight: 300;
+      letter-spacing: .5px;
+      text-decoration: underline;
+    }
+  }
+}
 
+.itemConditionWrapper {
+  margin: -7px 7px 15px 7px;
+  font-size: 26px;
+  .mint {
+    color: $mint !important;
+    border-bottom: 8px solid $mint;
+  }
+  .good {
+    color: $good !important;
+    border-bottom: 7px solid $good;
+  }
+  .fair {
+    color: $fair !important;
+    border-bottom: 7px solid $fair;
+  }
+  .relic {
+    color: $relic !important;
+    border-bottom: 7px solid $relic;
+  }
+}
+.mystuffMap {
+  margin: auto;
+}
 
+@media (max-width: 750px) {
+  .SingleItem {
+    width: 30em !important;
+    margin: auto !important;
+    .cardHeader {
+      flex-direction: column !important;
+      width: 30em !important;
+      .full-card-title {
+        font-size: 25px !important;
+        height: 50px;
+        margin: auto;
+        margin-top: 5px !important;
+        }
+        .allCardIcons {
+        width: auto !important;
+        .conditionalIconSpan {
+          height: 20px;
+        }
+        .singleIcon {
+          margin: auto;
+        }
+      }
+    }
+    .mainCard {
+      display: flex;
+      flex-direction: column !important;
+      width: 30em !important;
+      .imgAndIsAvailWrapper {
+        width: 30em !important;
+        .imgDiv {
+          min-width: 29em !important;
+          max-width: 30em !important;
+          .SingleItemImg {
+            width: 29.9em !important;
+          }
+        }
+      }
+      .singleItemDiv {
+        margin: auto !important;
+        .mystuffMap {
+          .leafletMap {
 
-// .itemImg {
-//   // transform: scale(.5) !important;
-// }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .SingleItem {
+    width: 20em !important;
+    // margin: auto !important;
+    .cardHeader {
+      flex-direction: column !important;
+      width: 20em !important;
+      .full-card-title {
+        font-size: 25px !important;
+        height: 50px;
+        margin: auto;
+        margin-top: 5px !important;
+        // margin-left: 0px !important;
+        }
+        .allCardIcons {
+        width: auto !important;
+        .conditionalIconSpan {
+          height: 20px;
+        }
+        .singleIcon {
+          margin: auto;
+        }
+      }
+    }
+    .mainCard {
+      display: flex;
+      flex-direction: column !important;
+      width: 20em !important;
+      .imgAndIsAvailWrapper {
+        width: 20em !important;
+        .imgDiv {
+          min-width: 19em !important;
+          max-width: 29em !important;
+          .SingleItemImg {
+            width: 19.9em !important;
+          }
+        }
+      }
+      .singleItemDiv {
+        margin: auto !important;
+        .mystuffMap {
+          .leafletMap {
+
+          }
+        }
+      }
+    }
+  }
+}
+

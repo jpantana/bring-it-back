@@ -9,12 +9,12 @@ import {
 } from 'reactstrap';
 import moment from 'moment';
 // JSs
+import Rolodex from '../Rolodex/Rolodex';
 // STYLEs
 import './RentItem.scss';
 // PROPs
 import itemShape from '../../helpers/propz/itemShape';
 // SVGs
-import cart from '../../SVGs/iconmonstr-shopping-cart-3.svg';
 import usersData from '../../helpers/data/usersData';
 
 const defaultStateRental = {
@@ -117,6 +117,17 @@ class RentItem extends React.Component {
     this.determineDueDate(e.target.value);
   };
 
+  roloValu = (num) => {
+    const tempItem = { ...this.state.itemToRent };
+    tempItem.hoursRented = num;
+    const { itemToRent } = this.state;
+    const firstDate = itemToRent.pickupDate;
+    const hours = num * 1;
+    const bringItBack = moment(firstDate, 'MM/DD/YYYY - h:mm a').add(hours, 'hours').calendar();
+    tempItem.returnTime = bringItBack;
+    this.setState({ itemToRent: tempItem });
+  };
+
   render() {
     const {
       street,
@@ -125,6 +136,7 @@ class RentItem extends React.Component {
       state,
       isOpen,
     } = this.state;
+    const { item } = this.props;
     return (
       <div className="RentItem">
         <Modal isOpen={isOpen}>
@@ -144,31 +156,32 @@ class RentItem extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="howLong">How long do you need it?</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="howLong"
-                  aria-describedby="how long"
-                  placeholder="e.g. 26 hrs"
-                  defaultValue={0}
-                  onChange={this.rentThisLong}
-                />
+                <div className="hoursRoloDiv">
+                  <p className="howManyHours">How many hours do you need it for?</p>
+                  <div className="rolodexDiv">
+                    <Rolodex
+                      key={`${item.id}.rolodex`}
+                      roloValu={this.roloValu}
+                    />
+                  </div>
+                </div>
                 <p className="returnTime">{this.state.itemToRent.returnTime}</p>
               </div>
-              <div>
-                <h3>Your Pickup/Return Location</h3>
-                <p>{street}</p>
-                <p>{city}</p>
-                <p>{state}</p>
-                <p>{zipcode}</p>
+              <div className="editRentalInfoDiv">
+                <h3 className="pickupandreturnlocH3">Your Pickup/Return Location</h3>
+                <p className="editRentalInfoP">{street}</p>
+                <p className="editRentalInfoP">{city}, {state}</p>
+                <p className="editRentalInfoP">{zipcode}</p>
               </div>
-              <button onClick={this.rentItem} className="btn rentBtn">Rent It!</button>
-              <span className="cancelRental" onClick={this.modalShowHide}>X</span>
+
+              <div className="rentalModalBtnsDiv">
+                <button onClick={this.rentItem} className="btn rentBtn">Rent It!</button>
+                <button className="btn cancelRentalItemBtn" onClick={this.modalShowHide}>X</button>
+              </div>
               </form>
             </ModalBody>
         </Modal>
-        <img onClick={this.modalShowHide} className="cartIcon" src={cart} alt="cart icon"/>
+        <i onClick={this.modalShowHide} className="fas fa-cart-plus cartIcon"></i>
       </div>
     );
   }

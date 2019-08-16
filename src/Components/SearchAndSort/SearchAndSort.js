@@ -6,14 +6,10 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
-// JSs
-
 // PROPs
 import categoriesShape from '../../helpers/propz/categoriesShape';
 // STYLEs
 import './SearchAndSort.scss';
-// SVGs
-// import magnifier from '../../SVGs/iconmonstr-magnifier-4.svg';
 
 class SearchAndSort extends React.Component {
   static propTypes = {
@@ -56,6 +52,17 @@ class SearchAndSort extends React.Component {
 
     return (
       <div className="SearchAndSort">
+        <div className="md-form mt-0 searchBarDiv">
+          <input
+            className="form-control searchInput"
+            type="text"
+            placeholder="Search"
+            aria-label="Search"
+            defaultValue={searchInput}
+            onChange={this.searchInput}
+          />
+          <i className="fas fa-search magnifyingGlass"></i>
+
         <Dropdown
           isOpen={this.state.dropdownOpen}
           toggle={this.toggle}
@@ -63,13 +70,14 @@ class SearchAndSort extends React.Component {
         >
           <DropdownToggle
             caret
+            id="SearchAndSortDropdown"
             onClick={this.showCategories}
             defaultValue={ categoryName }
             className="dropdownToggle"
           >
             { categoryName }
           </DropdownToggle >
-          <DropdownMenu className="dropdownMenu">
+          <DropdownMenu id="searchSortDropdown">
             <DropdownItem
               onClick={this.props.pickCategory}
               value={'Categories'}
@@ -81,16 +89,8 @@ class SearchAndSort extends React.Component {
             { catLoop }
           </DropdownMenu>
         </Dropdown>
-        <div className="md-form mt-0">
-          <input
-            className="form-control searchInput"
-            type="text"
-            placeholder="Search"
-            aria-label="Search"
-            defaultValue={searchInput}
-            onChange={this.searchInput}
-          />
         </div>
+
       </div>
     );
   }

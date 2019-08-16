@@ -1,0 +1,11 @@
+@import '../../styles/variables.scss';
+
+.msgIsAbt {
+  font-family: $font1;
+  font-size: 12px;
+  color: $whiteFont;
+  font-style: italic;
+  padding: 0;
+  margin-top: -16px;
+  margin-bottom: 5px;
+}

@@ -1,19 +1,20 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import $ from 'jquery';
 import { Modal, ModalHeader } from 'reactstrap';
 // JSs
+import Scroll from '../Sroll/Scroll';
 import usersData from '../../helpers/data/usersData';
 import itemsData from '../../helpers/data/itemsData';
 import ItemCard from '../ItemCard/ItemCard';
 import itemCategoriesData from '../../helpers/data/itemCategoriesData';
 import SearchAndSort from '../SearchAndSort/SearchAndSort';
 import itemsRentedData from '../../helpers/data/itemsRentedData';
+import Footer from '../Footer/Footer';
 // STYLEs
+import 'animate.css';
 import './Home.scss';
 // SVGs
-import arrow from '../../SVGs/iconmonstr-arrow-25.svg';
 
 class Home extends React.Component {
   state = {
@@ -38,11 +39,21 @@ class Home extends React.Component {
     this.getRentedItemsData();
   }
 
+  // start a message about an item
   messageUserRedirect = (ownerId, itemId) => {
     this.props.history.push({
       pathname: `/notifications/${this.state.useruid}`,
       state: { ownersId: ownerId, itemId },
     });
+  };
+
+  getUser = (uid) => {
+    usersData.getUsers(uid)
+      .then((resp) => {
+        if (resp.length === 0) {
+          this.props.history.push('/signup');
+        }
+      }).catch(err => console.error(err, 'no such user exists'));
   };
 
   getItems = () => {
@@ -55,15 +66,6 @@ class Home extends React.Component {
         this.setState({ items: filterCategories, itemsLength: filterCategories.length });
       }
     }).catch(err => console.error('no items to display', err));
-  };
-
-  getUser = (uid) => {
-    usersData.getUsers(uid)
-      .then((resp) => {
-        if (resp.length === 0) {
-          this.props.history.push('/signup');
-        }
-      }).catch(err => console.error(err, 'no such user exists'));
   };
 
   // CATEGORIES
@@ -81,7 +83,6 @@ class Home extends React.Component {
     this.getItems();
   };
 
-  // SEARCH BAR DATA CHANGE
   searchItemInput = (e) => {
     e.preventDefault();
     this.setState({ searchInput: e.target.value });
@@ -144,61 +145,6 @@ class Home extends React.Component {
       .catch(err => console.error('no items match search', err));
   };
 
-  // NAVIGATE SCROLL BUTTONS
-  moveRight = (e) => {
-    e.preventDefault();
-    const howManyClicks = this.mathyMathMath();
-    const { counter } = this.state;
-    if (counter >= howManyClicks) {
-      this.setState({ counter: howManyClicks });
-    } else {
-      this.setState({ counter: this.state.counter + 1 });
-    }
-    if (counter >= howManyClicks) {
-      $('#allCardsDiv').animate({
-        marginLeft: '-=0px',
-      }, 'fast');
-    } else {
-      $('#allCardsDiv').animate({
-        marginLeft: '-=300px',
-      }, 'fast');
-    }
-    $('#arrowBack').removeClass('hide');
-    $('#arrowLeft').removeClass('hide');
-  };
-
-  moveLeft = (e) => {
-    e.preventDefault();
-    const { counter } = this.state;
-    if (counter <= 0) {
-      this.setState({ counter: 0 });
-    } else {
-      this.setState({ counter: this.state.counter - 1 });
-    }
-    if (counter <= 0) {
-      $('#allCardsDiv').animate({
-        marginLeft: '+=0px',
-      }, 'fast');
-    } else {
-      $('#allCardsDiv').animate({
-        marginLeft: '+=300px',
-      }, 'fast');
-    }
-  };
-
-  widthMath = () => {
-    const divLength = this.state.itemsLength;
-    const makeNum = divLength * 1;
-    const theMath = makeNum * 143;
-    return theMath;
-  };
-
-  mathyMathMath = () => {
-    const total = this.widthMath();
-    const theMath = total / 300;
-    return Math.floor(theMath);
-  };
-
   render() {
     const {
       items,
@@ -208,6 +154,7 @@ class Home extends React.Component {
       itemsRented,
       isOpen,
       useruid,
+      itemsLength,
     } = this.state;
     const makeItemCards = items.map(item => (
         <ItemCard
@@ -238,13 +185,20 @@ class Home extends React.Component {
             />
           </div>
         </div>
-       <div className="allCardsWrapper" id="arrowDiv">
-          <span onClick={this.moveRight} className="scrollCardsRight" id="arrowRight"><img id="arrow" src={arrow} alt="arrow icon" /></span>
-        <div className="row allCardsDiv" id="allCardsDiv">
-          { (items.length > 0 ? makeItemCards : '') }
-        </div>
-          <span onClick={this.moveLeft} id="arrowBack" className="scrollCardsLeft hide"><img className="hide" id="arrowLeft" src={arrow} alt="arrow icon" /></span>
-        </div>
+        <div>
+          <Scroll
+              key={`${useruid}.arrowRight`}
+              itemsLength={itemsLength}
+            />
+          </div>
+          <div className="allCardsWrapper" id="arrowDiv">
+            <div className="row allCardsDiv" id="allCardsDiv">
+              { (items.length > 0 ? makeItemCards : '') }
+            </div>
+          </div>
+          <div className="footerDiv">
+            <Footer key={'footer'} />
+          </div>
       </div>
     );
   }

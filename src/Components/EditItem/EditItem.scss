@@ -1,5 +1,167 @@
 @import '../../styles/variables.scss';
 
 .EditItem {
-  display: block;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.uploadSeeImg {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 1em;
+  .imgUploadLabel {
+    margin: auto;
+    margin-bottom: 15px;
+    background-color: $secondBlue;
+    padding: 15px;
+    color: $whiteFont;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: $font1;
+    &:hover {
+      cursor: pointer;
+    }
+    .cameraIcon {
+      filter: invert(100%);
+      margin-right: 12px;
+      margin-top: -5px;
+    }
+  }
+  .imgThumbnail {
+    margin: auto;
+    width: 40%;
+  }
+}
+
+#Mint, #Good, #Fair, #Relic {
+  margin: 5px 30px 5px 8px !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  background-color: $upperNav;
+  color: $upperNavWhite;
+  top: 10px;
+  height: 22px;
+  width: 22px;
+  border: 0;
+  border-radius: 50px;
+  // box-shadow: 4px 1px 8px $shadow;
+  cursor: pointer;     
+  margin-right: 7px;
+  outline: none;
+  &:checked {
+    background-color: $oranger !important;
+  }
+  &:checked::before {
+    position: absolute;
+    font: 13px/1 'Open Sans', sans-serif;
+    left: 7px;
+    top: 4px;
+    content: '\02143';
+    transform: rotate(40deg);
+  }
+}
+
+.mint {
+  border-bottom: 5px solid $mint;
+}
+.good {
+  border-bottom: 5px solid $good;
+}
+.fair {
+  border-bottom: 5px solid $fair;
+}
+.relic {
+  border-bottom: 5px solid $relic
+}
+
+
+
+.editItemPricesDiv {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  margin-bottom: 20px;
+  .formGroupItem {
+    margin: 1px;
+    width: 165px !important;
+  }
+  .posDollarSpanHourEdit {
+    position: relative;
+    top: 40px;
+    right: 115px;
+    background-color: $shadow;
+    .posDollarSignHourEdit {
+      padding: 10px !important;
+      background-color: $upperNav;
+      border: 1px solid $shadow;
+      border-radius: 4px 0 0 4px;
+    }
+  }
+  
+  .posDollarSpanDayEdit {
+    position: relative;
+    top: 40px;
+    right: 108px;
+    background-color: $shadow;
+    .posDollarSignDayEdit {
+      padding: 10px !important;
+      background-color: $upperNav;
+      border: 1px solid $shadow;
+      border-radius: 4px 0 0 4px;
+    }
+  }
+  
+  #editpriceperhour {
+    width: 55%;
+    margin-left: 2em;
+    border: 1px solid $shadow !important;
+    border-radius: 0px 5px 5px 0px !important
+  }
+  #editpriceperday {
+    width: 55%;
+    margin-left: 2em;
+    border: 1px solid $shadow !important;
+    border-radius: 0px 5px 5px 0px !important
+  }
+}
+
+
+
+.updateModalBtnsDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+  .cancelUpdateBtn {
+    width: 100px;
+    margin-bottom: 15px !important;
+    margin-left: 15px;
+    color: $whiteFont !important;
+    background-color: $orange !important;
+    font-family: $font1 !important;
+    border: 1px solid $orange !important;
+    &:hover {
+      background-color: $whiteFont !important;
+      color: $orange !important;
+      transition: .4s;
+      border: 1px solid $orange !important;
+    } 
+  }
+  .updateItemBtn {
+    width: 100px;
+    margin-bottom: 15px !important;
+    color: $whiteFont !important;
+    background-color: $mainBlue !important;
+    font-family: $font1 !important;
+    border: 1px solid $mainBlue !important;
+    &:hover {
+      background-color: $whiteFont !important;
+      color: $mainBlue !important;
+      transition: .4s;
+    }
+  }
 }

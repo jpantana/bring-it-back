@@ -7,14 +7,15 @@ import {
   DropdownItem,
   Modal,
 } from 'reactstrap';
+import ReactTooltip from 'react-tooltip';
 // JSs
 import $ from 'jquery';
 import EditRental from '../EditRental/EditRental';
 import itemsRentedShape from '../../helpers/propz/itemsRentedShape';
 // STYLEs
 import './RentalCard.scss';
-// SVGs
-import gear from '../../SVGs/iconmonstr-gear-thin.svg';
+import 'animate.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class RentalCard extends React.Component {
   static propTypes = {
@@ -40,7 +41,6 @@ class RentalCard extends React.Component {
     const itmId = this.props.rental.itemId;
     e.preventDefault();
     this.props.cancelMyRental(e.target.id, itmId);
-    $('.RentalCard').addClass('fadeOut');
     setTimeout(() => {
       this.setState({ ...this.props.getMyRentals() });
     }, 600);
@@ -59,12 +59,27 @@ class RentalCard extends React.Component {
     }));
   }
 
+  showCardDetails = (e) => {
+    e.preventDefault();
+    $('#showDetails').removeClass('hide');
+    $('#showDetails').addClass('wow bounceIn slideInDown');
+    $('#rentalCardDescripDiv').addClass(' hide');
+    $('#rentalCardDescripDiv').removeClass(' wow bounceIn slideInDown');
+  };
+
+  hideDetails = (e) => {
+    e.preventDefault();
+    $('#showDetails').addClass(' hide');
+    $('#showDetails').removeClass('wow bounceIn slideInDown');
+    $('#rentalCardDescripDiv').removeClass(' hide');
+    $('#rentalCardDescripDiv').addClass(' wow bounceIn slideInDown');
+  };
+
   render() {
     const { rental } = this.props;
-    const { sendMessage, isOpen } = this.state;
-
+    const { isOpen } = this.state;
     return (
-      <div>
+      <div className="wow bounceIn slideInUp">
         <Modal isOpen={isOpen}>
           {<EditRental
             key={rental.id}
@@ -77,50 +92,61 @@ class RentalCard extends React.Component {
         <div className="RentalCard card">
           <div className="card-body">
             <div className="rentalImgContainer">
-              {/* <img src={rental.imageUrl} alt={rental.name} className="card-img-top rentalImg" /> */}
-              <img src="https://via.placeholder.com/300x300" alt="placeholder img" />
+              <img src={rental.imageUrl} alt={rental.name} className="card-img-top rentalImg" />
+              {/* <img src="https://via.placeholder.com/300x300" alt="placeholder img" /> */}
             </div>
-            <h5 className="rental-card-title rentalCardsTitle">{rental.name}</h5>
             <div className="cardDetails">
-              <table>
-                <tbody>
-                  <tr>
-                    <th className="rentalThCondition">Condition</th>
-                    <th className="rentalThPriceHour">Hourly</th>
-                    <th className="rentalThPriceDay">Daily</th>
-                    <th className="rentalThPickupDate">Pickup Date</th>
-                    <th className="rentalThReturnDate">Return</th>
-                  </tr>
-                  <tr>
-                    <td className="rentalCondition">{rental.condition}</td>
-                    <td className="rentalPriceHour">${rental.priceperhour}</td>
-                    <td className="rentalPriceDay">${rental.priceperday}</td>
-                    <td className="rentalPickupDate">${rental.pickupDate}</td>
-                    <td className="rentalPickupDate">${rental.returnTime}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <i onClick={this.showCardDetails} className="fas fa-ellipsis-h showDetailsBtn bounceIn"></i>
+                <div id="showDetails" className="hide">
+                  <div className="row flex-nowrap">
+                    <div className="conditionDivRental">
+                      <p className="detailP detHeader rentalThCondition rentalHeaders">Condition</p>
+                      <p className="detailP detInfo rentalCondition rentalsInfo">{rental.condition}</p>
+                    </div>
+                    <div className="hourlyDivRental">
+                      <p className="detailP detHeader rentalThPriceHour rentalHeaders">Hourly</p>
+                      <p className="detailP detInfo rentalPriceHour rentalsInfo">${rental.priceperhour}</p>
+                    </div>
+                    <div className="dailyDivRental">
+                      <p className="detailP detHeader rentalThPriceDay rentalHeaders">Daily</p>
+                      <p className="detailP detInfo rentalPriceDay rentalsInfo">${rental.priceperday}</p>
+                    </div>
+                  </div>
+
+                  <div className="row flex-nowrap">
+                    <div className="pickupDivRental">
+                      <p className="detailP detHeader rentalThPickupDate rentalHeaders">Pickup Date</p>
+                      <p className="detailP detInfo rentalPickupDate rentalsInfo">{rental.pickupDate}</p>
+                    </div>
+                    <div className="returnDivRental">
+                      <p className="detailP detHeader rentalThReturnDate rentalHeaders">Return Date</p>
+                      <p className="detailP detInfo rentalPickupDate rentalsInfo">{rental.returnTime}</p>
+                    </div>
+                  </div>
+
+                  <i onClick={this.hideDetails} className="fas fa-angle-double-up hideDetailsBtn"></i>
+                </div>
+              </div>
             </div>
-          </div>
           <div className="rentalCardsIconsHome">
           </div>
           <div className="iconsRentalCards">
-          <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-            <DropdownToggle caret>
-              <img src={gear} id={rental.id} alt={rental.name} />
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={this.cancelRental}>Cancel Rental</DropdownItem>
-              <DropdownItem onClick={this.editRental}>Edit Rental Times</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          <Dropdown id="rentalCardDropdown" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <DropdownToggle>
+                {<i className="fas fa-cog rentalCardDropDown"></i>}
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem id={rental.id} onClick={this.cancelRental}><i className="fas fa-trash-alt trashEditIconRentalDropDown"></i>Cancel Rental</DropdownItem>
+                <DropdownItem onClick={this.editRental}><i className="fas fa-edit trashEditIconRentalDropDown"></i>Edit Rental Times</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
-          <button
-            className="btn messageOwnerBtn"
-            onClick={this.messageItemOwner}
-          >
-          { sendMessage === false ? 'Message Owner' : 'Hide Messages'}
-          </button>
+
+          <div id="rentalCardDescripDiv" className="wow bounceIn slideInDown">
+            <span data-tip={rental.name} className="rentalCardName" data-placement="top">{rental.name}</span>
+            <ReactTooltip place="top" type="info" effect="float"/>
+            <p className="rentalCardDescrip">{rental.description}</p>
+          </div>
         </div>
         {/* { sendMessage === true ? <Component key={'unique2'} to={(`/messages/${userid}`)} userid={userid}/> : ''} */}
       </div>

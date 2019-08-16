@@ -5,13 +5,16 @@
   margin-bottom: .5em;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
-// .searchDiv {
-//   // width: 25em !important;
-// }
+.catDropDown {
+  border-radius: 20px !important;
+}
 
+.dropdown-item {
+  color: $blackFont !important;
+}
 
 .searchInput {
   width: 18em !important;
@@ -20,19 +23,81 @@
 
 .btn-secondary {
   background-color: $mainBlue !important;
-  color: $mainBlue;
-  // border: 3px solid $orange !important;
-  border: none !important;
-  // .dropdownMenu {
-  //   margin-right: 30px;
-  //   margin-top: 40px;
-  //   background-color: blue !important;
-  // }
-  // .dropdown-menu, .show {
-  //   position: relative !important;
-  //   will-change: transform;
-  //   top: 160px !important;
-  //   left: 0px;
-  //   transform: translate3d(100px, -122px, 0px);
-  // }
+  border: none !important;  
+}
+
+#allCategoriesSelected {
+  &:hover {
+    color: $upperNav !important;
+  }
+}
+
+.searchBarDiv {
+  display: flex;
+  flex-direction: row;
+
+  .searchInput {
+    border-radius: 20px 0 0 20px;
+    height: 1.9em !important;
+    border: .5px solid $secondBlue;
+    border-right: none;
+  }
+  
+  .magnifyingGlass {
+    position: relative;
+    top: 7px;
+    left: -25px;
+    color: $secondBlue;
+  }
+}
+
+// #searchSortDropdown {
+//   top: 200px !important;
+// }
+
+#SearchAndSortDropdown {
+  position: relative;
+  right: 16px;
+  background-color: $orange !important;
+  border-radius: 0px 15px 15px 0px;
+  width: 12.7em;
+  height: 2.15em !important;
+  font-family: $font1;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  border: .5px solid $orange !important;
+  &:hover {
+    background-color: #e99e58 !important;
+    color: white !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .searchInput {
+    width: 13em !important;
+    margin-left: 5px;
+  }
+
+  #searchSortDropdown {
+    top: 200px !important;
+  }
+  
+  #SearchAndSortDropdown {
+    position: relative;
+    right: 16px;
+    background-color: $orange !important;
+    border-radius: 0px 15px 15px 0px;
+    width: 12em;
+    height: 2.50em !important;
+    font-family: $font1;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    border: .5px solid $orange !important;
+    &:hover {
+      background-color: #e99e58 !important;
+      color: white !important;
+    }
+  }
 }

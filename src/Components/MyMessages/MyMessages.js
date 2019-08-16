@@ -1,18 +1,24 @@
 import React from 'react';
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
+import $ from 'jquery';
 // JSs
-import SentMessages from '../SentMessages/SentMessages';
+import MessageConversation from '../MessageConversation/MessageConversation';
 import messagesData from '../../helpers/data/messagesData';
-// import ReceivedMessages from '../ReceivedMessages/ReceivedMessages';
+// import itemsData from '../../helpers/data/itemsData';
+import Footer from '../Footer/Footer';
+// STYLEs
+import './MyMessages.scss';
+import 'animate.css';
+// import MessageCard from '../MessageCard/MessageCard';
 
 class MyMessages extends React.Component {
   state = {
-    messages: [],
     uid: '',
+    itemIds: [],
+    conversations: [],
+    otherUsersId: '',
     ownersId: '',
     itemId: '',
-    conversationsWith: [],
+    // cardIsDisplayed: false,
   }
 
   componentDidMount() {
@@ -21,44 +27,117 @@ class MyMessages extends React.Component {
       const { ownersId, itemId } = this.props.location.state;
       this.setState({ ownersId, itemId });
     }
-    messagesData.getMessages()
-      .then((res) => {
-        this.setState({ messages: res, uid });
-      })
-      .catch(err => console.error('nothing has been rented', err));
+    this.setState({ uid });
+    this.getMyMessages(uid);
+    this.hideBanner();
   }
 
-  seeConversationRecips = (user, msg) => {
-    this.setState(prevstate => ({ conversationsWith: `${prevstate.conversationsWith}, ${user}` }));
-    this.filterUsersArr();
+  hideBanner = () => {
+    setTimeout(() => {
+      $('#welcomeBanner').addClass(' fadeOutLeft');
+    }, 2500);
+    setTimeout(() => {
+      $('#welcomeBanner').addClass(' hide');
+    }, 3100);
   };
 
-  filterUsersArr = () => {
-    const wat = this.state.conversationsWith;
-    for (let i = 0; i <= wat.length; i += 1) {
-      console.error(wat[i]);
-    }
+
+  getMyMessages = (uid) => {
+    messagesData.getReceivedMessages()
+      .then((res) => {
+        const msgs = res.filter(m => m.receiverid === uid || m.senderid === uid);
+        const msgsItemIdsArr = [];
+        msgs.forEach((m) => {
+          msgsItemIdsArr.push(m.itemId);
+        });
+        const uniqueItemIds = Array.from(new Set(msgsItemIdsArr));
+        const groupOfMsgs = [];
+        this.state.itemIds.forEach((itm) => {
+          const msgsGroupedByItemId = msgs.filter(m => m.itemId === itm);
+          groupOfMsgs.push(msgsGroupedByItemId);
+          });
+        const onlyTwoAtATime = [];
+        msgs.forEach((m) => {
+          onlyTwoAtATime.push(m.senderid);
+          onlyTwoAtATime.push(m.receiverid);
+        });
+        const userIdsInConversations = Array.from(new Set(onlyTwoAtATime));
+        const removeUid = userIdsInConversations.filter(id => id !== this.state.uid);
+        const conversation = [];
+        removeUid.forEach((unq) => {
+          const uniqueUserConversations = [];
+          msgs.forEach((msg) => {
+            if (msg.senderid === unq || msg.receiverid === unq) {
+              uniqueUserConversations.push(msg);
+            }
+          });
+          conversation.push(uniqueUserConversations);
+        });
+        const convos = [];
+        conversation.forEach((convo) => {
+          uniqueItemIds.forEach((itmId) => {
+            const loopArr1 = [];
+            convo.forEach((c) => {
+              if (c.itemId === itmId) {
+                loopArr1.push(c);
+              }
+            });
+            convos.push(loopArr1);
+          });
+        });
+        const wholeConversation = [];
+        convos.forEach((c) => {
+          if (c.length !== 0) {
+            wholeConversation.push(c);
+          }
+        });
+        this.setState({ conversations: wholeConversation });
+      })
+      .catch(err => console.error('no group messages', err));
   };
+
+  // hideAllSmallCards = () => {
+  //   this.setState({ cardIsDisplayed: !this.state.cardIsDisplayed });
+  // };
 
   render() {
-    const { messages, uid } = this.state;
-    const sentMessages = messages.map(message => (
-      <SentMessages
-        uid={uid}
-        key={message.id}
-        message={message}
-        seeConversationRecips={this.seeConversationRecips}
-      />
-    ));
+    const {
+      itemId,
+      conversations,
+    } = this.state;
 
-    // const conversations = messages.filter(message => message.userid1 !== uid);
-    // const conversations2 = messages.filter(message => message.userid2 !== uid);
-    // console.error(conversations, conversations2);
+    const singleMessage = !this.props.location.state ? (
+      conversations.map((convo, i) => (
+        <MessageConversation
+          key={`${i}.messageConversation`}
+          convo={convo}
+          i={i}
+          getMyMessages={this.getMyMessages}
+          showThisMessage={this.showThisMessage}
+          // hideAllSmallCards={this.hideAllSmallCards}
+        />
+      )))
+      : (
+        <MessageConversation
+          key={`${itemId}.messageConversation`}
+          getMyMessages={this.getMyMessages}
+          showThisMessage={this.showThisMessage}
+          itemId={itemId}
+          ownersId={this.state.ownersId}
+      />);
 
     return (
-      <div className="row justify-content-center">
-        <p></p>
-        <div className="col-4">{ sentMessages }</div>
+      <div className="MyMessages">
+        <h4 id="welcomeBanner" className="welcomeMsgCenterBanner wow bounceIn fadeInRight">Welcome to your message center</h4>
+          <div className="msgConvoDiv">
+            {/* {this.state.cardIsDisplayed === false
+              ? singleMessage
+              : ''} */}
+              {singleMessage}
+          </div>
+        <div className="footerDiv">
+          <Footer key={'footer'} />
+        </div>
       </div>
     );
   }

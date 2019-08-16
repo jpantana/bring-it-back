@@ -17,6 +17,7 @@ import {
   DropdownMenu,
 } from 'reactstrap';
 // JSs
+import messagesData from '../../helpers/data/messagesData';
 import UpdateUser from '../UpdateUser/UpdateUser';
 // STYLES
 import './MyNavbar.scss';
@@ -25,7 +26,6 @@ import 'animate.css';
 import userIcon from '../../SVGs/iconmonstr-user-circle-thin.svg';
 import brand from '../../SVGs/BringItBackTransparentWHITE.svg';
 import usersData from '../../helpers/data/usersData';
-// import downArrow from '../../SVGs/iconmonstr-arrow-69.svg';
 
 const defaultUserState = {
   firstname: '',
@@ -38,7 +38,6 @@ const defaultUserState = {
   username: '',
   proifle: '',
 };
-
 
 class MyNavbar extends React.Component {
   static propTypes = {
@@ -56,24 +55,29 @@ class MyNavbar extends React.Component {
     user: defaultUserState,
     hasUser: false,
     profilePic: '',
+    msgsReceived: [],
+    msgsUnread: [],
   }
 
   componentWillReceiveProps() {
     if (this.props.authed === true && this.props.useruid !== '') {
       this.getUser();
+      this.getNotifications(this.props.useruid);
     }
   }
 
+  toggle = this.toggle.bind(this);
+
   toggle() {
     this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen,
+      isOpen: !prevState.isOpen,
     }));
   }
 
-  toggle2 = this.toggle.bind(this);
+  toggle2 = this.toggle2.bind(this);
 
   toggle2() {
-    this.setState({ isOpen: !this.state.isOpen });
+    this.setState({ dropdownOpen: !this.state.dropdownOpen });
   }
 
   openModal = (e) => {
@@ -104,24 +108,57 @@ class MyNavbar extends React.Component {
     firebase.auth().signOut();
   };
 
+  getNotifications = (uid) => {
+    messagesData.getReceivedMessages()
+      .then((res) => {
+        const msgReceived = res.filter(m => m.receiverid === uid);
+        const msgsAreUnread = [];
+        msgReceived.forEach((m) => {
+          if (m.unread === true) {
+            msgsAreUnread.push(m.unread);
+          }
+        });
+        this.setState({ msgsReceived: msgReceived, msgsUnread: msgsAreUnread });
+      }).catch();
+  };
+
   render() {
     const { authed, username, useruid } = this.props;
-    const { modal, user } = this.state;
+    const { modal, user, msgsUnread } = this.state;
     const buildNavbar = () => {
       if (authed) {
         return (
-        <Nav className="ml-auto" navbar>
+        <Nav className="navBarNav" navbar>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to="/home">Home</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to="/home">
+                <span><i className="fas fa-home navIcon"></i></span>
+                <br/>
+                <span className="navItemTitle">Home</span>
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/mystuff/${useruid}`)}>My Stuff</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/mystuff/${useruid}`)}>
+              <span><i className="fas fa-archive navIcon"></i></span>
+              <br/>
+              <span className="navItemTitle">My Stuff</span>
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/myrentals/${useruid}`)}>Renting</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/myrentals/${useruid}`)}>
+              <span><i className="fas fa-shopping-cart navIcon"></i></span>
+              <br/>
+              <span className="navItemTitle">Renting</span>
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/notifications/${useruid}`)}>Notifications</NavLink>
+            <NavLink className="navLink hvr-shadow hvr-underline-reveal bounceIn" tag={RRNavLink} to={(`/notifications/${useruid}`)}>
+              <span><i className="fas fa-envelope navIcon"></i></span>
+              <br/>
+              <span className="navItemTitle">Notifications</span>
+              {msgsUnread.length > 0
+                ? <span className="notificationFlag">{msgsUnread.length}</span>
+                : ''}
+            </NavLink>
           </NavItem>
         </Nav>
         );
@@ -145,8 +182,8 @@ class MyNavbar extends React.Component {
             <div className="userDisplayDiv">
               {(this.state.profilePic !== '' && this.props.authed === true
                 ? <div className="profilePic">
-                    <img className="userIcon" src={userIcon} alt="icon for a user"/>
-                    {/* <img className="profilePicImg" src={this.state.profilePic} alt="user profile" /> */}
+                    {/* <img className="userIcon" src={userIcon} alt="icon for a user"/> */}
+                    <img className="profilePicImg" src={this.state.profilePic} alt="user profile" />
                   </div>
                 : <img className="userIcon" src={userIcon} alt="icon for a user"/>
               )}
@@ -158,12 +195,12 @@ class MyNavbar extends React.Component {
                     isOpen={this.state.dropdownOpen}
                     toggle={this.toggle2}
                   >
-                    <DropdownToggle>{<i className="fas fa-chevron-circle-down"></i>}</DropdownToggle>
+                    <DropdownToggle>{<i className="fas fa-chevron-circle-down navDropDown"></i>}</DropdownToggle>
                       <DropdownMenu right>
-                        <DropdownItem onClick={this.openModal} ><i className="fas fa-user"></i> User Profile</DropdownItem>
-                        <DropdownItem><i className="fas fa-cog"></i> Settings</DropdownItem>
+                        <DropdownItem className="userdropdownText" onClick={this.openModal} ><i className="fas fa-user updateUserIcon"></i> User Profile</DropdownItem>
+                        <DropdownItem className="userdropdownText"><i className="fas fa-cog updateCogWheelIcon"></i> Settings</DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem onClick={this.logMeOut}><i className="fa fa-sign-out fa-fw"></i> Logout</DropdownItem>
+                        <DropdownItem onClick={this.logMeOut}><i className="fas fa-sign-out-alt signoutIcon"></i> Logout</DropdownItem>
                       </DropdownMenu>
                   </UncontrolledButtonDropdown>
                 : ''}
@@ -171,7 +208,7 @@ class MyNavbar extends React.Component {
           </div>
         </div>
         <Navbar className="navBar" expand="md">
-          <NavbarToggler onClick={this.toggle} />
+          <NavbarToggler onClick={this.toggle} className="bounceIn wow" />
           <Collapse isOpen={this.state.isOpen} navbar>
             {buildNavbar()}
           </Collapse>

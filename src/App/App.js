@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import firebase from 'firebase/app';
 // JS files
-// import MessageBoard from '../Components/MessageBoard/MessageBoard';
 import MyMessages from '../Components/MyMessages/MyMessages';
 import MyRentals from '../Components/MyRentals/MyRentals';
 import MyStuff from '../Components/MyStuff/MyStuff';
@@ -107,7 +106,6 @@ class App extends React.Component {
                 <Switch>
                   <PublicRoute path="/auth" component={Auth} authed={authed} />
                   <PrivateRoute path="/signup" component={SignUp} authed={authed} />
-                  {/* <PrivateRoute path="/signup" component={() => (<SignUp />)} authed={authed} /> */}
                   <PrivateRoute path="/home" component={Home} authed={authed} />
                   <PrivateRoute path="/mystuff/:id" className="" component={MyStuff} authed={authed} />
                   <PrivateRoute path="/myrentals/:id" className="" component={MyRentals} authed={authed} />

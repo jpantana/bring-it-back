@@ -11,6 +11,7 @@
     "jquery": "^3.4.1",
     "leaflet": "^1.5.1",
     "moment": "^2.24.0",
+    "popper.js": "^1.15.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -19,6 +20,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-tooltip": "^3.10.0",
     "reactstrap": "^8.0.1"
   },
   "scripts": {

@@ -3,8 +3,7 @@
 .ItemCard {
   width: 14em !important;
   height: 23em;
-  margin: 10px;
-  // margin-top: -10px;
+  margin: 23px;
   padding: 0;
   box-shadow: 5px 1px 9px $shadow;
   display: flex;
@@ -12,7 +11,6 @@
   justify-content: center;
   border-radius: 0 !important;
   overflow: hidden;
-  // border: .5px solid $mainBlue !important;
 }
 
 .imgContainer {
@@ -22,6 +20,7 @@
   position: absolute;
   top: .5px;
   right: .5px;
+  box-shadow: 1px 1px 4px $shadow;
   .itemImg {
     object-fit: contain;
     margin: auto;
@@ -31,7 +30,7 @@
 
 .allCardsTitle {
   margin: 0;
-  margin-top: 11.5em !important;
+  margin-top: 14.5em !important;
   padding: 0;
   padding-bottom: 0px;
   font-family: $font1;
@@ -41,58 +40,95 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  // border-bottom: 1px solid $shadow;
 }
 
 .cardDetails {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 7px;
-  border: .5px solid $shadow;
-  border-radius: 5px;
-  margin-top: -20px !important;
-  .thCondition {
-    font-family: $font1;
-    font-size: 10px;
-    color: $mainBlue;
-    padding: 10px;
-    text-decoration: underline;
+  flex-flow: row nowrap;
+  .cardDetailsWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around !important;
+    border-top: 1px solid $shadow;
+    border-bottom: 1px solid $shadow;
+    position: relative;
+    top: -20px;
+    left: 45px;
+    .cardDetailHeaders {
+      margin-top: -8px;
+      text-align: center;
+      .detailsHeaders {
+        font-size: 11px;
+        padding: 7px;
+        font-style: italic;
+      }
+    }
+    .details {
+      margin-top: 0px;
+      margin-right: -8px;
+      .detailReportings {
+        padding: 0px 7px 0px 7px;
+        text-align: center;
+      }
+      #itemPriceHour {
+        margin-left: -30px;
+        color: $oranger;
+        font-family: $font1;
+        font-weight: 700;
+        font-size: 22px;
+      }
+      #itemPriceDay {
+        margin-right: -17px;
+        font-family: $font1;
+        color: $mainBlue;
+        font-weight: 700;
+        font-size: 22px;
+      }
+    }
   }
-  .thPriceHour {
-    font-family: $font1;
-    font-size: 10px;
-    color: $mainBlue;
-    padding: 10px;
-    text-decoration: underline;
+  
+  .cardPrintoutsWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    position: absolute;
+    top: 325px;
+    right: 10px;
+    padding-bottom: 0px;
+    .itemCondition {
+      margin-top: -5px;
+      font-family: $font1;
+      padding: 0;
+      font-size: 18px;
+      text-align: center;
+      font-weight: 200;
+    }
   }
-  .thPriceDay {
-    font-family: $font1;
-    font-size: 10px;
-    color: $mainBlue;
-    padding: 10px;
-    text-decoration: underline;
+  
+  .mint {
+    color: $mint !important;
+    border-bottom: 7px solid $mint;
   }
-  .itemCondition {
-    font-family: $font1;
-    font-weight: 700;
-    font-size: 12px;
-    color: $orange;
+  .good {
+    color: $good !important;
+    border-bottom: 7px solid $good;
   }
-  .itemPriceHour, .itemPriceDay {
-    font-family: $font1;
-    font-weight: 700;
-    font-size: 12px;
-    color: $orange;
+  .fair {
+    color: $fair !important;
+    border-bottom: 7px solid $fair;
+  }
+  .relic {
+    color: $relic !important;
+    border-bottom: 7px solid $relic;
   }
 }
+
 
 .availableAgainDate {
   font-size: 10px;
   font-style: italic;
   font-family: $font1;
-  color: $mainBlue;
-  text-shadow: 2px 2px 5px $shadow;
+  color: $orange;
 }
 
 .allCardIconsHome {
@@ -102,29 +138,30 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 4px;
-  .iconSvg {
-    height: 1.5em;
-    padding: 5px;
-  }  
+  padding: 4px; 
+  .availableIcon {
+    color: $oranger;
+    text-shadow: 1px 1px 3px $shadow;
+  }
 }
 
 .msgUserSpan {
   
   .msgUserBtn {
-    width: 97px;
-    padding: 2px !important;
-    margin: auto !important;
-    margin-bottom: 15px !important;
+    position: absolute;
+    top: 340px;
+    left: 10px;
     color: $whiteFont !important;
-    background-color: $mainBlue !important;
-    font-family: $font1 !important;
-    font-size: 10px !important;
-    border: 1px solid $mainBlue !important;
-    &:hover {
-      background-color: $whiteFont !important;
-      color: $mainBlue !important;
-      transition: .4s;
+    background-color: transparent !important;
+    .msgIcon {
+      font-size: 20px;
+      color: $secondBlue;
+      text-shadow: 2px 1px 5px lightgrey;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: .4s;
+      }
     }
   }  
 }
