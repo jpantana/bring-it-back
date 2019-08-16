@@ -33,6 +33,8 @@ const getReceivedMessages = () => new Promise((resolve, reject) => {
     }).catch(err => reject(err));
 });
 
+const getSingleMessage = msgId => axios.get(`${baseUrl}/messages/${msgId}.json`);
+
 const markAsRead = (id, markAsFalse) => axios.put(`${baseUrl}/messages/${id}/unread.json`, markAsFalse);
 
 const newMessage = message => axios.post(`${baseUrl}/messages.json`, message);
@@ -42,4 +44,5 @@ export default {
   getGroupedMessages,
   getReceivedMessages,
   markAsRead,
+  getSingleMessage,
 };

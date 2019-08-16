@@ -13,6 +13,7 @@ class MessageHeader extends React.Component {
     showThisMessage: PropTypes.func,
     convoWith: PropTypes.string,
     otherUser: PropTypes.string,
+    removedUnreadNotificatonInSmallCard: PropTypes.func.isRequired,
   }
 
   state = {
@@ -38,6 +39,7 @@ class MessageHeader extends React.Component {
   hideThisMessage = (e) => {
     e.preventDefault();
     this.props.showThisMessage();
+    this.props.removedUnreadNotificatonInSmallCard();
   };
 
   render() {

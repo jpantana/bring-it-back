@@ -198,8 +198,15 @@
       }
       .navBarNav, .navbar-nav {
         position: relative;
+        right: -1em;
         z-index: 10;
-        width: 5em;
+        width: 11em;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        background-color: $upperNavWhite;
+        border-radius: 4px;
+        box-shadow: 2px 1px 8px $upperNav;
         .navLink {
           &:after {
             border-bottom: solid 3px $oranger;  

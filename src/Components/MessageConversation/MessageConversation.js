@@ -33,6 +33,8 @@ class MessageConversation extends React.Component {
     itemname: '',
     hideSmallCard: false,
     isClicked: false,
+    isUnread: false,
+    unreadMsgId: '',
   }
 
   componentDidMount() {
@@ -62,6 +64,7 @@ class MessageConversation extends React.Component {
       });
       this.conversationStarter(findOutItemId);
       this.whoIsTheOtherUser(findWhoIsOtherUser);
+      this.showButtonIfUnread(this.props.convo);
     }
   }
 
@@ -86,12 +89,24 @@ class MessageConversation extends React.Component {
     this.setState({ isClicked: !this.state.isClicked, hideSmallCard: !this.state.hideSmallCard });
   };
 
+  showButtonIfUnread = (convo) => {
+    convo.forEach((msg) => {
+      console.error(msg.id);
+      if (msg.unread === true) {
+        console.error(msg, ' in the if');
+        // only works, bc last msg will always be unread if any is
+        this.setState({ isUnread: true, unreadMsgId: msg.id });
+      }
+    });
+  };
+
   render() {
     return (
       <div className="MessageInboxLine">
         {this.state.hideSmallCard === true
           ? ''
           : <div onClick={this.showThisMessage} className="messageHeaderDivInbox">
+        {this.state.isUnread === true ? <span className="fa fa-circle animated pulse blueButtonForUnread"></span>: ''}
               <div className="inboxCardGuts">
                 <div className="profilePicMsgInbox">
                   {this.state.userProfPic !== ''
@@ -126,6 +141,8 @@ class MessageConversation extends React.Component {
                 isClicked={this.state.isClicked}
                 hideSmallCard={this.state.hideSmallCard}
                 ownersId={this.props.ownersId}
+                showButtonIfUnread={this.showButtonIfUnread}
+                unreadMsgId={this.state.unreadMsgId}
               />
             : ''}
         </div>

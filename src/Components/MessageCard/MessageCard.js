@@ -34,6 +34,8 @@ class MessageCard extends React.Component {
     itemOwnerId: PropTypes.string,
     otherUsersId: PropTypes.string,
     convoWith: PropTypes.string,
+    showButtonIfUnread: PropTypes.func.isRequired,
+    unreadMsgId: PropTypes.string,
   }
 
   state = {
@@ -75,7 +77,16 @@ class MessageCard extends React.Component {
         itemId: this.props.itemId,
       });
     }
+    this.scrollToBottom();
     this.markAsRead();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   makeMsg = (e) => {
@@ -124,6 +135,14 @@ class MessageCard extends React.Component {
     }
   };
 
+  removedUnreadNotificatonInSmallCard = () => {
+    messagesData.getSingleMessage(this.props.unreadMsgId)
+      .then((res) => {
+        this.props.showButtonIfUnread(res.data);
+      })
+      .catch(err => console.error('no single msg returned', err));
+  };
+
   render() {
     const {
       conversation,
@@ -150,6 +169,7 @@ class MessageCard extends React.Component {
             otherUser={otherUser}
             showThisMessage={this.props.showThisMessage}
             convoWith={this.props.convoWith}
+            removedUnreadNotificatonInSmallCard={this.removedUnreadNotificatonInSmallCard}
           />
           {itemId !== ''
             ? <MessagesAbout
@@ -158,11 +178,12 @@ class MessageCard extends React.Component {
             />
             : ''}
         </div>
-        <div className="msgTableDiv">
+        <div className="msgTableDiv" id="messagesContainer">
           <div>{conversation.length > 0
             ? myConversations
             : null
-          }</div>
+          }<div ref={(el) => { this.messagesEnd = el; }}></div></div>
+          
         </div>
 
         <div className="Messages">

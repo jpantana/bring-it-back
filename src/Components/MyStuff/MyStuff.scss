@@ -2,10 +2,12 @@
 
 .MyStuff {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-flow: column;
   justify-content: center;
   margin-top: 2.5em;
+  // margin: auto;
 }
 
 .myStuffContainer {
@@ -117,41 +119,69 @@
 @media (max-width: 1120px) {
   .myStuffContainer {
     width: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center !important; 
+    justify-content: center !important;
+    .myStuffContainer {
+      display: flex;
+      flex-direction: column !important;
+      align-self: center;
+      margin: auto !important;
+    }
+  .smallCardsDiv {
+    margin-top: 1em;
+    width: auto;
+    display: flex;
+    flex-flow: row wrap;
+    margin: auto !important;
+    margin-right: auto !important;
+    .addNewWrapper {
+      display: flex;
+      flex-direction: column;
+      margin: auto !important;
+    }
   }
+}
 
   .profileDataDiv {
     box-shadow: 4px 1px 8px $softShadow;
     margin-top: 1em;
-    margin-right: 3em;
+    margin: auto !important;
+    margin-top: 3em !important;
     background: linear-gradient($upperNavWhite, $upperNav);
     height: 18em;
-    width: 22em;
+    width: auto;
     display: flex;
     flex-flow: column;
     justify-content: center;
     border-radius: 5px 5px 0 0;
     border: 1px solid $upperNav;
     padding-bottom: 1em;
-    
     .profileImgContainerDiv {
       margin: auto;
-      width: 15em;
-      height: 15em;
+      max-width: 18em;
+      max-height: 18em;
       .mystuffProfilePic {
-        width: 15em;
+        max-width: 18em;
         margin-top: -3em;
       }
     }
   }
   .usernameMyStuff {
-    width: 11em !important;
+    width: 12em !important;
+    padding: 5px;
     font-family: $font1;
     color: $whiteFont;
+    border: 1px solid $mainBlue;
   }
 }
+.SingleItemDiv {
+    margin-top: 1em;
+    margin-right: 3em;
+    width: 90%;
+    border: none !important;
+  }
 
 // @media (max-width: 450px) {
 //   .usernameMyStuff {

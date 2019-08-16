@@ -27,6 +27,7 @@ class MessageRow extends React.Component {
 
     return (
       <div className="MessageRow">
+      {/* {this.state.isUnread === true ? <span className="fa fa-circle blueButtonForUnread"></span>: ''} */}
         <p className={`messageP wow bounceIn ${this.state.received === true ? 'sentMessage fadeInRight' : 'receivedMessage fadeInLeft'}`}>{convo.message}</p>
       </div>
     );
