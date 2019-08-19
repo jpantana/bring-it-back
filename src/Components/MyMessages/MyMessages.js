@@ -55,7 +55,7 @@ class MyMessages extends React.Component {
         this.state.itemIds.forEach((itm) => {
           const msgsGroupedByItemId = msgs.filter(m => m.itemId === itm);
           groupOfMsgs.push(msgsGroupedByItemId);
-          });
+        });
         const onlyTwoAtATime = [];
         msgs.forEach((m) => {
           onlyTwoAtATime.push(m.senderid);
